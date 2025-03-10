@@ -26,4 +26,9 @@ class Event extends Model
     {
         return $this->hasMany(Standing::class);
     }
+
+    public function days(): HasMany
+    {
+        return $this->hasMany(Day::class);
+    }
 }
