@@ -5,20 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Day extends Model
+class Round extends Model
 {
     use HasUuids, SoftDeletes;
 
-    public function event(): BelongsTo
+    public function day(): BelongsTo
     {
-        return $this->belongsTo(Event::class);
-    }
-
-    public function rounds(): HasMany
-    {
-        return $this->hasMany(Round::class);
+        return $this->belongsTo(Day::class);
     }
 }
