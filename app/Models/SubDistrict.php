@@ -21,4 +21,9 @@ class SubDistrict extends Model
     {
         return $this->hasMany(Village::class);
     }
+
+    public function venues(): HasMany
+    {
+        return $this->hasMany(Venue::class);
+    }
 }
