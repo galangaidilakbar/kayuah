@@ -32,4 +32,19 @@ class Participant extends Model
     {
         return $this->hasMany(Standing::class);
     }
+
+    public function leftLaneRaces(): HasMany
+    {
+        return $this->hasMany(Race::class, 'left_lane_participant_id');
+    }
+
+    public function rightLaneRaces(): HasMany
+    {
+        return $this->hasMany(Race::class, 'right_lane_participant_id');
+    }
+
+    public function winnerRaces(): HasMany
+    {
+        return $this->hasMany(Race::class, 'winner_id');
+    }
 }
