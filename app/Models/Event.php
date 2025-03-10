@@ -21,4 +21,9 @@ class Event extends Model
     {
         return $this->hasMany(Participant::class);
     }
+
+    public function standings(): HasMany
+    {
+        return $this->hasMany(Standing::class);
+    }
 }
