@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class District extends Model
+class SubDistrict extends Model
 {
     use HasUuids, SoftDeletes;
 
-    public function subDistricts(): HasMany
+    public function district(): BelongsTo
     {
-        return $this->hasMany(SubDistrict::class);
+        return $this->belongsTo(District::class);
     }
 }

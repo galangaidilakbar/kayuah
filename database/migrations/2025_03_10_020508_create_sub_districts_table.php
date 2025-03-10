@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('districts', function (Blueprint $table) {
+        Schema::create('sub_districts', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('district_id')->constrained()->cascadeOnDelete();
             $table->string('code')->unique()->nullable();
             $table->string('name');
             $table->timestamps();
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('districts');
+        Schema::dropIfExists('sub_districts');
     }
 };
