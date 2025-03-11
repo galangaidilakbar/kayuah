@@ -18,18 +18,24 @@ class ParticipantsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('boat_id')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('boat_id')
+                    ->relationship('boat', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                Forms\Components\Select::make('sponsors')
+                    ->multiple()
+                    ->relationship('sponsors', 'name')
+                    ->preload(),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('boat_id')
+            ->recordTitleAttribute('title')
             ->columns([
-                Tables\Columns\TextColumn::make('boat_id'),
+                Tables\Columns\TextColumn::make('title')->label(__('Boat')),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

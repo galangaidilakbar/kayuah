@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -46,5 +47,12 @@ class Participant extends Model
     public function winnerRaces(): HasMany
     {
         return $this->hasMany(Race::class, 'winner_id');
+    }
+
+    protected function title(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->boat->name.' '.$this->sponsors->pluck('name')->join(', ')
+        );
     }
 }
