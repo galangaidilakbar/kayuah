@@ -66,6 +66,7 @@ class RacesRelationManager extends RelationManager
                     ->prefix('#')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('leftLaneParticipant.title')
+                    ->description(fn (?Race $record) => $record->leftLaneParticipant->boat->village->name)
                     ->badge()
                     ->color(function (Race $record): string {
                         if ($record->winner_id === null) {
@@ -83,6 +84,7 @@ class RacesRelationManager extends RelationManager
                             ->action(fn (Race $record) => $record->update(['winner_id' => $record->left_lane_participant_id]))
                     ),
                 Tables\Columns\TextColumn::make('rightLaneParticipant.title')
+                    ->description(fn (?Race $record) => $record->rightLaneParticipant?->boat->village->name)
                     ->badge()
                     ->color(function (Race $record): string {
                         if ($record->winner_id === null) {
@@ -123,8 +125,10 @@ class RacesRelationManager extends RelationManager
                 ->with([
                     'leftLaneParticipant.boat',
                     'leftLaneParticipant.sponsors',
+                    'leftLaneParticipant.boat.village',
                     'rightLaneParticipant.boat',
                     'rightLaneParticipant.sponsors',
+                    'rightLaneParticipant.boat.village',
                 ])
                 ->withoutGlobalScopes([
                     SoftDeletingScope::class,
