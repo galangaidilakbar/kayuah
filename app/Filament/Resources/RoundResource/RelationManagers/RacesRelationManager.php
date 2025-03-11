@@ -22,8 +22,12 @@ class RacesRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('number')
                     ->required()
-                    ->columnSpanFull()
+                    ->prefix('#')
                     ->numeric(),
+                Forms\Components\Radio::make('is_bye')
+                    ->label('Is Bye')
+                    ->default(false)
+                    ->boolean(),
                 Forms\Components\Select::make('left_lane_participant_id')
                     ->options(function (RelationManager $livewire): array {
                         return $livewire->getOwnerRecord()
@@ -60,7 +64,7 @@ class RacesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('number')->numeric()->prefix('#')->sortable(),
                 Tables\Columns\TextColumn::make('leftLaneParticipant.title')
                     ->action(
-                        Action::make('Select as Winner')
+                        Action::make('Select left lane as Winner')
                             ->requiresConfirmation()
                             ->modalDescription('Are you sure you want to select this participant as the winner?')
                             ->action(fn (Race $record) => $record->update(['winner_id' => $record->left_lane_participant_id]))
@@ -68,7 +72,7 @@ class RacesRelationManager extends RelationManager
                     ->limit(30),
                 Tables\Columns\TextColumn::make('rightLaneParticipant.title')
                     ->action(
-                        Action::make('Select as Winner')
+                        Action::make('Select right lane as Winner')
                             ->requiresConfirmation()
                             ->modalDescription('Are you sure you want to select this participant as the winner?')
                             ->action(fn (Race $record) => $record->update(['winner_id' => $record->right_lane_participant_id]))
@@ -94,8 +98,15 @@ class RacesRelationManager extends RelationManager
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ])
-            ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]));
+            ->modifyQueryUsing(fn (Builder $query) => $query
+                ->with([
+                    'leftLaneParticipant.boat',
+                    'leftLaneParticipant.sponsors',
+                    'rightLaneParticipant.boat',
+                    'rightLaneParticipant.sponsors',
+                ])
+                ->withoutGlobalScopes([
+                    SoftDeletingScope::class,
+                ]));
     }
 }

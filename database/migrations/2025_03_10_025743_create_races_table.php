@@ -21,6 +21,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('participants')
                 ->cascadeOnDelete();
+            $table->boolean('is_bye')->default(false);
             $table->foreignUuid('right_lane_participant_id')
                 ->nullable()
                 ->constrained('participants')
