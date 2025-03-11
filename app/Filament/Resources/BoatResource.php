@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BoatResource\Pages;
-use App\Filament\Resources\BoatResource\RelationManagers;
 use App\Models\Boat;
 use Filament\Forms;
 use Filament\Forms\Form;
