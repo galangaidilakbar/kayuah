@@ -7,6 +7,8 @@ use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Event;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -104,6 +106,19 @@ class EventResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\TextEntry::make('venue.name'),
+                Infolists\Components\TextEntry::make('name'),
+                Infolists\Components\TextEntry::make('start_date')
+                    ->dateTime(),
+                Infolists\Components\TextEntry::make('end_date')
+                    ->dateTime(),
             ]);
     }
 }
