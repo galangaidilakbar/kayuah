@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DayResource\Pages;
-use App\Filament\Resources\DayResource\RelationManagers;
 use App\Models\Day;
 use Filament\Forms;
 use Filament\Forms\Form;
