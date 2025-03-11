@@ -56,7 +56,7 @@ class ParticipantsRelationManager extends RelationManager
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ])
-            ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes([
+            ->modifyQueryUsing(fn (Builder $query) => $query->with(['sponsors', 'boat'])->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]));
     }
