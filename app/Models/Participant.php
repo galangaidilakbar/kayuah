@@ -55,4 +55,11 @@ class Participant extends Model
             get: fn () => $this->boat->name.' '.$this->sponsors->pluck('name')->join(', ')
         );
     }
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['title'];
 }
