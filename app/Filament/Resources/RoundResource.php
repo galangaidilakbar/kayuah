@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoundResource\Pages;
+use App\Filament\Resources\RoundResource\RelationManagers\RacesRelationManager;
 use App\Models\Round;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -77,7 +78,7 @@ class RoundResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RacesRelationManager::class,
         ];
     }
 

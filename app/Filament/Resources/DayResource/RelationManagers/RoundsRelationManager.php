@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources\DayResource\RelationManagers;
 
+use App\Filament\Resources\RoundResource;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RoundsRelationManager extends RelationManager
@@ -31,6 +33,9 @@ class RoundsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
             ])
+            ->recordUrl(fn (Model $record) => RoundResource::getUrl('view', [
+                'record' => $record,
+            ]))
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
