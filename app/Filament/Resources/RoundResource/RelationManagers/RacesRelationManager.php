@@ -61,23 +61,44 @@ class RacesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('number')
             ->columns([
-                Tables\Columns\TextColumn::make('number')->numeric()->prefix('#')->sortable(),
+                Tables\Columns\TextColumn::make('number')
+                    ->numeric()
+                    ->prefix('#')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('leftLaneParticipant.title')
+                    ->badge()
+                    ->color(function (Race $record): string {
+                        if ($record->winner_id === null) {
+                            return 'gray';
+                        }
+
+                        return $record->winner_id === $record->left_lane_participant_id
+                            ? 'success'  // Green for winner
+                            : 'danger';  // Red for loser
+                    })
                     ->action(
                         Action::make('Select left lane as Winner')
                             ->requiresConfirmation()
                             ->modalDescription('Are you sure you want to select this participant as the winner?')
                             ->action(fn (Race $record) => $record->update(['winner_id' => $record->left_lane_participant_id]))
-                    )
-                    ->limit(30),
+                    ),
                 Tables\Columns\TextColumn::make('rightLaneParticipant.title')
+                    ->badge()
+                    ->color(function (Race $record): string {
+                        if ($record->winner_id === null) {
+                            return 'gray';
+                        }
+
+                        return $record->winner_id === $record->right_lane_participant_id
+                            ? 'success'  // Green for winner
+                            : 'danger';  // Red for loser
+                    })
                     ->action(
                         Action::make('Select right lane as Winner')
                             ->requiresConfirmation()
                             ->modalDescription('Are you sure you want to select this participant as the winner?')
                             ->action(fn (Race $record) => $record->update(['winner_id' => $record->right_lane_participant_id]))
-                    )
-                    ->limit(30),
+                    ),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
