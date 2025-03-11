@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\RoundResource\RelationManagers;
 
+use App\Models\Race;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -56,8 +58,22 @@ class RacesRelationManager extends RelationManager
             ->recordTitleAttribute('number')
             ->columns([
                 Tables\Columns\TextColumn::make('number')->numeric()->prefix('#')->sortable(),
-                Tables\Columns\TextColumn::make('leftLaneParticipant.title')->limit(30),
-                Tables\Columns\TextColumn::make('rightLaneParticipant.title')->limit(30),
+                Tables\Columns\TextColumn::make('leftLaneParticipant.title')
+                    ->action(
+                        Action::make('Select as Winner')
+                            ->requiresConfirmation()
+                            ->modalDescription('Are you sure you want to select this participant as the winner?')
+                            ->action(fn (Race $record) => $record->update(['winner_id' => $record->left_lane_participant_id]))
+                    )
+                    ->limit(30),
+                Tables\Columns\TextColumn::make('rightLaneParticipant.title')
+                    ->action(
+                        Action::make('Select as Winner')
+                            ->requiresConfirmation()
+                            ->modalDescription('Are you sure you want to select this participant as the winner?')
+                            ->action(fn (Race $record) => $record->update(['winner_id' => $record->right_lane_participant_id]))
+                    )
+                    ->limit(30),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
