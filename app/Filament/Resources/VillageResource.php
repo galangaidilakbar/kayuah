@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubDistrictResource\Pages;
-use App\Models\SubDistrict;
+use App\Filament\Resources\VillageResource\Pages;
+use App\Models\Village;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,9 +12,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SubDistrictResource extends Resource
+class VillageResource extends Resource
 {
-    protected static ?string $model = SubDistrict::class;
+    protected static ?string $model = Village::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -22,8 +22,8 @@ class SubDistrictResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('district_id')
-                    ->relationship('district', 'name')
+                Forms\Components\Select::make('sub_district_id')
+                    ->relationship('subDistrict', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('code')
                     ->maxLength(255),
@@ -39,7 +39,7 @@ class SubDistrictResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->label('ID'),
-                Tables\Columns\TextColumn::make('district.name'),
+                Tables\Columns\TextColumn::make('subDistrict.name'),
                 Tables\Columns\TextColumn::make('code')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
@@ -83,10 +83,10 @@ class SubDistrictResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSubDistricts::route('/'),
-            'create' => Pages\CreateSubDistrict::route('/create'),
-            'view' => Pages\ViewSubDistrict::route('/{record}'),
-            'edit' => Pages\EditSubDistrict::route('/{record}/edit'),
+            'index' => Pages\ListVillages::route('/'),
+            'create' => Pages\CreateVillage::route('/create'),
+            'view' => Pages\ViewVillage::route('/{record}'),
+            'edit' => Pages\EditVillage::route('/{record}/edit'),
         ];
     }
 
