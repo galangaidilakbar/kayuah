@@ -57,13 +57,7 @@ class RacesRelationManager extends RelationManager
                     ->description(fn (?Race $record) => $record->leftLaneParticipant->boat->village->name)
                     ->badge()
                     ->color(function (Race $record): string {
-                        if ($record->winner_id === null) {
-                            return 'gray';
-                        }
-
-                        return $record->winner_id === $record->left_lane_participant_id
-                            ? 'success'  // Green for winner
-                            : 'danger';  // Red for loser
+                        return $this->setBadgeColor($record, 'left_lane_participant_id');
                     })
                     ->action(
                         Action::make('Select left lane as Winner')
@@ -75,13 +69,7 @@ class RacesRelationManager extends RelationManager
                     ->description(fn (?Race $record) => $record->rightLaneParticipant?->boat->village->name)
                     ->badge()
                     ->color(function (Race $record): string {
-                        if ($record->winner_id === null) {
-                            return 'gray';
-                        }
-
-                        return $record->winner_id === $record->right_lane_participant_id
-                            ? 'success'  // Green for winner
-                            : 'danger';  // Red for loser
+                        return $this->setBadgeColor($record, 'right_lane_participant_id');
                     })
                     ->action(
                         Action::make('Select right lane as Winner')
@@ -131,5 +119,16 @@ class RacesRelationManager extends RelationManager
             ->participants->load(['boat', 'sponsors'])
             ->pluck('title', 'id')
             ->toArray();
+    }
+
+    protected function setBadgeColor(Race $record, string $column): string
+    {
+        if ($record->winner_id === null) {
+            return 'gray';
+        }
+
+        return $record->winner_id === $record->{$column}
+            ? 'success'  // Green for winner
+            : 'danger';  // Red for loser
     }
 }
