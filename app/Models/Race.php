@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\RaceWinnerSelected;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,5 +36,7 @@ class Race extends Model
     {
         $this->winner_id = $participantId;
         $this->save();
+
+        RaceWinnerSelected::dispatch($this);
     }
 }
