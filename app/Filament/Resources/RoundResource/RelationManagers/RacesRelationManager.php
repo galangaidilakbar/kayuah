@@ -28,31 +28,19 @@ class RacesRelationManager extends RelationManager
                     ->label('Is Bye')
                     ->default(false)
                     ->boolean(),
+
                 Forms\Components\Select::make('left_lane_participant_id')
-                    ->options(function (RelationManager $livewire): array {
-                        return $livewire->getOwnerRecord()
-                            ->day
-                            ->event
-                            ->participants->load(['boat', 'sponsors'])
-                            ->pluck('title', 'id')
-                            ->toArray();
-                    })
+                    ->options($this->participantOptions())
                     ->nullable()
                     ->searchable()
                     ->columnSpanFull()
                     ->label('Left Lane Participant'),
                 Forms\Components\Select::make('right_lane_participant_id')
-                    ->options(function (RelationManager $livewire): array {
-                        return $livewire->getOwnerRecord()
-                            ->day
-                            ->event
-                            ->participants->load(['boat', 'sponsors'])
-                            ->pluck('title', 'id')
-                            ->toArray();
-                    })
+                    ->options($this->participantOptions())
                     ->nullable()
                     ->searchable()
-                    ->label('Right Lane Participant')->columnSpanFull(),
+                    ->label('Right Lane Participant')
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -133,5 +121,15 @@ class RacesRelationManager extends RelationManager
                 ->withoutGlobalScopes([
                     SoftDeletingScope::class,
                 ]));
+    }
+
+    protected function participantOptions(): array
+    {
+        return $this->getOwnerRecord()
+            ->day
+            ->event
+            ->participants->load(['boat', 'sponsors'])
+            ->pluck('title', 'id')
+            ->toArray();
     }
 }
