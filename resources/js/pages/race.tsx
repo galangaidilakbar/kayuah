@@ -1,16 +1,17 @@
+import { Head } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import echo from '../echo';
 
 function RowRaceStyle({ name, id, winner }: any) {
     if (!winner) {
-        return <td className="text-gray-500">{name}</td>;
+        return <td className="p-2 text-gray-500">{name}</td>;
     }
 
     if (winner === id) {
-        return <td className="text-green-500">{name}</td>;
+        return <td className="animate-pulse p-2 font-bold text-green-500">{name} 🏆</td>;
     }
 
-    return <td className="text-red-500">{name}</td>;
+    return <td className="p-2 text-red-500 line-through">{name}</td>;
 }
 
 export default function Race({ races }: any) {
@@ -37,28 +38,46 @@ export default function Race({ races }: any) {
 
     return (
         <div className="p-8">
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Left Lane</th>
-                        <th>Right Lane</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {items.map((race: any) => (
-                        <tr key={race.id}>
-                            <td>{race.number}</td>
-                            <RowRaceStyle name={race.left_lane_participant.title} id={race.left_lane_participant_id} winner={race.winner_id} />
-                            <RowRaceStyle
-                                name={race.right_lane_participant ? race.right_lane_participant.title : '---'}
-                                id={race.right_lane_participant_id}
-                                winner={race.winner_id}
-                            />
+            <Head title="Race" />
+            <div className="overflow-x-auto rounded-lg shadow-md">
+                <table className="min-w-full bg-white">
+                    <thead className="bg-gray-100">
+                        <tr>
+                            <th className="p-3 text-left font-medium text-gray-600">#</th>
+                            <th className="p-3 text-left font-medium text-gray-600">Left Lane</th>
+                            <th className="p-3 text-left font-medium text-gray-600">Right Lane</th>
+                            <th className="p-3 text-left font-medium text-gray-600">Status</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                        {items.map((race: any) => (
+                            <tr key={race.id} className="transition-colors hover:bg-gray-50">
+                                <td className="p-2 font-medium">{race.number}</td>
+                                <RowRaceStyle name={race.left_lane_participant.title} id={race.left_lane_participant_id} winner={race.winner_id} />
+                                <RowRaceStyle
+                                    name={race.right_lane_participant?.title || '---'}
+                                    id={race.right_lane_participant_id}
+                                    winner={race.winner_id}
+                                />
+                                <td className="p-2">
+                                    {race.winner_id ? (
+                                        <span className="rounded-full bg-green-100 px-2 py-1 text-xs text-green-800">Completed</span>
+                                    ) : (
+                                        <span className="rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800">In Progress</span>
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
+                        {items.length === 0 && (
+                            <tr>
+                                <td colSpan={4} className="p-4 text-center text-gray-500">
+                                    No races available
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
