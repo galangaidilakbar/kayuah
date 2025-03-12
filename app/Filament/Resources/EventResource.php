@@ -86,6 +86,7 @@ class EventResource extends Resource
     {
         return [
             RelationManagers\DaysRelationManager::class,
+            RelationManagers\RoundsRelationManager::class,
             RelationManagers\ParticipantsRelationManager::class,
             RelationManagers\StandingsRelationManager::class,
         ];
