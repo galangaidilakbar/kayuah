@@ -63,7 +63,7 @@ class RacesRelationManager extends RelationManager
                         Action::make('Select left lane as Winner')
                             ->requiresConfirmation()
                             ->modalDescription('Are you sure you want to select this participant as the winner?')
-                            ->action(fn (Race $record) => $record->update(['winner_id' => $record->left_lane_participant_id]))
+                            ->action(fn (Race $record) => $record->setWinner($record->left_lane_participant_id))
                     ),
                 Tables\Columns\TextColumn::make('rightLaneParticipant.title')
                     ->description(fn (?Race $record) => $record->rightLaneParticipant?->boat->village->name)
@@ -75,7 +75,7 @@ class RacesRelationManager extends RelationManager
                         Action::make('Select right lane as Winner')
                             ->requiresConfirmation()
                             ->modalDescription('Are you sure you want to select this participant as the winner?')
-                            ->action(fn (Race $record) => $record->update(['winner_id' => $record->right_lane_participant_id]))
+                            ->action(fn (Race $record) => $record->setWinner($record->right_lane_participant_id))
                     ),
             ])
             ->filters([

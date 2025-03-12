@@ -30,4 +30,10 @@ class Race extends Model
     {
         return $this->belongsTo(Participant::class, 'winner_id');
     }
+
+    public function setWinner(string $participantId): void
+    {
+        $this->winner_id = $participantId;
+        $this->save();
+    }
 }
