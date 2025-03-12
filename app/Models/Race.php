@@ -37,6 +37,13 @@ class Race extends Model
         $this->winner_id = $participantId;
         $this->save();
 
-        RaceWinnerSelected::dispatch($this);
+        RaceWinnerSelected::dispatch($this->load([
+            'leftLaneParticipant.boat',
+            'leftLaneParticipant.sponsors',
+            'leftLaneParticipant.boat.village',
+            'rightLaneParticipant.boat',
+            'rightLaneParticipant.sponsors',
+            'rightLaneParticipant.boat.village',
+        ]));
     }
 }
