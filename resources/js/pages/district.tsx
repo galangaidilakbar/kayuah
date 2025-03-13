@@ -16,7 +16,8 @@ export default function District() {
                     {districts.map((district) => (
                         <li key={district.id}>
                             <div className="text-xl">{district.name}</div>
-                            <div className="text-sm">{district.code ?? '-'}</div>
+                            <div className="text-sm">{district.code}</div>
+                            <div>{district.subDistricts?.length} sub districts</div>
                         </li>
                     ))}
                 </ul>

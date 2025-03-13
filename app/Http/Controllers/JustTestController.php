@@ -15,7 +15,8 @@ class JustTestController extends Controller
     public function index()
     {
         return Inertia::render('district', [
-            'districts' => DistrictData::collect(District::all()),
+            // 'districts' => DistrictData::collect(District::all()),
+            'districts' => DistrictData::collect(District::with('subDistricts')->get()),
         ]);
     }
 

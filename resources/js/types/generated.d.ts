@@ -3,6 +3,7 @@ declare namespace App.Data {
         id: string;
         code: string | null;
         name: string;
+        subDistricts: Array<App.Data.SubDistrictData> | null;
     };
     export type SubDistrictData = {
         id: string;
