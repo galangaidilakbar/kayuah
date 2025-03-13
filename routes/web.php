@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JustTestController;
 use App\Models\Race;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,9 +24,13 @@ Route::get('/race', function () {
             'rightLaneParticipant.boat',
             'rightLaneParticipant.sponsors',
             'rightLaneParticipant.boat.village',
-        ])->orderBy('number')->get(),
+        ])
+            ->orderBy('number')
+            ->get(),
     ]);
 });
+
+Route::resource('/test', JustTestController::class);
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
