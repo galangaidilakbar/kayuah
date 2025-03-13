@@ -4,4 +4,10 @@ declare namespace App.Data {
         code: string | null;
         name: string;
     };
+    export type SubDistrictData = {
+        id: string;
+        district_id: string;
+        code: string | null;
+        name: string;
+    };
 }

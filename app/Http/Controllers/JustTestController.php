@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Data\DistrictData;
 use App\Models\District;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class JustTestController extends Controller
 {
@@ -13,7 +14,9 @@ class JustTestController extends Controller
      */
     public function index()
     {
-        return DistrictData::collect(District::paginate(2));
+        return Inertia::render('district', [
+            'districts' => DistrictData::collect(District::all()),
+        ]);
     }
 
     /**
