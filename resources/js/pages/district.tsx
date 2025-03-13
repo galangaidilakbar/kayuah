@@ -9,7 +9,7 @@ export default function District() {
         <div className="space-y-6 p-8">
             <Head title="Districts" />
 
-            <h1 className="text-2xl">Districts</h1>
+            <h1 className="text-2xl font-bold">Districts</h1>
 
             <div>
                 <ul className="space-y-6">
