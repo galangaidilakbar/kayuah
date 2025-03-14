@@ -11,6 +11,14 @@ declare namespace App.Data {
         name: string;
         sub_districts?: Array<App.Data.SubDistrictData> | null;
     };
+    export type EventData = {
+        id: string;
+        venue_id: string;
+        name: string;
+        start_date: string;
+        end_date: string;
+        venue: App.Data.VenueData | null;
+    };
     export type SubDistrictData = {
         id: string;
         district_id: string;

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Data\DistrictData;
+use App\Data\EventData;
 use App\Models\District;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,9 +16,10 @@ class JustTestController extends Controller
      */
     public function index()
     {
-        return Inertia::render('district', [
-            // 'districts' => DistrictData::collect(District::all()),
-            'districts' => DistrictData::collect(District::with('subDistricts')->get()),
+        dd(EventData::collect(Event::all()), Event::all());
+
+        return Inertia::render('events', [
+            'events' => EventData::collect(Event::all()),
         ]);
     }
 

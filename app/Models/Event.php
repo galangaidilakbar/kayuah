@@ -13,6 +13,19 @@ class Event extends Model
 {
     use HasUuids, SoftDeletes;
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'datetime',
+            'end_date' => 'datetime',
+        ];
+    }
+
     public function venue(): BelongsTo
     {
         return $this->belongsTo(Venue::class);
