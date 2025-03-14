@@ -30,5 +30,6 @@ declare namespace App.Data {
         code: string | null;
         name: string;
         sub_district: App.Data.SubDistrictData | null;
+        boats?: Array<App.Data.BoatData> | null;
     };
 }
