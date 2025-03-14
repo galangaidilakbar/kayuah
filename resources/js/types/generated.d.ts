@@ -39,6 +39,20 @@ declare namespace App.Data {
         title: string;
         sponsors?: Array<App.Data.SponsorData> | null;
     };
+    export type RaceData = {
+        id: string;
+        round_id: string;
+        number: number;
+        left_lane_participant_id: string;
+        is_bye: boolean;
+        right_lane_participant_id: string;
+        winner_id: string;
+        status: string;
+        round: App.Data.RoundData | null;
+        left_lane_participant: App.Data.ParticipantData | null;
+        right_lane_participant: App.Data.ParticipantData | null;
+        winner: App.Data.ParticipantData | null;
+    };
     export type RoundData = {
         id: string;
         day_id: string;
