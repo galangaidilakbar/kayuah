@@ -3,7 +3,7 @@ import { Head, usePage } from '@inertiajs/react';
 export default function Events() {
     const { props } = usePage<{ events: App.Data.EventData[] }>();
     const { events } = props;
-    
+
     // Function to format the date
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
@@ -13,10 +13,10 @@ export default function Events() {
             day: 'numeric',
             hour: 'numeric',
             minute: 'numeric',
-            hour12: true
+            hour12: true,
         }).format(date);
     };
-    
+
     return (
         <div className="space-y-6 p-8">
             <Head title="Events" />

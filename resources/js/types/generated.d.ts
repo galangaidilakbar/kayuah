@@ -8,7 +8,7 @@ declare namespace App.Data {
     export type DayData = {
         id: string;
         event_id: string;
-        date: any;
+        date: string;
         name: string;
         event: App.Data.EventData | null;
     };
