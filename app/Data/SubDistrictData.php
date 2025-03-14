@@ -11,5 +11,6 @@ class SubDistrictData extends Data
         public string $district_id,
         public ?string $code,
         public string $name,
+        public ?DistrictData $district,
     ) {}
 }
