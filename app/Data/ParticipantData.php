@@ -2,7 +2,9 @@
 
 namespace App\Data;
 
+use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Lazy;
 
 class ParticipantData extends Data
 {
@@ -13,5 +15,7 @@ class ParticipantData extends Data
         public ?EventData $event,
         public ?BoatData $boat,
         public string $title,
+        #[DataCollectionOf(SponsorData::class)]
+        public Lazy|array|null $sponsors,
     ) {}
 }

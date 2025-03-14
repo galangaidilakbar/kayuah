@@ -37,6 +37,7 @@ declare namespace App.Data {
         event: App.Data.EventData | null;
         boat: App.Data.BoatData | null;
         title: string;
+        sponsors?: Array<App.Data.SponsorData> | null;
     };
     export type RoundData = {
         id: string;
