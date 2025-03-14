@@ -1,9 +1,5 @@
 import { Head, usePage } from '@inertiajs/react';
 
-function formatDate(date: string){
-    return new Date(date).toLocaleString()
-}
-
 export default function Events() {
     const { props } = usePage<{ events: App.Data.EventData[] }>();
 
@@ -21,7 +17,7 @@ export default function Events() {
                         <li key={event.id}>
                             <div className="text-xl">{event.name}</div>
                             <div className="text-sm">{event.start_date}</div>
-                            <div className="text-sm">{formatDate(event.end_date)}</div>
+                            <div className="text-sm">{event.end_date}</div>
                         </li>
                     ))}
                 </ul>
