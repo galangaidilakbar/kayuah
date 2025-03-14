@@ -12,6 +12,7 @@ declare namespace App.Data {
         date: string;
         name: string;
         event: App.Data.EventData | null;
+        rounds?: Array<App.Data.RoundData> | null;
     };
     export type DistrictData = {
         id: string;
@@ -36,6 +37,13 @@ declare namespace App.Data {
         event: App.Data.EventData | null;
         boat: App.Data.BoatData | null;
         title: string;
+    };
+    export type RoundData = {
+        id: string;
+        day_id: string;
+        name: string;
+        order: number;
+        day: App.Data.DayData | null;
     };
     export type SponsorData = {
         id: string;

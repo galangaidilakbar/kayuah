@@ -2,7 +2,9 @@
 
 namespace App\Data;
 
+use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Lazy;
 
 class DayData extends Data
 {
@@ -12,5 +14,7 @@ class DayData extends Data
         public string $date,
         public string $name,
         public ?EventData $event,
+        #[DataCollectionOf(RoundData::class)]
+        public Lazy|array|null $rounds,
     ) {}
 }
