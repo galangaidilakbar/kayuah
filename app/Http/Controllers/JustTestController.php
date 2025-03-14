@@ -17,7 +17,10 @@ class JustTestController extends Controller
     public function index()
     {
         return Inertia::render('events', [
-            'events' => EventData::collect(Event::with('days')->get()),
+            'events' => EventData::collect(Event::with([
+                'participants.boat',
+                'participants.sponsors',
+            ])->get()),
         ]);
     }
 
