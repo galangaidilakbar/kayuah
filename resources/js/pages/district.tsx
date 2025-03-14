@@ -17,7 +17,7 @@ export default function District() {
                         <li key={district.id}>
                             <div className="text-xl">{district.name}</div>
                             <div className="text-sm">{district.code}</div>
-                            <div>{district.subDistricts?.length} sub districts</div>
+                            <div>{district.sub_districts?.length} sub districts</div>
                         </li>
                     ))}
                 </ul>
