@@ -3,7 +3,9 @@
 namespace App\Data;
 
 use DateTime;
+use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Lazy;
 
 class EventData extends Data
 {
@@ -14,5 +16,7 @@ class EventData extends Data
         public DateTime $start_date,
         public DateTime $end_date,
         public ?VenueData $venue,
+        #[DataCollectionOf(DayData::class)]
+        public Lazy|array|null $days,
     ) {}
 }

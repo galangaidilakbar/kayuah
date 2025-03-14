@@ -5,6 +5,13 @@ declare namespace App.Data {
         name: string;
         village: App.Data.VillageData | null;
     };
+    export type DayData = {
+        id: string;
+        event_id: string;
+        date: any;
+        name: string;
+        event: App.Data.EventData | null;
+    };
     export type DistrictData = {
         id: string;
         code: string | null;
@@ -18,6 +25,7 @@ declare namespace App.Data {
         start_date: string;
         end_date: string;
         venue: App.Data.VenueData | null;
+        days?: Array<App.Data.DayData> | null;
     };
     export type SubDistrictData = {
         id: string;
