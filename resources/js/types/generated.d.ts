@@ -1,4 +1,10 @@
 declare namespace App.Data {
+    export type BoatData = {
+        id: string;
+        village_id: string;
+        name: string;
+        village: App.Data.VillageData | null;
+    };
     export type DistrictData = {
         id: string;
         code: string | null;
