@@ -18,5 +18,7 @@ class EventData extends Data
         public ?VenueData $venue,
         #[DataCollectionOf(DayData::class)]
         public Lazy|array|null $days,
+        #[DataCollectionOf(ParticipantData::class)]
+        public Lazy|array|null $participants,
     ) {}
 }
