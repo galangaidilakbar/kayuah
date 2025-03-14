@@ -12,6 +12,12 @@ declare namespace App.Data {
         name: string;
         district: App.Data.DistrictData | null;
     };
+    export type VenueData = {
+        id: string;
+        sub_district_id: string;
+        name: string;
+        subDistrict: App.Data.SubDistrictData | null;
+    };
     export type VillageData = {
         id: string;
         sub_district_id: string;
