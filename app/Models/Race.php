@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Enums\RaceStatus;
 use App\Events\RaceWinnerSelected;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Race extends Model
 {
     use HasUuids, SoftDeletes;
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'status' => RaceStatus::class,
+        ];
+    }
 
     public function round(): BelongsTo
     {

@@ -2,6 +2,7 @@
 
 namespace App\Data;
 
+use App\Enums\Enums\RaceStatus;
 use Spatie\LaravelData\Data;
 
 class RaceData extends Data
@@ -14,7 +15,7 @@ class RaceData extends Data
         public bool $is_bye,
         public string $right_lane_participant_id,
         public string $winner_id,
-        public string $status,
+        public ?RaceStatus $status,
         public ?RoundData $round,
         public ?ParticipantData $left_lane_participant,
         public ?ParticipantData $right_lane_participant,

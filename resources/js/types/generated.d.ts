@@ -47,7 +47,7 @@ declare namespace App.Data {
         is_bye: boolean;
         right_lane_participant_id: string;
         winner_id: string;
-        status: string;
+        status: App.Enums.Enums.RaceStatus | null;
         round: App.Data.RoundData | null;
         left_lane_participant: App.Data.ParticipantData | null;
         right_lane_participant: App.Data.ParticipantData | null;
@@ -108,4 +108,7 @@ declare namespace App.Enums {
         | 'foundation'
         | 'charity'
         | 'government';
+}
+declare namespace App.Enums.Enums {
+    export type RaceStatus = 'scheduled' | 'prepared' | 'ongoing' | 'paused' | 'completed' | 'cancelled' | 'postponed';
 }
