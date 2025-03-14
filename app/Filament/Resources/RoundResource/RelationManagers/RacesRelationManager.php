@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\RoundResource\RelationManagers;
 
+use App\Enums\Enums\RaceStatus;
 use App\Models\Race;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -18,30 +19,27 @@ class RacesRelationManager extends RelationManager
 
     public function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('number')
-                    ->required()
-                    ->prefix('#')
-                    ->numeric(),
-                Forms\Components\Radio::make('is_bye')
-                    ->label('Is Bye')
-                    ->default(false)
-                    ->boolean(),
+        return $form->schema([
+            Forms\Components\TextInput::make('number')->required()->prefix('#')->numeric(),
 
-                Forms\Components\Select::make('left_lane_participant_id')
-                    ->options($this->participantOptions())
-                    ->nullable()
-                    ->searchable()
-                    ->columnSpanFull()
-                    ->label('Left Lane Participant'),
-                Forms\Components\Select::make('right_lane_participant_id')
-                    ->options($this->participantOptions())
-                    ->nullable()
-                    ->searchable()
-                    ->label('Right Lane Participant')
-                    ->columnSpanFull(),
-            ]);
+            Forms\Components\Radio::make('is_bye')->label('Is Bye')->default(false)->boolean(),
+
+            Forms\Components\Select::make('left_lane_participant_id')
+                ->options($this->participantOptions())
+                ->nullable()
+                ->searchable()
+                ->columnSpanFull()
+                ->label('Left Lane Participant'),
+
+            Forms\Components\Select::make('right_lane_participant_id')
+                ->options($this->participantOptions())
+                ->nullable()
+                ->searchable()
+                ->label('Right Lane Participant')
+                ->columnSpanFull(),
+
+            Forms\Components\Select::make('status')->options(RaceStatus::class),
+        ]);
     }
 
     public function table(Table $table): Table
@@ -49,10 +47,7 @@ class RacesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('number')
             ->columns([
-                Tables\Columns\TextColumn::make('number')
-                    ->numeric()
-                    ->prefix('#')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('number')->numeric()->prefix('#')->sortable(),
                 Tables\Columns\TextColumn::make('leftLaneParticipant.title')
                     ->description(fn (?Race $record) => $record->leftLaneParticipant->boat->village->name)
                     ->badge()
@@ -77,13 +72,10 @@ class RacesRelationManager extends RelationManager
                             ->modalDescription('Are you sure you want to select this participant as the winner?')
                             ->action(fn (Race $record) => $record->setWinner($record->right_lane_participant_id))
                     ),
+                Tables\Columns\TextColumn::make('status')->badge(),
             ])
-            ->filters([
-                Tables\Filters\TrashedFilter::make(),
-            ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
-            ])
+            ->filters([Tables\Filters\TrashedFilter::make()])
+            ->headerActions([Tables\Actions\CreateAction::make()])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
@@ -97,26 +89,24 @@ class RacesRelationManager extends RelationManager
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ])
-            ->modifyQueryUsing(fn (Builder $query) => $query
-                ->with([
-                    'leftLaneParticipant.boat',
-                    'leftLaneParticipant.sponsors',
-                    'leftLaneParticipant.boat.village',
-                    'rightLaneParticipant.boat',
-                    'rightLaneParticipant.sponsors',
-                    'rightLaneParticipant.boat.village',
-                ])
-                ->withoutGlobalScopes([
-                    SoftDeletingScope::class,
-                ]));
+            ->modifyQueryUsing(
+                fn (Builder $query) => $query
+                    ->with([
+                        'leftLaneParticipant.boat',
+                        'leftLaneParticipant.sponsors',
+                        'leftLaneParticipant.boat.village',
+                        'rightLaneParticipant.boat',
+                        'rightLaneParticipant.sponsors',
+                        'rightLaneParticipant.boat.village',
+                    ])
+                    ->withoutGlobalScopes([SoftDeletingScope::class])
+            );
     }
 
     protected function participantOptions(): array
     {
         return $this->getOwnerRecord()
-            ->day
-            ->event
-            ->participants->load(['boat', 'sponsors'])
+            ->day->event->participants->load(['boat', 'sponsors'])
             ->pluck('title', 'id')
             ->toArray();
     }
@@ -128,7 +118,7 @@ class RacesRelationManager extends RelationManager
         }
 
         return $record->winner_id === $record->{$column}
-            ? 'success'  // Green for winner
-            : 'danger';  // Red for loser
+            ? 'success' // Green for winner
+            : 'danger'; // Red for loser
     }
 }
