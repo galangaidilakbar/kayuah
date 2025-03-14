@@ -49,7 +49,7 @@ declare namespace App.Data {
     export type SponsorData = {
         id: string;
         name: string;
-        type: string | null;
+        type: App.Enums.SponsorType | null;
     };
     export type SubDistrictData = {
         id: string;
@@ -72,4 +72,18 @@ declare namespace App.Data {
         sub_district: App.Data.SubDistrictData | null;
         boats?: Array<App.Data.BoatData> | null;
     };
+}
+declare namespace App.Enums {
+    export type SponsorType =
+        | 'politician'
+        | 'entrepreneur'
+        | 'community'
+        | 'organization'
+        | 'individual'
+        | 'corporate'
+        | 'company'
+        | 'association'
+        | 'foundation'
+        | 'charity'
+        | 'government';
 }
