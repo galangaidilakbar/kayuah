@@ -51,6 +51,14 @@ declare namespace App.Data {
         name: string;
         type: App.Enums.SponsorType | null;
     };
+    export type StandingData = {
+        id: string;
+        event_id: string;
+        participant_id: string;
+        rank: number;
+        event: App.Data.EventData | null;
+        participant: App.Data.ParticipantData | null;
+    };
     export type SubDistrictData = {
         id: string;
         district_id: string;
