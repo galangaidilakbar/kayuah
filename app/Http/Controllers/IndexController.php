@@ -14,10 +14,17 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $events = EventData::collect(Event::latest()->take(3)->get());
+        // get latest 3 events
+        $events = EventData::collect(
+            Event::with('venue')
+                ->withCount(['days', 'participants'])
+                ->latest()
+                ->take(3)
+                ->get()
+        );
 
         return Inertia::render('page', [
-            'events' => $events
+            'events' => $events,
         ]);
     }
 }
