@@ -48,7 +48,7 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
                 <div className="flex items-start justify-between">
                     <div>
                         <CardTitle className="mb-1 line-clamp-2 text-lg leading-tight font-bold">{event.name}</CardTitle>
-                        <CardDescription className="flex items-center text-sm text-gray-600">
+                        <CardDescription className="flex items-center text-sm text-gray-600 dark:text-gray-400">
                             <MapPin className="mr-1 h-3 w-3" />
                             <span className="line-clamp-1">{event.venue?.name || 'Location not specified'}</span>
                         </CardDescription>
@@ -76,7 +76,7 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
                     <div className="flex items-center">
                         <Calendar className="mr-1.5 h-3.5 w-3.5 text-gray-500" />
                         <span>
