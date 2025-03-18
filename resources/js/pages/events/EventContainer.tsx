@@ -1,6 +1,6 @@
 import EventCard from './EventCard';
 
-export default function CardContainer({ events, title = 'Events' }: { events: App.Data.EventData[]; title: string }) {
+export default function EventContainer({ events, title = 'Events' }: { events: App.Data.EventData[]; title?: string }) {
     return (
         <div className="space-y-6">
             <h1 className="text-3xl font-bold">{title}</h1>
