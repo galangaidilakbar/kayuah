@@ -42,50 +42,53 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
     const participantsCount = event.participants_count || 0;
 
     return (
-        <Card className="overflow-hidden transition-shadow duration-300 hover:shadow-lg">
-            {/* Visual indicator for event status */}
-            <div className={`h-1 w-full ${isPastEvent ? 'bg-gray-400' : isActive ? 'bg-green-500' : 'bg-blue-400'}`}></div>
-
-            <CardHeader className="pb-3">
-                <div className="flex justify-end">
-                    <Badge variant={badgeInfo.variant}>{badgeInfo.text}</Badge>
+        <Card className="overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+            <CardHeader>
+                <div className="flex items-start justify-between">
+                    <div>
+                        <CardTitle className="mb-1 line-clamp-2 text-lg leading-tight font-bold">{event.name}</CardTitle>
+                        <CardDescription className="flex items-center text-sm text-gray-600">
+                            <MapPin className="mr-1 h-3 w-3" />
+                            <span className="line-clamp-1">{event.venue?.name || 'Location not specified'}</span>
+                        </CardDescription>
+                    </div>
+                    <Badge variant={badgeInfo.variant} className="ml-2 whitespace-nowrap">
+                        {badgeInfo.text}
+                    </Badge>
                 </div>
-
-                <CardTitle className="text-xl font-bold">{event.name}</CardTitle>
-
-                <CardDescription className="flex items-center space-x-1 text-sm">
-                    <MapPin className="h-4 w-4" />
-                    <span>{event.venue?.name || 'Location not specified'}</span>
-                </CardDescription>
             </CardHeader>
 
-            <CardContent className="space-y-2">
-                <div className="flex items-center space-x-1">
-                    <Calendar className="h-4 w-4 text-gray-500" />
-                    <div>
-                        <span>{format(startDate, 'dd MMM yyyy')}</span>
-                        {!event.start_date.includes(event.end_date) && (
-                            <>
-                                {' '}
-                                - <span>{format(endDate, 'dd MMM yyyy')}</span>
-                            </>
-                        )}
-                        <span className="ml-2 text-sm text-gray-500">({getTimeText()})</span>
+            <CardContent className="space-y-3">
+                <div className="flex items-center text-sm">
+                    <Calendar className="mr-2 h-4 w-4 text-gray-500" />
+                    <div className="flex flex-col sm:flex-row sm:items-center">
+                        <div>
+                            <span className="font-medium">{format(startDate, 'dd MMM yyyy')}</span>
+                            {!event.start_date.includes(event.end_date) && (
+                                <>
+                                    {' - '}
+                                    <span className="font-medium">{format(endDate, 'dd MMM yyyy')}</span>
+                                </>
+                            )}
+                        </div>
+                        <span className="text-gray-500 sm:ml-2">({getTimeText()})</span>
                     </div>
                 </div>
 
-                <div className="flex items-center space-x-1">
-                    <Calendar className="h-4 w-4 text-gray-500" />
-                    <span>
-                        {daysCount} {daysCount === 1 ? 'day' : 'days'}
-                    </span>
-                </div>
+                <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                    <div className="flex items-center">
+                        <Calendar className="mr-1.5 h-3.5 w-3.5 text-gray-500" />
+                        <span>
+                            {daysCount} {daysCount === 1 ? 'day' : 'days'}
+                        </span>
+                    </div>
 
-                <div className="flex items-center space-x-1">
-                    <Users className="h-4 w-4 text-gray-500" />
-                    <span>
-                        {participantsCount} {participantsCount === 1 ? 'participant' : 'participants'}
-                    </span>
+                    <div className="flex items-center">
+                        <Users className="mr-1.5 h-3.5 w-3.5 text-gray-500" />
+                        <span>
+                            {participantsCount} {participantsCount === 1 ? 'participant' : 'participants'}
+                        </span>
+                    </div>
                 </div>
             </CardContent>
 
