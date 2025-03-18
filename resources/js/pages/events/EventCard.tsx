@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { format, formatDistance, isFuture, isPast, isWithinInterval } from 'date-fns';
+import { format, formatDistance, isPast, isWithinInterval } from 'date-fns';
 import { Calendar, ChevronRight, MapPin, Users } from 'lucide-react';
 
 export default function EventCard({ event }: { event: App.Data.EventData }) {
@@ -46,57 +47,52 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
             <div className={`h-1 w-full ${isPastEvent ? 'bg-gray-400' : isActive ? 'bg-green-500' : 'bg-blue-400'}`}></div>
 
             <CardHeader className="pb-3">
-                <div className='flex justify-end'>
-                    <Badge variant={badgeInfo.variant}>
-                        {badgeInfo.text}
-                    </Badge>
+                <div className="flex justify-end">
+                    <Badge variant={badgeInfo.variant}>{badgeInfo.text}</Badge>
                 </div>
 
                 <CardTitle className="text-xl font-bold">{event.name}</CardTitle>
 
-                <CardDescription className="flex space-x-1 items-center text-sm">
+                <CardDescription className="flex items-center space-x-1 text-sm">
                     <MapPin className="h-4 w-4" />
                     <span>{event.venue?.name || 'Location not specified'}</span>
                 </CardDescription>
             </CardHeader>
 
-            <CardContent className='space-y-2'>
-                <div className="flex space-x-1 items-center text-sm">
+            <CardContent className="space-y-2">
+                <div className="flex items-center space-x-1">
                     <Calendar className="h-4 w-4 text-gray-500" />
                     <div>
-                        <span className="font-medium">{format(startDate, 'dd MMM yyyy')}</span>
+                        <span>{format(startDate, 'dd MMM yyyy')}</span>
                         {!event.start_date.includes(event.end_date) && (
                             <>
                                 {' '}
-                                - <span className="font-medium">{format(endDate, 'dd MMM yyyy')}</span>
+                                - <span>{format(endDate, 'dd MMM yyyy')}</span>
                             </>
                         )}
                         <span className="ml-2 text-sm text-gray-500">({getTimeText()})</span>
                     </div>
                 </div>
 
-                <div className="flex space-x-4 text-sm">
-                    <div className="flex items-center">
-                        <Calendar className="mr-1 h-4 w-4 text-gray-500" />
-                        <span>
-                            {daysCount} {daysCount === 1 ? 'day' : 'days'}
-                        </span>
-                    </div>
-                    <div className="flex items-center">
-                        <Users className="mr-1 h-4 w-4 text-gray-500" />
-                        <span>
-                            {participantsCount} {participantsCount === 1 ? 'participant' : 'participants'}
-                        </span>
-                    </div>
+                <div className="flex items-center space-x-1">
+                    <Calendar className="h-4 w-4 text-gray-500" />
+                    <span>
+                        {daysCount} {daysCount === 1 ? 'day' : 'days'}
+                    </span>
+                </div>
+
+                <div className="flex items-center space-x-1">
+                    <Users className="h-4 w-4 text-gray-500" />
+                    <span>
+                        {participantsCount} {participantsCount === 1 ? 'participant' : 'participants'}
+                    </span>
                 </div>
             </CardContent>
 
-            <CardFooter className="flex items-center justify-between border-t bg-gray-50 pt-0">
-                <div className="text-sm text-gray-500">ID: {event.id.substring(0, 8)}...</div>
-                <div className="flex cursor-pointer items-center text-sm text-blue-600 hover:text-blue-800">
-                    View details
-                    <ChevronRight className="ml-1 h-4 w-4" />
-                </div>
+            <CardFooter className="flex items-center justify-end">
+                <Button>
+                    View details <ChevronRight />
+                </Button>
             </CardFooter>
         </Card>
     );
