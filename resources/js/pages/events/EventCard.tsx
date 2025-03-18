@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Link } from '@inertiajs/react';
 import { format, formatDistance, isPast, isWithinInterval } from 'date-fns';
 import { Calendar, ChevronRight, MapPin, Users } from 'lucide-react';
 
@@ -93,8 +94,10 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
             </CardContent>
 
             <CardFooter className="flex items-center justify-end">
-                <Button>
-                    View details <ChevronRight />
+                <Button asChild>
+                    <Link href={route('events.show', event.id)}>
+                        View details <ChevronRight />
+                    </Link>
                 </Button>
             </CardFooter>
         </Card>
