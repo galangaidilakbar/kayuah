@@ -7,7 +7,9 @@ import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import AuthLayout from '@/layouts/auth-layout';
+import { SiFacebook } from '@icons-pack/react-simple-icons';
 
 type RegisterForm = {
     name: string;
@@ -104,6 +106,14 @@ export default function Register() {
                     <Button type="submit" className="mt-2 w-full" tabIndex={5} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Create account
+                    </Button>
+
+                    <Separator />
+
+                    <Button asChild tabIndex={5} className="w-full bg-[#1877f2]">
+                        <a href={route('socialite.create', 'facebook')}>
+                            <SiFacebook /> Sign in with Facebook
+                        </a>
                     </Button>
                 </div>
 

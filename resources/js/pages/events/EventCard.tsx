@@ -58,9 +58,7 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
 
                 <div className="flex items-center space-x-2">
                     <SiBoat className="h-4 w-4" />
-                    <span>
-                        {participantsCount} participants
-                    </span>
+                    <span>{participantsCount} participants</span>
                 </div>
             </CardContent>
 
