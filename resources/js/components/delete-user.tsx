@@ -1,4 +1,4 @@
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
 
 import InputError from '@/components/input-error';
@@ -9,10 +9,12 @@ import { Label } from '@/components/ui/label';
 import HeadingSmall from '@/components/heading-small';
 
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { SharedData } from '@/types';
 
 export default function DeleteUser() {
-    const passwordInput = useRef<HTMLInputElement>(null);
-    const { data, setData, delete: destroy, processing, reset, errors, clearErrors } = useForm<Required<{ password: string }>>({ password: '' });
+    const emailInput = useRef<HTMLInputElement>(null);
+    const { data, setData, delete: destroy, processing, reset, errors, clearErrors } = useForm<Required<{ email: string }>>({ email: '' });
+    const { auth } = usePage<SharedData>().props;
 
     const deleteUser: FormEventHandler = (e) => {
         e.preventDefault();
@@ -20,7 +22,7 @@ export default function DeleteUser() {
         destroy(route('profile.destroy'), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
-            onError: () => passwordInput.current?.focus(),
+            onError: () => emailInput.current?.focus(),
             onFinish: () => reset(),
         });
     };
@@ -46,27 +48,27 @@ export default function DeleteUser() {
                     <DialogContent>
                         <DialogTitle>Are you sure you want to delete your account?</DialogTitle>
                         <DialogDescription>
-                            Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password
-                            to confirm you would like to permanently delete your account.
+                            Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your email to
+                            confirm you would like to permanently delete your account.
                         </DialogDescription>
                         <form className="space-y-6" onSubmit={deleteUser}>
                             <div className="grid gap-2">
-                                <Label htmlFor="password" className="sr-only">
-                                    Password
+                                <Label htmlFor="email" className="sr-only">
+                                    Email
                                 </Label>
 
                                 <Input
-                                    id="password"
-                                    type="password"
-                                    name="password"
-                                    ref={passwordInput}
-                                    value={data.password}
-                                    onChange={(e) => setData('password', e.target.value)}
-                                    placeholder="Password"
-                                    autoComplete="current-password"
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                    ref={emailInput}
+                                    value={data.email}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                    placeholder={auth.user.email}
+                                    autoComplete="email"
                                 />
 
-                                <InputError message={errors.password} />
+                                <InputError message={errors.email} />
                             </div>
 
                             <DialogFooter className="gap-2">
