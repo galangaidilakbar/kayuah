@@ -1,4 +1,4 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
@@ -101,9 +101,9 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     <Separator />
 
                     <Button asChild tabIndex={5} className="w-full bg-[#1877f2]">
-                        <Link href={route('socialite.create', 'facebook')}>
+                        <a href={route('socialite.create', 'facebook')}>
                             <SiFacebook /> Sign in with Facebook
-                        </Link>
+                        </a>
                     </Button>
                 </div>
 

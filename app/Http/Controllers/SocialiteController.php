@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialiteController extends Controller
@@ -18,9 +20,25 @@ class SocialiteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, string $driver)
     {
-        //
+        $currentUser = Socialite::driver($driver)->user();
+
+        $providerId = $driver.'_id';
+
+        $user = User::updateOrCreate(
+            [
+                $providerId => $currentUser->id,
+            ],
+            [
+                'name' => $currentUser->name,
+                'email' => $currentUser->email,
+            ]
+        );
+
+        Auth::login($user);
+
+        return redirect('/dashboard');
     }
 
     /**
