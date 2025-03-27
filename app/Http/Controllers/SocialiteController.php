@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
 
 class SocialiteController extends Controller
 {
@@ -11,7 +12,7 @@ class SocialiteController extends Controller
      */
     public function create(string $driver)
     {
-        dd($driver);
+        return Socialite::driver($driver)->redirect();
     }
 
     /**

@@ -30,7 +30,7 @@ Route::middleware('guest')->group(function () {
 
     Route::get('auth/{driver}/redirect', [SocialiteController::class, 'create'])->name('socialite.create');
 
-    Route::get('auth/{driver}/callback', [SocialiteController::class, 'store'])->name('socialite.callback');
+    Route::get('auth/{driver}/callback', [SocialiteController::class, 'store'])->name('socialite.store');
 });
 
 Route::middleware('auth')->group(function () {

@@ -1,6 +1,8 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
+
+import { SiFacebook } from '@icons-pack/react-simple-icons';
 
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
@@ -8,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import AuthLayout from '@/layouts/auth-layout';
 
 type LoginForm = {
@@ -93,6 +96,14 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Log in
+                    </Button>
+
+                    <Separator />
+
+                    <Button asChild tabIndex={5} className="w-full bg-[#1877f2]">
+                        <Link href={route('socialite.create', 'facebook')}>
+                            <SiFacebook /> Sign in with Facebook
+                        </Link>
                     </Button>
                 </div>
 
