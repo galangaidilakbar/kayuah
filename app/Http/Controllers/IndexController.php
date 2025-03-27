@@ -17,8 +17,8 @@ class IndexController extends Controller
         // get latest 3 events
         $events = EventData::collect(
             Event::with('venue')
-                ->withCount(['days', 'participants'])
-                ->latest()
+                ->withCount(['participants'])
+                ->latest('start_date')
                 ->take(3)
                 ->get()
         );

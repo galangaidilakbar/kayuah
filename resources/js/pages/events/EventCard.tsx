@@ -1,8 +1,9 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { SiBoat } from '@icons-pack/react-simple-icons';
 import { Link } from '@inertiajs/react';
 import { format, formatDistance, isPast, isWithinInterval } from 'date-fns';
-import { Calendar, ChevronRight, MapPin, Users } from 'lucide-react';
+import { Calendar, ChevronRight, MapPin } from 'lucide-react';
 
 export default function EventCard({ event }: { event: App.Data.EventData }) {
     // Format dates
@@ -25,52 +26,41 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
     };
 
     // Calculate metrics
-    const daysCount = event.days_count || 0;
     const participantsCount = event.participants_count || 0;
 
     return (
         <Card className="overflow-hidden transition-shadow duration-300 hover:shadow-xl">
             <CardHeader>
-                <div>
-                    <CardTitle className="mb-1 line-clamp-2 text-lg leading-tight font-bold">{event.name}</CardTitle>
-                    <CardDescription className="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                        <MapPin className="mr-1 h-3 w-3" />
-                        <span className="line-clamp-1">{event.venue?.name || 'Location not specified'}</span>
-                    </CardDescription>
-                </div>
+                <CardTitle className="mb-1 line-clamp-2 text-lg leading-tight font-bold">{event.name}</CardTitle>
             </CardHeader>
 
-            <CardContent className="space-y-3">
-                <div className="flex items-center text-sm">
-                    <Calendar className="mr-2 h-4 w-4 text-gray-500" />
-                    <div className="flex flex-col sm:flex-row sm:items-center">
+            <CardContent className="space-y-3 text-sm dark:text-gray-300">
+                <div className="flex items-center space-x-2">
+                    <MapPin className="h-4 w-4" />
+                    <span className="line-clamp-1">{event.venue?.name || 'Location not specified'}</span>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                    <Calendar className="h-4 w-4" />
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
                         <div>
-                            <span className="font-medium">{format(startDate, 'dd MMM yyyy')}</span>
+                            <span>{format(startDate, 'dd MMM yyyy')}</span>
                             {!event.start_date.includes(event.end_date) && (
                                 <>
                                     {' - '}
-                                    <span className="font-medium">{format(endDate, 'dd MMM yyyy')}</span>
+                                    <span>{format(endDate, 'dd MMM yyyy')}</span>
                                 </>
                             )}
                         </div>
-                        <span className="text-gray-500 sm:ml-2">({getTimeText()})</span>
+                        <span className="text-gray-500">({getTimeText()})</span>
                     </div>
                 </div>
 
-                <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
-                    <div className="flex items-center">
-                        <Calendar className="mr-1.5 h-3.5 w-3.5 text-gray-500" />
-                        <span>
-                            {daysCount} {daysCount === 1 ? 'day' : 'days'}
-                        </span>
-                    </div>
-
-                    <div className="flex items-center">
-                        <Users className="mr-1.5 h-3.5 w-3.5 text-gray-500" />
-                        <span>
-                            {participantsCount} {participantsCount === 1 ? 'participant' : 'participants'}
-                        </span>
-                    </div>
+                <div className="flex items-center space-x-2">
+                    <SiBoat className="h-4 w-4" />
+                    <span>
+                        {participantsCount} participants
+                    </span>
                 </div>
             </CardContent>
 
