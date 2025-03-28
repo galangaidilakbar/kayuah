@@ -14,7 +14,7 @@ export default function Page() {
 
                 {/* <EventCarousel /> */}
 
-                <EventContainer events={events} />
+                <EventContainer events={events} title="Event Pacu Jalur 2025" />
             </main>
         </>
     );
