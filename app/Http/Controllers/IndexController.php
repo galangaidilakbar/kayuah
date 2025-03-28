@@ -39,7 +39,7 @@ class IndexController extends Controller
             ->first();
 
         if (!$currentEvent) {
-            $currentEvent = Event::with('venue')->orderBy('start_date', 'asc')->first();
+            $currentEvent = Event::with('venue.subDistrict')->orderBy('start_date', 'asc')->first();
             if (!$currentEvent) {
                 return null;
             }

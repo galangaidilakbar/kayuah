@@ -1,5 +1,3 @@
-'use client';
-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
@@ -9,17 +7,7 @@ import { ArrowRight, Calendar, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 interface EventCardProps {
-    event: {
-        id: string;
-        name: string;
-        start_date: string;
-        end_date: string;
-        venue?: {
-            name: string;
-        };
-        days_count?: number;
-        participants_count?: number;
-    };
+    event: App.Data.EventData;
 }
 
 export default function EventCard({ event }: EventCardProps) {
@@ -45,6 +33,9 @@ export default function EventCard({ event }: EventCardProps) {
     const formatDate = (dateString: string) => {
         return format(new Date(dateString), 'MMM d, yyyy');
     };
+
+    const dayCount = event.days_count || 0;
+    const participantCount = event.participants_count || 0;
 
     return (
         <Card className="h-full overflow-hidden py-0">
@@ -75,6 +66,7 @@ export default function EventCard({ event }: EventCardProps) {
                         <div className="flex items-center gap-1.5">
                             <MapPin className="text-primary h-4 w-4" />
                             <span>{event.venue.name}</span>
+                            {event.venue?.subDistrict && <span className="text-muted-foreground">• {event.venue?.subDistrict?.name}</span>}
                         </div>
                     )}
 
@@ -85,18 +77,14 @@ export default function EventCard({ event }: EventCardProps) {
                         </span>
                     </div>
 
-                    {event.days_count && (
-                        <div className="mt-1">
-                            <Badge variant="outline" className="text-xs">
-                                {event.days_count} {event.days_count === 1 ? 'Day' : 'Days'}
-                            </Badge>
-                            {event.participants_count && (
-                                <Badge variant="outline" className="ml-2 text-xs">
-                                    {event.participants_count} {event.participants_count === 1 ? 'Participant' : 'Participants'}
-                                </Badge>
-                            )}
-                        </div>
-                    )}
+                    <div className="mt-1">
+                        <Badge variant="outline" className="text-xs">
+                            {dayCount} {dayCount > 1 ? 'Days' : 'Day'}
+                        </Badge>
+                        <Badge variant="outline" className="ml-2 text-xs">
+                            {participantCount} {participantCount > 1 ? 'Participants' : 'Participant'}
+                        </Badge>
+                    </div>
                 </div>
             </CardContent>
 
