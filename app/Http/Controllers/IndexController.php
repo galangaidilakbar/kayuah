@@ -32,15 +32,20 @@ class IndexController extends Controller
     protected function getCurrentEvent(): ?EventData
     {
         $currentEvent = Event::with('venue.subDistrict')
+            ->withCount(['days', 'participants'])
             ->where('start_date', '<=', now())
             ->where('end_date', '>=', now())
             ->orWhere('start_date', '>=', now())
             ->orderBy('start_date', 'asc')
             ->first();
 
-        if (!$currentEvent) {
-            $currentEvent = Event::with('venue.subDistrict')->orderBy('start_date', 'asc')->first();
-            if (!$currentEvent) {
+        if (! $currentEvent) {
+            $currentEvent = Event::with('venue.subDistrict')
+                ->withCount(['days', 'participants'])
+                ->orderBy('start_date', 'asc')
+                ->first();
+
+            if (! $currentEvent) {
                 return null;
             }
         }
