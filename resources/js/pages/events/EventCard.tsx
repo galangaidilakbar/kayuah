@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from '@inertiajs/react';
 import { format, formatDistance, isPast, isWithinInterval } from 'date-fns';
-import { ArrowRight, Calendar, ChevronRight, Clock, MapPin } from 'lucide-react';
+import { ArrowRight, Calendar, Clock, MapPin } from 'lucide-react';
 
 export default function EventCard({ event }: { event: App.Data.EventData }) {
     // Format dates
@@ -30,10 +30,11 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
                 <CardTitle className="mb-1 line-clamp-2 text-lg leading-tight font-bold">{event.name}</CardTitle>
             </CardHeader>
 
-            <CardContent className="space-y-3 text-sm text-muted-foreground">
+            <CardContent className="text-muted-foreground space-y-3 text-sm">
                 <div className="flex items-center space-x-2">
                     <MapPin className="h-4 w-4" />
                     <span className="line-clamp-1">{event.venue?.name || 'Location not specified'}</span>
+                    {event.venue?.subDistrict && <span className="text-muted-foreground">• {event.venue?.subDistrict?.name}</span>}
                 </div>
 
                 <div className="flex items-center space-x-2">
@@ -54,12 +55,14 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
 
                 <div className="flex items-center space-x-2">
                     <Clock className="h-4 w-4" />
-                    <span>{format(startDate, 'h:mm a')} - {format(endDate, 'h:mm a')}</span>
+                    <span>
+                        {format(startDate, 'h:mm a')} - {format(endDate, 'h:mm a')}
+                    </span>
                 </div>
             </CardContent>
 
             <CardFooter className="flex items-center justify-end">
-                <Button asChild className='group'>
+                <Button asChild className="group">
                     <Link href={route('events.show', event.id)}>
                         View details <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
