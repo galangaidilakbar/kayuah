@@ -1,70 +1,110 @@
+'use client';
+
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Link } from '@inertiajs/react';
-import { format, formatDistance, isPast, isWithinInterval } from 'date-fns';
-import { ArrowRight, Calendar, Clock, MapPin } from 'lucide-react';
+import { format } from 'date-fns';
+import { ArrowRight, Calendar, MapPin } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-export default function EventCard({ event }: { event: App.Data.EventData }) {
-    // Format dates
-    const startDate = new Date(event.start_date);
-    const endDate = new Date(event.end_date);
+interface EventCardProps {
+    event: {
+        id: string;
+        name: string;
+        start_date: string;
+        end_date: string;
+        venue?: {
+            name: string;
+        };
+        days_count?: number;
+        participants_count?: number;
+    };
+}
 
-    // Determine event status
-    const isActive = isWithinInterval(new Date(), { start: startDate, end: endDate });
-    const isPastEvent = isPast(endDate);
+export default function EventCard({ event }: EventCardProps) {
+    const [isLive, setIsLive] = useState(false);
 
-    // Get relative time text
-    const getTimeText = () => {
-        if (isPastEvent) {
-            return formatDistance(endDate, new Date(), { addSuffix: true });
-        } else if (isActive) {
-            return `Ends ${formatDistance(endDate, new Date(), { addSuffix: true })}`;
-        } else {
-            return `Starts ${formatDistance(startDate, new Date(), { addSuffix: true })}`;
-        }
+    useEffect(() => {
+        // Check if event is currently live
+        const now = new Date();
+        const startDate = new Date(event.start_date);
+        const endDate = new Date(event.end_date);
+
+        setIsLive(now >= startDate && now <= endDate);
+
+        // Update live status every minute
+        const interval = setInterval(() => {
+            const currentTime = new Date();
+            setIsLive(currentTime >= startDate && currentTime <= endDate);
+        }, 60000);
+
+        return () => clearInterval(interval);
+    }, [event.start_date, event.end_date]);
+
+    const formatDate = (dateString: string) => {
+        return format(new Date(dateString), 'MMM d, yyyy');
     };
 
     return (
-        <Card className="overflow-hidden transition-shadow duration-300 hover:shadow-xl">
-            <CardHeader>
-                <CardTitle className="mb-1 line-clamp-2 text-lg leading-tight font-bold">{event.name}</CardTitle>
-            </CardHeader>
+        <Card className="h-full overflow-hidden py-0">
+            <div className="relative aspect-[16/9] w-full overflow-hidden">
+                <img
+                    src={`/placeholder.svg?height=400&width=600&text=${encodeURIComponent(event.name)}`}
+                    alt={event.name}
+                    className="object-cover transition-transform hover:scale-105"
+                />
+                {isLive && (
+                    <div className="absolute top-3 right-3 z-10">
+                        <Badge variant="destructive" className="px-2 py-1 text-xs font-medium tracking-wider uppercase">
+                            <span className="relative mr-1.5 flex h-2 w-2">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75"></span>
+                                <span className="relative inline-flex h-2 w-2 rounded-full bg-white"></span>
+                            </span>
+                            Live Now
+                        </Badge>
+                    </div>
+                )}
+            </div>
 
-            <CardContent className="text-muted-foreground space-y-3 text-sm">
-                <div className="flex items-center space-x-2">
-                    <MapPin className="h-4 w-4" />
-                    <span className="line-clamp-1">{event.venue?.name || 'Location not specified'}</span>
-                    {event.venue?.subDistrict && <span className="text-muted-foreground">• {event.venue?.subDistrict?.name}</span>}
-                </div>
+            <CardContent className="p-4">
+                <h3 className="line-clamp-2 text-xl font-bold">{event.name}</h3>
 
-                <div className="flex items-center space-x-2">
-                    <Calendar className="h-4 w-4" />
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
-                        <div>
-                            <span>{format(startDate, 'MMM d, yyyy')}</span>
-                            {!event.start_date.includes(event.end_date) && (
-                                <>
-                                    {' - '}
-                                    <span>{format(endDate, 'MMM d, yyyy')}</span>
-                                </>
+                <div className="text-muted-foreground mt-3 space-y-2 text-sm">
+                    {event.venue && (
+                        <div className="flex items-center gap-1.5">
+                            <MapPin className="text-primary h-4 w-4" />
+                            <span>{event.venue.name}</span>
+                        </div>
+                    )}
+
+                    <div className="flex items-center gap-1.5">
+                        <Calendar className="text-primary h-4 w-4" />
+                        <span>
+                            {formatDate(event.start_date)} - {formatDate(event.end_date)}
+                        </span>
+                    </div>
+
+                    {event.days_count && (
+                        <div className="mt-1">
+                            <Badge variant="outline" className="text-xs">
+                                {event.days_count} {event.days_count === 1 ? 'Day' : 'Days'}
+                            </Badge>
+                            {event.participants_count && (
+                                <Badge variant="outline" className="ml-2 text-xs">
+                                    {event.participants_count} {event.participants_count === 1 ? 'Participant' : 'Participants'}
+                                </Badge>
                             )}
                         </div>
-                        <span className="text-gray-500">({getTimeText()})</span>
-                    </div>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                    <Clock className="h-4 w-4" />
-                    <span>
-                        {format(startDate, 'h:mm a')} - {format(endDate, 'h:mm a')}
-                    </span>
+                    )}
                 </div>
             </CardContent>
 
-            <CardFooter className="flex items-center justify-end">
-                <Button asChild className="group">
-                    <Link href={route('events.show', event.id)}>
-                        View details <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <CardFooter className="p-4 pt-0">
+                <Button variant="outline" size="sm" className="group w-full" asChild>
+                    <Link href={`/events/${event.id}`}>
+                        View Details
+                        <ArrowRight className="ml-2 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </Link>
                 </Button>
             </CardFooter>

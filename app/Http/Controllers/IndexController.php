@@ -17,6 +17,7 @@ class IndexController extends Controller
         // get latest 3 events
         $events = EventData::collect(
             Event::with('venue.subDistrict')
+                ->withCount(['days', 'participants'])
                 ->latest('start_date')
                 ->take(3)
                 ->get()
@@ -37,9 +38,9 @@ class IndexController extends Controller
             ->orderBy('start_date', 'asc')
             ->first();
 
-        if (! $currentEvent) {
+        if (!$currentEvent) {
             $currentEvent = Event::with('venue')->orderBy('start_date', 'asc')->first();
-            if (! $currentEvent) {
+            if (!$currentEvent) {
                 return null;
             }
         }
