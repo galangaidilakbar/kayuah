@@ -17,7 +17,7 @@ class IndexController extends Controller
         // get latest 3 events
         $events = EventData::collect(
             Event::with('venue.subDistrict')
-                ->withCount(['days', 'participants'])
+                ->withCount(['participants'])
                 ->latest('start_date')
                 ->take(3)
                 ->get()
@@ -32,7 +32,7 @@ class IndexController extends Controller
     protected function getCurrentEvent(): ?EventData
     {
         $currentEvent = Event::with('venue.subDistrict')
-            ->withCount(['days', 'participants'])
+            ->withCount(['participants'])
             ->where('start_date', '<=', now())
             ->where('end_date', '>=', now())
             ->orWhere('start_date', '>=', now())
@@ -41,7 +41,7 @@ class IndexController extends Controller
 
         if (! $currentEvent) {
             $currentEvent = Event::with('venue.subDistrict')
-                ->withCount(['days', 'participants'])
+                ->withCount(['participants'])
                 ->orderBy('start_date', 'asc')
                 ->first();
 

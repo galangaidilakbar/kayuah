@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@inertiajs/react';
 import { format } from 'date-fns';
-import { ArrowRight, Calendar, Clock, MapPin } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function EventHero({ event }: { event: App.Data.EventData }) {
@@ -29,9 +29,6 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
     const formatDate = (dateString: string) => {
         return format(new Date(dateString), 'MMM d, yyyy');
     };
-
-    const dayCount = event.days_count || 0;
-    const participantCount = event.participants_count || 0;
 
     return (
         <div className="from-primary/10 to-primary/5 relative w-full overflow-hidden bg-gradient-to-r py-12 md:py-20">
@@ -74,19 +71,8 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
                             </div>
 
                             <div className="flex items-center gap-2">
-                                <Clock className="text-primary h-5 w-5" />
-                                <span>
-                                    {format(new Date(event.start_date), 'h:mm a')} - {format(new Date(event.end_date), 'h:mm a')}
-                                </span>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                                <Badge variant="outline" className="text-xs">
-                                    {dayCount} {dayCount > 1 ? 'Days' : 'Day'}
-                                </Badge>
-                                <Badge variant="outline" className="ml-2 text-xs">
-                                    {participantCount} {participantCount > 1 ? 'Participants' : 'Participant'}
-                                </Badge>
+                                <Users className="text-primary h-5 w-5" />
+                                <span>{event.participants_count} jalur</span>
                             </div>
                         </div>
 

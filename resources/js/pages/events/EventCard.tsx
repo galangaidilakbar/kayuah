@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Link } from '@inertiajs/react';
 import { format } from 'date-fns';
-import { ArrowRight, Calendar, MapPin } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 interface EventCardProps {
@@ -33,9 +33,6 @@ export default function EventCard({ event }: EventCardProps) {
     const formatDate = (dateString: string) => {
         return format(new Date(dateString), 'MMM d, yyyy');
     };
-
-    const dayCount = event.days_count || 0;
-    const participantCount = event.participants_count || 0;
 
     return (
         <Card className="h-full overflow-hidden py-0">
@@ -77,13 +74,9 @@ export default function EventCard({ event }: EventCardProps) {
                         </span>
                     </div>
 
-                    <div className="mt-1">
-                        <Badge variant="outline" className="text-xs">
-                            {dayCount} {dayCount > 1 ? 'Days' : 'Day'}
-                        </Badge>
-                        <Badge variant="outline" className="ml-2 text-xs">
-                            {participantCount} {participantCount > 1 ? 'Participants' : 'Participant'}
-                        </Badge>
+                    <div className="flex items-center gap-1.5">
+                        <Users className="text-primary h-4 w-4" />
+                        <span>{event.participants_count} jalur</span>
                     </div>
                 </div>
             </CardContent>
