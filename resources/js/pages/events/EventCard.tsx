@@ -41,11 +41,11 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
                     <Calendar className="h-4 w-4" />
                     <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
                         <div>
-                            <span>{format(startDate, 'dd MMM yyyy')}</span>
+                            <span>{format(startDate, 'MMM d, yyyy')}</span>
                             {!event.start_date.includes(event.end_date) && (
                                 <>
                                     {' - '}
-                                    <span>{format(endDate, 'dd MMM yyyy')}</span>
+                                    <span>{format(endDate, 'MMM d, yyyy')}</span>
                                 </>
                             )}
                         </div>
