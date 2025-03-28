@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { SiBoat } from '@icons-pack/react-simple-icons';
 import { Link } from '@inertiajs/react';
 import { format, formatDistance, isPast, isWithinInterval } from 'date-fns';
-import { Calendar, ChevronRight, MapPin } from 'lucide-react';
+import { ArrowRight, Calendar, ChevronRight, Clock, MapPin } from 'lucide-react';
 
 export default function EventCard({ event }: { event: App.Data.EventData }) {
     // Format dates
@@ -24,9 +23,6 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
             return `Starts ${formatDistance(startDate, new Date(), { addSuffix: true })}`;
         }
     };
-
-    // Calculate metrics
-    const participantsCount = event.participants_count || 0;
 
     return (
         <Card className="overflow-hidden transition-shadow duration-300 hover:shadow-xl">
@@ -57,15 +53,15 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                    <SiBoat className="h-4 w-4" />
-                    <span>{participantsCount} participants</span>
+                    <Clock className="h-4 w-4" />
+                    <span>{format(startDate, 'h:mm a')} - {format(endDate, 'h:mm a')}</span>
                 </div>
             </CardContent>
 
             <CardFooter className="flex items-center justify-end">
-                <Button asChild>
+                <Button asChild className='group'>
                     <Link href={route('events.show', event.id)}>
-                        View details <ChevronRight />
+                        View details <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                 </Button>
             </CardFooter>
