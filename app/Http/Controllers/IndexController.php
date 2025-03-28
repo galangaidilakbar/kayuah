@@ -24,7 +24,27 @@ class IndexController extends Controller
         );
 
         return Inertia::render('page', [
+            'currentEvent' => $this->getCurrentEvent(),
             'events' => $events,
         ]);
+    }
+
+    protected function getCurrentEvent(): ?EventData
+    {
+        $currentEvent = Event::with('venue.subDistrict')
+            ->where('start_date', '<=', now())
+            ->where('end_date', '>=', now())
+            ->orWhere('start_date', '>=', now())
+            ->orderBy('start_date', 'asc')
+            ->first();
+
+        if (! $currentEvent) {
+            $currentEvent = Event::with('venue')->orderBy('start_date', 'asc')->first();
+            if (! $currentEvent) {
+                return null;
+            }
+        }
+
+        return EventData::from($currentEvent);
     }
 }
