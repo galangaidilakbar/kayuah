@@ -12,9 +12,7 @@ export default function Page() {
             <main>
                 <EventHero event={currentEvent} />
 
-                <div className="container mx-auto px-4 md:px-6">
-                    <EventContainer events={events} />
-                </div>
+                <EventContainer events={events} />
             </main>
         </>
     );
