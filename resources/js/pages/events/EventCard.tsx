@@ -56,13 +56,13 @@ export default function EventCard({ event }: EventCardProps) {
             </div>
 
             <CardContent className="p-4">
-                <h3 className="line-clamp-2 text-xl font-bold">{event.name}</h3>
+                <h3 className="line-clamp-2 text-xl font-bold capitalize">{event.name.toLowerCase()}</h3>
 
                 <div className="text-muted-foreground mt-3 space-y-2 text-sm">
                     {event.venue && (
                         <div className="flex items-center gap-1.5">
                             <MapPin className="text-primary h-4 w-4" />
-                            <span>{event.venue.name}</span>
+                            <span className="capitalize">{event.venue.name.toLowerCase()}</span>
                             {event.venue?.subDistrict && <span className="text-muted-foreground">• {event.venue?.subDistrict?.name}</span>}
                         </div>
                     )}
