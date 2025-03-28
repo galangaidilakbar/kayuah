@@ -59,7 +59,7 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
                         <div className="text-muted-foreground space-y-3">
                             <div className="flex items-center gap-2">
                                 <MapPin className="text-primary h-5 w-5" />
-                                <span>{event.venue?.name}</span>
+                                <span className="capitalize">{event.venue?.name.toLowerCase()}</span>
                                 {event.venue?.subDistrict && <span className="text-muted-foreground">• {event.venue?.subDistrict?.name}</span>}
                             </div>
 
