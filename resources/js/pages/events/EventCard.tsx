@@ -30,7 +30,7 @@ export default function EventCard({ event }: { event: App.Data.EventData }) {
                 <CardTitle className="mb-1 line-clamp-2 text-lg leading-tight font-bold">{event.name}</CardTitle>
             </CardHeader>
 
-            <CardContent className="space-y-3 text-sm dark:text-gray-300">
+            <CardContent className="space-y-3 text-sm text-muted-foreground">
                 <div className="flex items-center space-x-2">
                     <MapPin className="h-4 w-4" />
                     <span className="line-clamp-1">{event.venue?.name || 'Location not specified'}</span>
