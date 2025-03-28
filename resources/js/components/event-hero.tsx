@@ -34,7 +34,7 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
         <div className="from-primary/10 to-primary/5 relative w-full overflow-hidden bg-gradient-to-r py-12 md:py-20">
             {/* Background pattern */}
             <div className="absolute inset-0 z-0 opacity-10">
-                <div className="absolute inset-0 bg-[url('/placeholder.svg?height=100&width=100')] bg-repeat opacity-20"></div>
+                <div className="absolute inset-0 bg-[url('/placeholder.svg')] bg-repeat opacity-20"></div>
             </div>
 
             <div className="relative z-10 container mx-auto px-4 md:px-6">
@@ -90,7 +90,7 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
 
                     {/* Event image */}
                     <Card className="relative aspect-video overflow-hidden md:aspect-square">
-                        <img src={event.image_url || '/placeholder.svg?height=600&width=600'} alt={event.name} className="object-cover" />
+                        <img src={'/placeholder.svg'} alt={event.name} className="object-cover" />
                         {isLive && (
                             <div className="absolute top-4 right-4">
                                 <Badge variant="destructive" className="px-3 py-1.5 text-sm font-medium tracking-wider uppercase">
