@@ -3,10 +3,10 @@
 use App\Models\SubDistrict;
 use App\Models\Venue;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -19,10 +19,13 @@ return new class extends Migration
             $sub_district = SubDistrict::whereCode($record['sub_district_id'])->first();
 
             if ($sub_district) {
-                Venue::firstOrCreate([
-                    'sub_district_id' => $sub_district->id,
-                    'name' => $record['name'],
-                ], []);
+                Venue::firstOrCreate(
+                    [
+                        'sub_district_id' => $sub_district->id,
+                        'name' => $record['name'],
+                    ],
+                    []
+                );
             }
         }
     }
