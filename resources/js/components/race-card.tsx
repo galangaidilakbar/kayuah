@@ -15,7 +15,7 @@ export default function RaceCard({ race }: { race: App.Data.RaceData }) {
         <Card className="border-l-primary overflow-hidden border-l-4 transition-all hover:shadow-md">
             <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg font-bold">Race #{race.number}</CardTitle>
+                    <CardTitle className="text-lg font-bold">Hilir ke #{race.number}</CardTitle>
                     <StatusBadge status={race.status} />
                 </div>
                 <CardDescription className="text-xs">ID: {race.id}</CardDescription>
@@ -30,7 +30,7 @@ export default function RaceCard({ race }: { race: App.Data.RaceData }) {
                     >
                         <div className="mb-2 flex items-start justify-between">
                             <div className="mb-1 flex items-center text-sm font-medium">
-                                Left Lane
+                                Jalan sebelah kiri
                                 {race.winner_id === race.left_lane_participant_id && (
                                     <Badge variant="outline" className="bg-primary/20 text-primary border-primary/30 ml-2">
                                         <Trophy className="mr-1 h-3 w-3" />
@@ -71,7 +71,7 @@ export default function RaceCard({ race }: { race: App.Data.RaceData }) {
                     >
                         <div className="mb-2 flex items-start justify-between">
                             <div className="mb-1 flex items-center text-sm font-medium">
-                                Right Lane
+                                Jalan sebelah kanan
                                 {race.winner_id === race.right_lane_participant_id && (
                                     <Badge variant="outline" className="bg-primary/20 text-primary border-primary/30 ml-2">
                                         <Trophy className="mr-1 h-3 w-3" />
