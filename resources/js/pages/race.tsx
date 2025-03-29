@@ -2,7 +2,7 @@ import { Head } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import echo from '../echo';
 
-function RowRaceStyle({ name, id, winner }: any) {
+function RowRaceStyle({ name, id, winner }: { name: string | undefined; id: string | null; winner: string | null }) {
     if (!winner) {
         return <td className="p-2 text-gray-500">{name}</td>;
     }
@@ -14,7 +14,7 @@ function RowRaceStyle({ name, id, winner }: any) {
     return <td className="p-2 text-red-500 line-through">{name}</td>;
 }
 
-export default function Race({ races }: any) {
+export default function Race({ races }: { races: App.Data.RaceData[] }) {
     const [items, setItems] = useState(races);
 
     console.log(items);
@@ -22,12 +22,12 @@ export default function Race({ races }: any) {
     useEffect(() => {
         const channel = echo.channel('race');
 
-        channel.listen('RaceWinnerSelected', (data: any) => {
+        channel.listen('RaceWinnerSelected', (data: { race: App.Data.RaceData }) => {
             console.log(data);
             // Assuming data contains the race ID and the winner ID
             const { id, winner_id } = data.race;
 
-            setItems((prevItems: any) => prevItems.map((race: any) => (race.id === id ? { ...race, winner_id: winner_id } : race)));
+            setItems((prevItems) => prevItems.map((race) => (race.id === id ? { ...race, winner_id: winner_id } : race)));
         });
 
         // Cleanup on component unmount
@@ -50,10 +50,10 @@ export default function Race({ races }: any) {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                        {items.map((race: any) => (
+                        {items.map((race) => (
                             <tr key={race.id} className="transition-colors hover:bg-gray-50">
                                 <td className="p-2 font-medium">{race.number}</td>
-                                <RowRaceStyle name={race.left_lane_participant.title} id={race.left_lane_participant_id} winner={race.winner_id} />
+                                <RowRaceStyle name={race.left_lane_participant?.title} id={race.left_lane_participant_id} winner={race.winner_id} />
                                 <RowRaceStyle
                                     name={race.right_lane_participant?.title || '---'}
                                     id={race.right_lane_participant_id}
