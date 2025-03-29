@@ -1,7 +1,7 @@
 import EventHero from '@/components/event-hero';
 import RaceContainer from '@/components/race-container';
 import { Head, usePage } from '@inertiajs/react';
-import EventContainer from './events/EventContainer';
+import EventContainer from '../components/event-container';
 
 export default function Page() {
     const { currentEvent, events, races } = usePage<{

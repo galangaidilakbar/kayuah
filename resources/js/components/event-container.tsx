@@ -1,4 +1,4 @@
-import EventCard from './EventCard';
+import EventCard from './event-card';
 
 export default function EventContainer({ events, title = 'Events' }: { events: App.Data.EventData[]; title?: string }) {
     return (
