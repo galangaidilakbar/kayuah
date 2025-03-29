@@ -48,6 +48,7 @@ class Race extends Model
     public function setWinner(string $participantId): void
     {
         $this->winner_id = $participantId;
+        $this->status = RaceStatus::completed;
         $this->save();
 
         RaceWinnerSelected::dispatch($this);
