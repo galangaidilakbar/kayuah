@@ -48,7 +48,7 @@ declare namespace App.Data {
         left_lane_participant_id: string;
         is_bye: boolean;
         right_lane_participant_id: string;
-        winner_id: string;
+        winner_id: string | null;
         status: App.Enums.Enums.RaceStatus | null;
         round: App.Data.RoundData | null;
         left_lane_participant: App.Data.ParticipantData | null;

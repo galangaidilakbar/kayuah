@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Data\EventData;
+use App\Data\RaceData;
 use App\Models\Event;
+use App\Models\Race;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,24 +17,18 @@ class IndexController extends Controller
     public function __invoke(Request $request)
     {
         // get latest 3 events
-        $events = EventData::collect(
-            Event::with('venue.subDistrict')
-                ->withCount(['participants'])
-                ->latest('start_date')
-                ->take(3)
-                ->get()
-        );
+        $events = EventData::collect($this->baseEventQuery()->latest('start_date')->take(3)->get());
 
         return Inertia::render('page', [
             'currentEvent' => $this->getCurrentEvent(),
             'events' => $events,
+            'races' => $this->getLatestRace(),
         ]);
     }
 
     protected function getCurrentEvent(): ?EventData
     {
-        $currentEvent = Event::with('venue.subDistrict')
-            ->withCount(['participants'])
+        $currentEvent = $this->baseEventQuery()
             ->where('start_date', '<=', now())
             ->where('end_date', '>=', now())
             ->orWhere('start_date', '>=', now())
@@ -40,10 +36,7 @@ class IndexController extends Controller
             ->first();
 
         if (! $currentEvent) {
-            $currentEvent = Event::with('venue.subDistrict')
-                ->withCount(['participants'])
-                ->orderBy('start_date', 'asc')
-                ->first();
+            $currentEvent = $this->baseEventQuery()->orderBy('start_date', 'asc')->first();
 
             if (! $currentEvent) {
                 return null;
@@ -51,5 +44,15 @@ class IndexController extends Controller
         }
 
         return EventData::from($currentEvent);
+    }
+
+    protected function baseEventQuery()
+    {
+        return Event::with('venue.subDistrict')->withCount(['participants']);
+    }
+
+    protected function getLatestRace()
+    {
+        return RaceData::collect(Race::latest()->take(3)->get());
     }
 }

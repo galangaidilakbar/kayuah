@@ -14,7 +14,7 @@ class RaceData extends Data
         public string $left_lane_participant_id,
         public bool $is_bye,
         public string $right_lane_participant_id,
-        public string $winner_id,
+        public ?string $winner_id,
         public ?RaceStatus $status,
         public ?RoundData $round,
         public ?ParticipantData $left_lane_participant,
