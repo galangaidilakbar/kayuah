@@ -35,10 +35,10 @@ class IndexController extends Controller
             ->orderBy('start_date', 'asc')
             ->first();
 
-        if (! $currentEvent) {
+        if (!$currentEvent) {
             $currentEvent = $this->baseEventQuery()->orderBy('start_date', 'asc')->first();
 
-            if (! $currentEvent) {
+            if (!$currentEvent) {
                 return null;
             }
         }
@@ -55,9 +55,9 @@ class IndexController extends Controller
     {
         return RaceData::collect(
             Race::with([
-                'leftLaneParticipant.boat.village',
+                'leftLaneParticipant.boat.village.subDistrict',
                 'leftLaneParticipant.sponsors',
-                'rightLaneParticipant.boat.village',
+                'rightLaneParticipant.boat.village.subDistrict',
                 'rightLaneParticipant.sponsors',
             ])
                 ->latest()

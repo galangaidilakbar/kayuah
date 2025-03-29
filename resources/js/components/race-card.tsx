@@ -18,11 +18,14 @@ export default function RaceCard({ race }: { race: App.Data.RaceData }) {
                 <CardDescription className="text-xs">ID: {race.id}</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="grid grid-cols-5 gap-2">
+                <div className="flex flex-col space-y-4">
                     {/* Left Boat */}
-                    <div className={`col-span-2 rounded-lg p-3 ${race.winner_id === race.left_lane_participant_id ? 'bg-primary/10' : 'bg-muted'}`}>
+                    <div className={`rounded-lg p-3 ${race.winner_id === race.left_lane_participant_id ? 'bg-primary/10' : 'bg-muted'}`}>
                         <div className="mb-1 text-sm font-medium">Left Boat</div>
                         <div className="truncate font-bold">{race.left_lane_participant?.title}</div>
+                        <div className="text-muted-foreground text-sm">
+                            {race.left_lane_participant?.boat?.village?.name}, {race.left_lane_participant?.boat?.village?.sub_district?.name}
+                        </div>
                         {race.winner_id === race.left_lane_participant_id && (
                             <div className="text-primary mt-2 flex items-center">
                                 <Trophy className="mr-1 h-4 w-4" />
@@ -32,14 +35,17 @@ export default function RaceCard({ race }: { race: App.Data.RaceData }) {
                     </div>
 
                     {/* VS */}
-                    <div className="col-span-1 flex items-center justify-center">
+                    <div className="flex justify-center py-2">
                         <div className="text-muted-foreground text-sm font-bold">VS</div>
                     </div>
 
                     {/* Right Boat */}
-                    <div className={`col-span-2 rounded-lg p-3 ${race.winner_id === race.right_lane_participant_id ? 'bg-primary/10' : 'bg-muted'}`}>
+                    <div className={`rounded-lg p-3 ${race.winner_id === race.right_lane_participant_id ? 'bg-primary/10' : 'bg-muted'}`}>
                         <div className="mb-1 text-sm font-medium">Right Boat</div>
                         <div className="truncate font-bold">{race.right_lane_participant?.title}</div>
+                        <div className="text-muted-foreground text-sm">
+                            {race.right_lane_participant?.boat?.village?.name}, {race.right_lane_participant?.boat?.village?.sub_district?.name}
+                        </div>
                         {race.winner_id === race.right_lane_participant_id && (
                             <div className="text-primary mt-2 flex items-center">
                                 <Trophy className="mr-1 h-4 w-4" />
