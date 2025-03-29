@@ -12,7 +12,7 @@ export default function RaceCard({ race }: { race: App.Data.RaceData }) {
     const winner = race.winner_id === race.left_lane_participant_id ? race.left_lane_participant?.title : race.right_lane_participant?.title;
 
     return (
-        <Card className="border-l-primary overflow-hidden border-l-4 transition-all hover:shadow-md">
+        <Card className="overflow-hidden transition-all hover:shadow-md">
             <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
                     <CardTitle className="text-lg font-bold">Hilir ke #{race.number}</CardTitle>
