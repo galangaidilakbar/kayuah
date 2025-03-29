@@ -3,8 +3,13 @@ import { Head, usePage } from '@inertiajs/react';
 import EventContainer from './events/EventContainer';
 
 export default function Page() {
-    const { props } = usePage<{ currentEvent: App.Data.EventData; events: App.Data.EventData[] }>();
-    const { currentEvent, events } = props;
+    const { currentEvent, events, races } = usePage<{
+        currentEvent: App.Data.EventData;
+        events: App.Data.EventData[];
+        races: App.Data.RaceData[];
+    }>().props;
+
+    console.log(races);
     return (
         <>
             <Head title="Welcome"></Head>
