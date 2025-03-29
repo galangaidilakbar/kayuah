@@ -1,4 +1,5 @@
 import EventHero from '@/components/event-hero';
+import RaceContainer from '@/components/race-container';
 import { Head, usePage } from '@inertiajs/react';
 import EventContainer from './events/EventContainer';
 
@@ -9,7 +10,6 @@ export default function Page() {
         races: App.Data.RaceData[];
     }>().props;
 
-    console.log(races);
     return (
         <>
             <Head title="Welcome"></Head>
@@ -20,6 +20,8 @@ export default function Page() {
                 {/* <EventCarousel /> */}
 
                 <EventContainer events={events} title="Event Pacu Jalur 2025" />
+
+                <RaceContainer races={races} />
             </main>
         </>
     );
