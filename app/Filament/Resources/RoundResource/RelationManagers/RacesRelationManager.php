@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\RoundResource\RelationManagers;
 
-use App\Enums\Enums\RaceStatus;
+use App\Enums\RaceStatus;
 use App\Models\Race;
 use Filament\Forms;
 use Filament\Forms\Form;

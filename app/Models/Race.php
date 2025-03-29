@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\Enums\RaceStatus;
+use App\Enums\RaceStatus;
 use App\Events\RaceWinnerSelected;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;

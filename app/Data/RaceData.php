@@ -2,7 +2,7 @@
 
 namespace App\Data;
 
-use App\Enums\Enums\RaceStatus;
+use App\Enums\RaceStatus;
 use Spatie\LaravelData\Data;
 
 class RaceData extends Data
