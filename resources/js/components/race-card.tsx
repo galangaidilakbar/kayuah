@@ -1,15 +1,18 @@
-import { AlertCircle, Flag, Trophy } from 'lucide-react';
+import { AlertCircle, ChevronDown, ChevronUp, Flag, MapPin, Trophy } from 'lucide-react';
+import { useState } from 'react';
 import { Badge } from './ui/badge';
+import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 
 export default function RaceCard({ race }: { race: App.Data.RaceData }) {
+    const [expanded, setExpanded] = useState(false);
     const isCompleted = race.status === 'completed';
     const isInProgress = race.status === 'ongoing';
     const isUpcoming = race.status === 'scheduled';
     const winner = race.winner_id === race.left_lane_participant_id ? race.left_lane_participant?.title : race.right_lane_participant?.title;
 
     return (
-        <Card className="overflow-hidden transition-all hover:shadow-md">
+        <Card className="border-l-primary overflow-hidden border-l-4 transition-all hover:shadow-md">
             <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
                     <CardTitle className="text-lg font-bold">Race #{race.number}</CardTitle>
@@ -20,40 +23,92 @@ export default function RaceCard({ race }: { race: App.Data.RaceData }) {
             <CardContent>
                 <div className="flex flex-col space-y-4">
                     {/* Left Boat */}
-                    <div className={`rounded-lg p-3 ${race.winner_id === race.left_lane_participant_id ? 'bg-primary/10' : 'bg-muted'}`}>
-                        <div className="mb-1 text-sm font-medium">Left Boat</div>
-                        <div className="truncate font-bold">{race.left_lane_participant?.title}</div>
-                        <div className="text-muted-foreground text-sm">
-                            {race.left_lane_participant?.boat?.village?.name}, {race.left_lane_participant?.boat?.village?.sub_district?.name}
+                    <div
+                        className={`rounded-lg p-4 ${
+                            race.winner_id === race.left_lane_participant_id ? 'bg-primary/10 border-primary/20 border' : 'bg-muted'
+                        }`}
+                    >
+                        <div className="mb-2 flex items-start justify-between">
+                            <div className="mb-1 flex items-center text-sm font-medium">
+                                Left Lane
+                                {race.winner_id === race.left_lane_participant_id && (
+                                    <Badge variant="outline" className="bg-primary/20 text-primary border-primary/30 ml-2">
+                                        <Trophy className="mr-1 h-3 w-3" />
+                                        Winner
+                                    </Badge>
+                                )}
+                            </div>
                         </div>
-                        {race.winner_id === race.left_lane_participant_id && (
-                            <div className="text-primary mt-2 flex items-center">
-                                <Trophy className="mr-1 h-4 w-4" />
-                                <span className="text-xs font-medium">Winner</span>
+
+                        <div className={`text-base font-bold ${expanded ? '' : 'line-clamp-1'}`}>{race.left_lane_participant?.title}</div>
+
+                        {race.left_lane_participant?.boat?.village && (
+                            <div className="text-muted-foreground mt-1 flex items-center text-sm">
+                                <MapPin className="mr-1 inline h-3 w-3" />
+                                {race.left_lane_participant.boat.village.name}
+                                {race.left_lane_participant.boat.village.sub_district?.name && (
+                                    <>, {race.left_lane_participant.boat.village.sub_district.name}</>
+                                )}
                             </div>
                         )}
                     </div>
 
-                    {/* VS */}
-                    <div className="flex justify-center py-2">
-                        <div className="text-muted-foreground text-sm font-bold">VS</div>
+                    {/* VS Section */}
+                    <div className="relative flex items-center justify-center py-1">
+                        <div className="bg-muted-foreground/20 absolute right-0 left-0 h-px"></div>
+                        <div className="bg-card z-10 px-4">
+                            <div className="bg-muted text-muted-foreground flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold">
+                                VS
+                            </div>
+                        </div>
                     </div>
 
                     {/* Right Boat */}
-                    <div className={`rounded-lg p-3 ${race.winner_id === race.right_lane_participant_id ? 'bg-primary/10' : 'bg-muted'}`}>
-                        <div className="mb-1 text-sm font-medium">Right Boat</div>
-                        <div className="truncate font-bold">{race.right_lane_participant?.title}</div>
-                        <div className="text-muted-foreground text-sm">
-                            {race.right_lane_participant?.boat?.village?.name}, {race.right_lane_participant?.boat?.village?.sub_district?.name}
+                    <div
+                        className={`rounded-lg p-4 ${
+                            race.winner_id === race.right_lane_participant_id ? 'bg-primary/10 border-primary/20 border' : 'bg-muted'
+                        }`}
+                    >
+                        <div className="mb-2 flex items-start justify-between">
+                            <div className="mb-1 flex items-center text-sm font-medium">
+                                Right Lane
+                                {race.winner_id === race.right_lane_participant_id && (
+                                    <Badge variant="outline" className="bg-primary/20 text-primary border-primary/30 ml-2">
+                                        <Trophy className="mr-1 h-3 w-3" />
+                                        Winner
+                                    </Badge>
+                                )}
+                            </div>
                         </div>
-                        {race.winner_id === race.right_lane_participant_id && (
-                            <div className="text-primary mt-2 flex items-center">
-                                <Trophy className="mr-1 h-4 w-4" />
-                                <span className="text-xs font-medium">Winner</span>
+
+                        <div className={`text-base font-bold ${expanded ? '' : 'line-clamp-1'}`}>{race.right_lane_participant?.title}</div>
+
+                        {race.right_lane_participant?.boat?.village && (
+                            <div className="text-muted-foreground mt-1 flex items-center text-sm">
+                                <MapPin className="mr-1 inline h-3 w-3" />
+                                {race.right_lane_participant.boat.village.name}
+                                {race.right_lane_participant.boat.village.sub_district?.name && (
+                                    <>, {race.right_lane_participant.boat.village.sub_district.name}</>
+                                )}
                             </div>
                         )}
                     </div>
                 </div>
+
+                {/* Expand/Collapse button */}
+                <Button variant="ghost" size="sm" className="text-muted-foreground mt-2 w-full text-xs" onClick={() => setExpanded(!expanded)}>
+                    {expanded ? (
+                        <>
+                            <ChevronUp className="mr-1 h-3 w-3" />
+                            Show less
+                        </>
+                    ) : (
+                        <>
+                            <ChevronDown className="mr-1 h-3 w-3" />
+                            Show more
+                        </>
+                    )}
+                </Button>
             </CardContent>
             <CardFooter className="text-muted-foreground pt-1 pb-3 text-xs">
                 {isCompleted && <div className="w-full text-center">Race completed with {winner} as the winner</div>}
