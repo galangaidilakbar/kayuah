@@ -35,10 +35,10 @@ class IndexController extends Controller
             ->orderBy('start_date', 'asc')
             ->first();
 
-        if (!$currentEvent) {
+        if (! $currentEvent) {
             $currentEvent = $this->baseEventQuery()->orderBy('start_date', 'asc')->first();
 
-            if (!$currentEvent) {
+            if (! $currentEvent) {
                 return null;
             }
         }

@@ -6,11 +6,13 @@ use App\Filament\Resources\EventResource\Pages;
 use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Event;
 use Filament\Forms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -35,6 +37,7 @@ class EventResource extends Resource
                     ->required(),
                 Forms\Components\DateTimePicker::make('end_date')
                     ->required(),
+                SpatieMediaLibraryFileUpload::make('thumbnail'),
             ]);
     }
 
@@ -44,6 +47,7 @@ class EventResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->label('ID'),
+                SpatieMediaLibraryImageColumn::make('thumbnail'),
                 Tables\Columns\TextColumn::make('venue.name'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
