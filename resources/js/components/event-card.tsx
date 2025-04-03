@@ -39,11 +39,7 @@ export default function EventCard({ event }: EventCardProps) {
     return (
         <Card className="h-full overflow-hidden py-0">
             <div className="relative aspect-video w-full overflow-hidden">
-                <img
-                    src={thumbnail}
-                    alt={event.name}
-                    className="object-cover transition-transform hover:scale-105"
-                />
+                <img src={thumbnail} alt={event.name} className="object-cover transition-transform hover:scale-105" />
                 {isLive && (
                     <div className="absolute top-3 right-3 z-10">
                         <Badge variant="destructive" className="px-2 py-1 text-xs font-medium tracking-wider uppercase">
