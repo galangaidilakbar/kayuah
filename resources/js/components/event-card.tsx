@@ -34,11 +34,13 @@ export default function EventCard({ event }: EventCardProps) {
         return format(new Date(dateString), 'MMM d, yyyy');
     };
 
+    const thumbnail = event.thumbnail ? event.thumbnail : 'placeholder.svg';
+
     return (
         <Card className="h-full overflow-hidden py-0">
             <div className="relative aspect-[16/9] w-full overflow-hidden">
                 <img
-                    src={`/placeholder.svg?height=400&width=600&text=${encodeURIComponent(event.name)}`}
+                    src={thumbnail}
                     alt={event.name}
                     className="object-cover transition-transform hover:scale-105"
                 />

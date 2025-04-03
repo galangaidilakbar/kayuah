@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Event extends Model implements HasMedia
 {
     use HasUuids, InteractsWithMedia, SoftDeletes;
+
+    protected $appends = ['thumbnail'];
 
     /**
      * Get the attributes that should be cast.
@@ -51,5 +54,10 @@ class Event extends Model implements HasMedia
     public function rounds(): HasManyThrough
     {
         return $this->hasManyThrough(Round::class, Day::class);
+    }
+
+    protected function thumbnail(): Attribute
+    {
+        return new Attribute(get: fn() => $this->getFirstMediaUrl());
     }
 }

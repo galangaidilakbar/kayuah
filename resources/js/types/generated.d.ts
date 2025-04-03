@@ -26,6 +26,7 @@ declare namespace App.Data {
         name: string;
         start_date: string;
         end_date: string;
+        thumbnail: string;
         venue: App.Data.VenueData | null;
         days?: Array<App.Data.DayData> | null;
         participants?: Array<App.Data.ParticipantData> | null;

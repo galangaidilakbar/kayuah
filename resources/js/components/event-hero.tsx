@@ -30,6 +30,8 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
         return format(new Date(dateString), 'MMM d, yyyy');
     };
 
+    const thumbnail = event.thumbnail ? event.thumbnail : 'placeholder.svg';
+
     return (
         <div className="from-primary/10 to-primary/5 relative w-full overflow-hidden bg-gradient-to-r py-12 md:py-20">
             {/* Background pattern */}
@@ -88,7 +90,7 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
 
                     {/* Event image */}
                     <Card className="relative aspect-video overflow-hidden py-0 md:aspect-square">
-                        <img src={'/placeholder.svg'} alt={event.name} className="object-cover" />
+                        <img src={thumbnail} alt={event.name} className="object-cover" />
                         {isLive && (
                             <div className="absolute top-4 right-4">
                                 <Badge variant="destructive" className="px-3 py-1.5 text-sm font-medium tracking-wider uppercase">
