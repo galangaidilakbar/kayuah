@@ -38,7 +38,7 @@ export default function EventCard({ event }: EventCardProps) {
 
     return (
         <Card className="h-full overflow-hidden py-0">
-            <div className="relative aspect-[16/9] w-full overflow-hidden">
+            <div className="relative aspect-video w-full overflow-hidden">
                 <img
                     src={thumbnail}
                     alt={event.name}

@@ -89,7 +89,7 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
                     </div>
 
                     {/* Event image */}
-                    <Card className="relative aspect-video overflow-hidden py-0 md:aspect-square">
+                    <Card className="relative aspect-video overflow-hidden py-0">
                         <img src={thumbnail} alt={event.name} className="object-cover" />
                         {isLive && (
                             <div className="absolute top-4 right-4">
