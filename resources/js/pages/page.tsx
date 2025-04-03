@@ -2,6 +2,7 @@ import EventHero from '@/components/event-hero';
 import RaceContainer from '@/components/race-container';
 import { Head, usePage } from '@inertiajs/react';
 import EventContainer from '../components/event-container';
+import { NavGuest } from '@/components/nav-guest';
 
 export default function Page() {
     const { currentEvent, events, races } = usePage<{
@@ -15,6 +16,8 @@ export default function Page() {
             <Head title="Welcome"></Head>
 
             <main>
+                <NavGuest />
+
                 <EventHero event={currentEvent} />
 
                 {/* <EventCarousel /> */}
