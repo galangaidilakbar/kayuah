@@ -58,6 +58,6 @@ class Event extends Model implements HasMedia
 
     protected function thumbnail(): Attribute
     {
-        return new Attribute(get: fn() => $this->getFirstMediaUrl());
+        return new Attribute(get: fn () => $this->getFirstMediaUrl());
     }
 }
