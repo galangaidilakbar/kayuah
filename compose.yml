@@ -4,9 +4,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - .:/app
-      - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
     environment:
       - APP_ENV=production
       - APP_KEY=${APP_KEY}
@@ -17,8 +14,12 @@ services:
       - DB_DATABASE=${DB_DATABASE}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_USERNAME=${DB_USERNAME}
+      - FACEBOOK_CLIENT_ID=${FACEBOOK_CLIENT_ID}
+      - FACEBOOK_CLIENT_SECRET=${FACEBOOK_CLIENT_SECRET}
+      - FACEBOOK_REDIRECT_URI=${FACEBOOK_REDIRECT_URI}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - laravel-network
 
@@ -30,6 +31,11 @@ services:
       - POSTGRES_DB=${DB_DATABASE}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - laravel-network
 

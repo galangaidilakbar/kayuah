@@ -1,12 +1,12 @@
-# Use the official FrankenPHP image with PHP 8.4
 FROM dunglas/frankenphp:php8.4
 
-# Install system dependencies and PHP extensions
+# Install system dependencies
 RUN apt-get update && \
     apt-get install -y ca-certificates unzip libexif-dev curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install PHP extensions
 RUN install-php-extensions \
     exif \
     pdo_pgsql \
@@ -15,37 +15,38 @@ RUN install-php-extensions \
     gd \
     intl \
     pcntl \
-    opcache
+    opcache \
+    tokenizer
 
-# Install latest Composer from official image
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install Bun
+# Install Bun securely (example; check latest install method)
 RUN curl -fsSL https://bun.sh/install | bash
 ENV BUN_INSTALL="/root/.bun"
 ENV PATH="$BUN_INSTALL/bin:$PATH"
 
-# Set working directory
 WORKDIR /app
 
-# Copy composer files and install PHP dependencies
+# Copy PHP dependencies and install
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
 
-# Copy application files
+# Copy JS dependencies and install
+COPY package.json bun.lockb ./
+RUN bun install --frozen-lockfile
+
+# Copy application
 COPY . .
 
-# Finalize PHP dependencies and run Laravel optimizations
+# Build JS assets
+RUN bun run build
+
+# Finalize PHP setup
 RUN composer dump-autoload --optimize && \
-    composer install --no-dev && \
     php artisan optimize && \
     php artisan config:cache && \
     php artisan route:cache && \
     php artisan view:cache
-
-# Install JS dependencies and build assets
-COPY package.json bun.lockb ./
-RUN bun install --frozen-lockfile && \
-    bun run build
 
 EXPOSE 80 443
