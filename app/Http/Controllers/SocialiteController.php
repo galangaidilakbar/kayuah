@@ -24,7 +24,7 @@ class SocialiteController extends Controller
     {
         $currentUser = Socialite::driver($driver)->user();
 
-        $providerId = $driver.'_id';
+        $providerId = $driver . '_id';
 
         $user = User::updateOrCreate(
             [
@@ -38,7 +38,7 @@ class SocialiteController extends Controller
 
         Auth::login($user);
 
-        return redirect('/dashboard');
+        return to_route('dashboard');
     }
 
     /**
