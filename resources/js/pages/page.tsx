@@ -1,9 +1,9 @@
 import EventHero from '@/components/event-hero';
+import Footer from '@/components/footer';
 import { NavGuest } from '@/components/nav-guest';
 import RaceContainer from '@/components/race-container';
 import { Head, usePage } from '@inertiajs/react';
 import EventContainer from '../components/event-container';
-import Footer from '@/components/footer';
 
 export default function Page() {
     const { currentEvent, events, races } = usePage<{
