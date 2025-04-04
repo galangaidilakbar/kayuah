@@ -34,7 +34,7 @@ export const NavGuest = () => {
                             </div>
                         ) : (
                             <Button asChild>
-                                <Link href={route('login')}>Login / Register</Link>
+                                <Link href={route('login')}>Masuk / Daftar</Link>
                             </Button>
                         )}
                     </div>
@@ -60,7 +60,7 @@ export const NavGuest = () => {
                             </Button>
                         ) : (
                             <Button asChild className="w-full">
-                                <Link href={route('login')}>Login / Register</Link>
+                                <Link href={route('login')}>Masuk / Daftar</Link>
                             </Button>
                         )}
                     </div>
