@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Data\EventData;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,7 +11,11 @@ class EventController extends Controller
 {
     public function index(Request $request)
     {
-        return Inertia::render('events/index');
+        $events = EventData::collect(Event::with('venue.subDistrict')->withCount(['participants'])->get());
+
+        return Inertia::render('events/index', [
+            'events' => $events,
+        ]);
     }
 
     /**
