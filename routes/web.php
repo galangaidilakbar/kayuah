@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', IndexController::class)->name('home');
-Route::get('/events/{event}', EventController::class)->name('events.show');
+Route::get('/events/{event}', EventController::class)->name('events.show')->middleware('auth');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
@@ -33,6 +33,6 @@ Route::get('/race', function () {
 
 Route::resource('/test', JustTestController::class);
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
-require __DIR__.'/legal.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/legal.php';

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class EventController extends Controller
 {
@@ -12,6 +13,8 @@ class EventController extends Controller
      */
     public function __invoke(Event $event)
     {
-        dd($event);
+        return Inertia::render('events/show', [
+            'event' => $event
+        ]);
     }
 }
