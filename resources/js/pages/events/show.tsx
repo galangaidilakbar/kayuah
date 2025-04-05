@@ -1,19 +1,23 @@
-interface ShowProps {
-    event: App.Data.EventData;
-}
-
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Events',
-        href: '/dashboard',
-    },
-];
+interface ShowProps {
+    event: App.Data.EventData;
+}
 
 export default function Show({ event }: ShowProps) {
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: 'Events',
+            href: route('events.index'),
+        },
+        {
+            title: event.name,
+            href: route('events.show', event.id)
+        }
+    ];
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={event.name} />
