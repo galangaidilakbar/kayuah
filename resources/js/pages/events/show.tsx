@@ -45,7 +45,9 @@ export default function Show({ event }: ShowProps) {
                             <TabsTrigger value="participants">Peserta</TabsTrigger>
                             <TabsTrigger value="standings">Peringkat</TabsTrigger>
                         </TabsList>
-                        <TabsContent value="days">List hari beserta ronde.</TabsContent>
+                        <TabsContent value="days">
+                            <ol className="list-decimal space-y-6 pl-6">{event.days?.map((day) => <li>{day.date}</li>)}</ol>
+                        </TabsContent>
                         <TabsContent value="participants">table jalur-jalur yang ikut.</TabsContent>
                         <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>
                     </Tabs>
