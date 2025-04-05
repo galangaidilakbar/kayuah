@@ -1,9 +1,9 @@
+import { SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
 import AppLogoIcon from './app-logo-icon';
-import { SharedData } from '@/types';
 
 export default function AppLogo() {
-    const { name } = usePage<SharedData>().props
+    const { name } = usePage<SharedData>().props;
 
     return (
         <>
@@ -11,7 +11,7 @@ export default function AppLogo() {
                 <AppLogoIcon className="size-5 fill-current text-white dark:text-black" />
             </div>
             <div className="ml-1 grid flex-1 text-left text-sm">
-                <span className="mb-0.5 truncate font-semibold font-mono uppercase tracking-tight">{name}</span>
+                <span className="mb-0.5 truncate font-mono font-semibold tracking-tight uppercase">{name}</span>
             </div>
         </>
     );

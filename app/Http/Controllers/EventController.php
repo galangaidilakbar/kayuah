@@ -8,13 +8,18 @@ use Inertia\Inertia;
 
 class EventController extends Controller
 {
+    public function index(Request $request)
+    {
+        return Inertia::render('events/index');
+    }
+
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Event $event)
+    public function show(Event $event)
     {
         return Inertia::render('events/show', [
-            'event' => $event
+            'event' => $event,
         ]);
     }
 }
