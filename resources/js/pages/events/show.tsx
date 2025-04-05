@@ -2,6 +2,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { format } from 'date-fns';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface ShowProps {
     event: App.Data.EventData;
@@ -35,6 +36,19 @@ export default function Show({ event }: ShowProps) {
                     <div>
                         {formatDate(event.start_date)} - {formatDate(event.end_date)}
                     </div>
+                </div>
+
+                <div>
+                    <Tabs defaultValue="days">
+                        <TabsList>
+                            <TabsTrigger value="days">Hari</TabsTrigger>
+                            <TabsTrigger value="participants">Peserta</TabsTrigger>
+                            <TabsTrigger value="standings">Peringkat</TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="days">List hari beserta ronde.</TabsContent>
+                        <TabsContent value="participants">table jalur-jalur yang ikut.</TabsContent>
+                        <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>
+                    </Tabs>
                 </div>
             </div>
         </AppLayout>
