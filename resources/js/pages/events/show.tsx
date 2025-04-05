@@ -1,8 +1,8 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { format } from 'date-fns';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface ShowProps {
     event: App.Data.EventData;
@@ -39,8 +39,8 @@ export default function Show({ event }: ShowProps) {
                 </div>
 
                 <div>
-                    <Tabs defaultValue="days">
-                        <TabsList>
+                    <Tabs defaultValue="days" className="w-[400px]">
+                        <TabsList className="grid w-full grid-cols-3">
                             <TabsTrigger value="days">Hari</TabsTrigger>
                             <TabsTrigger value="participants">Peserta</TabsTrigger>
                             <TabsTrigger value="standings">Peringkat</TabsTrigger>

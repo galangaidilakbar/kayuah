@@ -10,7 +10,7 @@ class RoundData extends Data
         public string $id,
         public string $day_id,
         public string $name,
-        public int $order,
+        public ?int $order,
         public ?DayData $day,
     ) {}
 }

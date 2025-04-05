@@ -60,7 +60,7 @@ declare namespace App.Data {
         id: string;
         day_id: string;
         name: string;
-        order: number;
+        order: number | null;
         day: App.Data.DayData | null;
     };
     export type SponsorData = {
