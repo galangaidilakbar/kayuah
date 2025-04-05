@@ -24,7 +24,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         return Inertia::render('events/show', [
-            'event' => $event,
+            'event' => EventData::from($event->load('venue.subDistrict')),
         ]);
     }
 }

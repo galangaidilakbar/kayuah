@@ -1,10 +1,15 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
+import { format } from 'date-fns';
 
 interface ShowProps {
     event: App.Data.EventData;
 }
+
+const formatDate = (dateString: string) => {
+    return format(new Date(dateString), 'MMM d, yyyy');
+};
 
 export default function Show({ event }: ShowProps) {
     const breadcrumbs: BreadcrumbItem[] = [
@@ -14,15 +19,23 @@ export default function Show({ event }: ShowProps) {
         },
         {
             title: event.name,
-            href: route('events.show', event.id)
-        }
+            href: route('events.show', event.id),
+        },
     ];
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={event.name} />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <h1>{event.name}</h1>
+                <div>
+                    <h1>{event.name}</h1>
+                    <div>
+                        {event.venue?.name}, {event.venue?.subDistrict?.name}
+                    </div>
+                    <div>
+                        {formatDate(event.start_date)} - {formatDate(event.end_date)}
+                    </div>
+                </div>
             </div>
         </AppLayout>
     );
