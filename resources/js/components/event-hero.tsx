@@ -80,7 +80,7 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
 
                         <div className="pt-4">
                             <Button size="lg" className="group" asChild>
-                                <Link href="/live-races">
+                                <Link href={route('events.show', event.id)}>
                                     Watch Live
                                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                                 </Link>

@@ -81,7 +81,7 @@ export default function EventCard({ event }: EventCardProps) {
 
             <CardFooter className="p-4 pt-0">
                 <Button variant="outline" size="sm" className="group w-full" asChild>
-                    <Link href={`/events/${event.id}`}>
+                    <Link href={route('events.show', event.id)}>
                         View Details
                         <ArrowRight className="ml-2 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </Link>
