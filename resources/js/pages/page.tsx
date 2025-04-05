@@ -1,7 +1,6 @@
 import EventHero from '@/components/event-hero';
-import Footer from '@/components/footer';
-import { NavGuest } from '@/components/nav-guest';
 import RaceContainer from '@/components/race-container';
+import GuestLayout from '@/layouts/guest-layout';
 import { Head, usePage } from '@inertiajs/react';
 import EventContainer from '../components/event-container';
 
@@ -13,20 +12,14 @@ export default function Page() {
     }>().props;
 
     return (
-        <>
+        <GuestLayout>
             <Head title="Welcome"></Head>
 
-            <main>
-                <NavGuest />
+            <EventHero event={currentEvent} />
 
-                <EventHero event={currentEvent} />
+            <EventContainer events={events} title="Event Pacu Jalur 2025" />
 
-                <EventContainer events={events} title="Event Pacu Jalur 2025" />
-
-                <RaceContainer races={races} />
-
-                <Footer />
-            </main>
-        </>
+            <RaceContainer races={races} />
+        </GuestLayout>
     );
 }

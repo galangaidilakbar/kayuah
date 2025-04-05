@@ -5,4 +5,4 @@ use Inertia\Inertia;
 
 Route::get('/legal/privacy-policy', function () {
     return Inertia::render('legal/privacy-policy');
-});
+})->name('legal.privacy-policy');

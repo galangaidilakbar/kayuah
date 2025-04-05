@@ -3,6 +3,7 @@ import { Link, usePage } from '@inertiajs/react';
 
 const Footer = () => {
     const { name } = usePage<SharedData>().props;
+
     return (
         <footer className="bg-background border-t">
             <div className="container mx-auto p-8">
@@ -11,7 +12,11 @@ const Footer = () => {
                         © {new Date().getFullYear()} {name}. All rights reserved.
                     </p>
                     <div className="mt-4 flex space-x-4 md:mt-0">
-                        <Link href="#" className="text-muted-foreground text-sm hover:underline">
+                        <Link
+                            href={route('legal.privacy-policy')}
+                            prefetch
+                            className={`text-muted-foreground text-sm hover:underline ${route().current('legal.privacy-policy') ? 'underline' : ''}`}
+                        >
                             Privacy Policy
                         </Link>
                         <Link href="#" className="text-muted-foreground text-sm hover:underline">
