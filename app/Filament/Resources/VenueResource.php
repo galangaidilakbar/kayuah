@@ -18,7 +18,6 @@ class VenueResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-
     public static function getNavigationLabel(): string
     {
         return __('Venues');
