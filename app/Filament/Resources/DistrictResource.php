@@ -18,6 +18,16 @@ class DistrictResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Districts');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Area');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
