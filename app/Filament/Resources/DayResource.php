@@ -19,6 +19,18 @@ class DayResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Days');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Schedule');
+    }
+
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form

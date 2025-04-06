@@ -19,6 +19,18 @@ class RoundResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Rounds');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Schedule');
+    }
+
+    protected static ?int $navigationSort = 3;
+
     public static function form(Form $form): Form
     {
         return $form

@@ -1,6 +1,9 @@
 {
     "Area": "Wilayah",
+    "Schedule": "Jadwal",
     "Districts": "Kabupaten",
     "Sub Districts": "Kecamatan",
-    "Villages": "Desa"
+    "Villages": "Desa",
+    "Days": "Hari",
+    "Rounds": "Putaran"
 }
