@@ -1,4 +1,6 @@
 {
+    "Area": "Wilayah",
     "Districts": "Kabupaten",
-    "Area": "Wilayah"
+    "Sub Districts": "Kecamatan",
+    "Villages": "Desa"
 }

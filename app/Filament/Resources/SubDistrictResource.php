@@ -18,6 +18,16 @@ class SubDistrictResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Sub Districts');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Area');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -38,7 +48,8 @@ class SubDistrictResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
+                    ->label('ID')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('district.name'),
                 Tables\Columns\TextColumn::make('code')
                     ->searchable(),
