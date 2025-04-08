@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\SubDistrict;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SubDistrictPolicy
