@@ -26,32 +26,42 @@ class SocialiteController extends Controller
         $currentUser = Socialite::driver($driver)->user();
         $providerId = $driver.'_id';
 
-        // Prepare attributes
-        $attributes = [
-            'name' => $currentUser->name,
-            'email' => $currentUser->email,
-        ];
+        // First check if a user with this email already exists
+        $existingUser = User::where('email', $currentUser->email)->first();
 
-        // Check if user exists first
-        // Add email_verified_at only for new users
-        if (
-            ! User::where($providerId, $currentUser->id)->exists()
-        ) {
-            $attributes['email_verified_at'] = now();
+        if ($existingUser) {
+            // User exists with this email, update the social ID for this provider
+            $existingUser->{$providerId} = $currentUser->id;
+            $existingUser->save();
+
+            $this->assignRoleVisitor($existingUser);
+
+            Auth::login($existingUser, true);
+
+            return to_route('dashboard');
         }
 
+        // Otherwise create a new user or update existing one by provider ID
         $user = User::updateOrCreate(
             [$providerId => $currentUser->id],
-            $attributes
+            [
+                'name' => $currentUser->name,
+                'email' => $currentUser->email,
+                'email_verified_at' => now(), // Only set this if it's a new record
+            ]
         );
 
-        // assign the user with role visitor if there is no roles attached
-        if ($user->roles->isEmpty()) {
-            $user->assignRole(Role::visitor->value);
-        }
+        $this->assignRoleVisitor($user);
 
         Auth::login($user, true);
 
         return to_route('dashboard');
+    }
+
+    protected function assignRoleVisitor(User $user)
+    {
+        if ($user->roles()->isEmpty()) {
+            $user->assignRole(Role::visitor->value);
+        }
     }
 }
