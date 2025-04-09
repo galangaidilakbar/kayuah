@@ -69,7 +69,7 @@ test('user can delete their account', function () {
     expect($user->fresh())->toBeNull();
 });
 
-test('correct password must be provided to delete account', function () {
+test('correct email must be provided to delete account', function () {
     $user = User::factory()->create();
 
     $response = $this
