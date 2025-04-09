@@ -19,14 +19,24 @@ class DayResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-sun';
 
-    public static function getNavigationLabel(): string
-    {
-        return __('Days');
-    }
-
     public static function getNavigationGroup(): ?string
     {
-        return __('Schedule');
+        return __('filament/navigation.group.schedules');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources.day.label.plural');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament/resources.day.label.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament/resources.day.label.plural');
     }
 
     protected static ?int $navigationSort = 2;

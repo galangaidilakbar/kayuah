@@ -31,4 +31,28 @@ return [
             'plural' => 'Sponsors',
         ],
     ],
+    'event' => [
+        'label' => [
+            'singular' => 'Event',
+            'plural' => 'Events',
+        ],
+    ],
+    'day' => [
+        'label' => [
+            'singular' => 'Day',
+            'plural' => 'Days',
+        ],
+    ],
+    'round' => [
+        'label' => [
+            'singular' => 'Round',
+            'plural' => 'Rounds',
+        ],
+    ],
+    'venue' => [
+        'label' => [
+            'singular' => 'Venue',
+            'plural' => 'Venues',
+        ],
+    ],
 ];

@@ -31,4 +31,28 @@ return [
             'plural' => 'Sponsor',
         ],
     ],
+    'event' => [
+        'label' => [
+            'singular' => 'Event',
+            'plural' => 'Event',
+        ],
+    ],
+    'day' => [
+        'label' => [
+            'singular' => 'Hari',
+            'plural' => 'Hari',
+        ],
+    ],
+    'round' => [
+        'label' => [
+            'singular' => 'Putaran',
+            'plural' => 'Putaran',
+        ],
+    ],
+    'venue' => [
+        'label' => [
+            'singular' => 'Tepian',
+            'plural' => 'Tepian',
+        ],
+    ],
 ];

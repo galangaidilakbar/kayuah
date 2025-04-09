@@ -18,14 +18,24 @@ class VenueResource extends Resource
 
     protected static ?string $navigationIcon = 'gmdi-festival-o';
 
-    public static function getNavigationLabel(): string
-    {
-        return __('Venues');
-    }
-
     public static function getNavigationGroup(): ?string
     {
-        return __('Schedule');
+        return __('filament/navigation.group.schedules');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources.venue.label.plural');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament/resources.venue.label.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament/resources.venue.label.plural');
     }
 
     protected static ?int $navigationSort = 4;

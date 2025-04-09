@@ -25,7 +25,22 @@ class EventResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('Schedule');
+        return __('filament/navigation.group.schedules');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources.event.label.plural');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament/resources.event.label.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament/resources.event.label.plural');
     }
 
     protected static ?int $navigationSort = 1;
