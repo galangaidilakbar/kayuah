@@ -18,14 +18,24 @@ class DistrictResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-asia-australia';
 
-    public static function getNavigationLabel(): string
-    {
-        return __('Districts');
-    }
-
     public static function getNavigationGroup(): ?string
     {
-        return __('Area');
+        return __('filament/navigation.group.regions');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources.district.label.plural');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament/resources.district.label.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament/resources.district.label.plural');
     }
 
     public static function form(Form $form): Form
