@@ -18,14 +18,24 @@ class BoatResource extends Resource
 
     protected static ?string $navigationIcon = 'tabler-kayak';
 
-    public static function getNavigationLabel(): string
-    {
-        return __('Boats');
-    }
-
     public static function getNavigationGroup(): ?string
     {
-        return __('Participants');
+        return __('filament/navigation.group.participants');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources.boat.label.plural');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament/resources.boat.label.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament/resources.boat.label.plural');
     }
 
     public static function form(Form $form): Form

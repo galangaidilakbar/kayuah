@@ -21,7 +21,22 @@ class SponsorResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('Participants');
+        return __('filament/navigation.group.participants');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources.sponsor.label.plural');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament/resources.sponsor.label.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament/resources.sponsor.label.plural');
     }
 
     public static function form(Form $form): Form

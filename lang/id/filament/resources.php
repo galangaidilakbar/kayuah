@@ -19,4 +19,16 @@ return [
             'plural' => 'Desa',
         ],
     ],
+    'boat' => [
+        'label' => [
+            'singular' => 'Jalur',
+            'plural' => 'Jalur',
+        ],
+    ],
+    'sponsor' => [
+        'label' => [
+            'singular' => 'Sponsor',
+            'plural' => 'Sponsor',
+        ],
+    ],
 ];
