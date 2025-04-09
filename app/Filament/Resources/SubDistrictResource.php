@@ -18,14 +18,24 @@ class SubDistrictResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
-    public static function getNavigationLabel(): string
-    {
-        return __('Sub Districts');
-    }
-
     public static function getNavigationGroup(): ?string
     {
-        return __('Area');
+        return __('filament/navigation.group.regions');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources.sub_district.label.plural');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament/resources.sub_district.label.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament/resources.sub_district.label.plural');
     }
 
     public static function form(Form $form): Form

@@ -18,14 +18,24 @@ class VillageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-table-cells';
 
-    public static function getNavigationLabel(): string
-    {
-        return __('Villages');
-    }
-
     public static function getNavigationGroup(): ?string
     {
-        return __('Area');
+        return __('filament/navigation.group.regions');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources.village.label.plural');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament/resources.village.label.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament/resources.village.label.plural');
     }
 
     public static function form(Form $form): Form
