@@ -22,6 +22,13 @@ class DaysRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->datalist([
+                        'Hari Pertama',
+                        'Hari Kedua',
+                        'Hari Ketiga',
+                        'Hari Keempat',
+                        'Hari Kelima',
+                    ])
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('date')
                     ->native(false)
