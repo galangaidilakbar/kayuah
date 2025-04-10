@@ -29,4 +29,16 @@ class Round extends Model
             get: fn () => $this->day->name.' - '.$this->name,
         );
     }
+
+    public static function datalist(): array
+    {
+        return [
+            'Putaran Pertama',
+            'Putaran Kedua',
+            'Putaran Ketiga',
+            'Semifinal',
+            'Final Segitiga',
+            'Final',
+        ];
+    }
 }

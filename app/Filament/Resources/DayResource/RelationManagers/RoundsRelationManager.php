@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\DayResource\RelationManagers;
 
 use App\Filament\Resources\RoundResource;
+use App\Models\Round as ModelRound;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -22,14 +23,7 @@ class RoundsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->datalist([
-                        'Putaran Pertama',
-                        'Putaran Kedua',
-                        'Putaran Ketiga',
-                        'Semifinal',
-                        'Final Segitiga',
-                        'Final',
-                    ])
+                    ->datalist(ModelRound::datalist())
                     ->autocomplete(false)
                     ->maxLength(255),
             ]);
