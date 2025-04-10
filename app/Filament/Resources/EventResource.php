@@ -49,6 +49,7 @@ class EventResource extends Resource
     {
         return $form
             ->schema([
+                SpatieMediaLibraryFileUpload::make('thumbnail'),
                 Forms\Components\Select::make('venue_id')
                     ->relationship('venue', 'name')
                     ->required(),
@@ -59,7 +60,6 @@ class EventResource extends Resource
                     ->required(),
                 Forms\Components\DateTimePicker::make('end_date')
                     ->required(),
-                SpatieMediaLibraryFileUpload::make('thumbnail'),
             ]);
     }
 
@@ -141,6 +141,7 @@ class EventResource extends Resource
     {
         return $infolist
             ->schema([
+                Infolists\Components\SpatieMediaLibraryImageEntry::make('thumbnail'),
                 Infolists\Components\TextEntry::make('venue.name'),
                 Infolists\Components\TextEntry::make('name'),
                 Infolists\Components\TextEntry::make('start_date')
