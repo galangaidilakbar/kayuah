@@ -58,7 +58,8 @@ class VenueResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
+                    ->label('ID')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('subDistrict.name'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),

@@ -61,7 +61,8 @@ class RoundResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
+                    ->label('ID')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('day.name'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
