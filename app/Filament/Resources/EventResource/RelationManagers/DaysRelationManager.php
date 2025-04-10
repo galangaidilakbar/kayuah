@@ -29,9 +29,12 @@ class DaysRelationManager extends RelationManager
                         'Hari Keempat',
                         'Hari Kelima',
                     ])
+                    ->autocomplete(false)
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('date')
                     ->native(false)
+                    ->minDate($this->getOwnerRecord()->start_date->format('Y-m-d'))
+                    ->maxDate($this->getOwnerRecord()->end_date->format('Y-m-d'))
                     ->required(),
             ]);
     }
