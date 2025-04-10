@@ -29,6 +29,9 @@ export default function Show({ event }: ShowProps) {
             <Head title={event.name} />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div>
+                    <div className="overflow-hidden rounded-xl shadow-md max-w-sm">
+                        <img src={event.thumbnail || "/placeholder.svg"} alt={event.name} className="h-full w-full object-cover" />
+                    </div>
                     <h1>{event.name}</h1>
                     <div>
                         {event.venue?.name}, {event.venue?.subDistrict?.name}
@@ -46,7 +49,17 @@ export default function Show({ event }: ShowProps) {
                             <TabsTrigger value="standings">Peringkat</TabsTrigger>
                         </TabsList>
                         <TabsContent value="days">
-                            <ol className="list-decimal space-y-6 pl-6">{event.days?.map((day) => <li>{day.date}</li>)}</ol>
+                            <ol className="mt-6 list-decimal space-y-6 pl-6">
+                                {event.days?.map((day) => (
+                                    <li key={day.id}>
+                                        <h2 className="mb-6">{day.name}</h2>
+
+                                        <ul className="list-disc space-y-6 pl-6">
+                                            {day.rounds?.map((round) => <li key={round.id}>{round.name}</li>)}
+                                        </ul>
+                                    </li>
+                                ))}
+                            </ol>
                         </TabsContent>
                         <TabsContent value="participants">table jalur-jalur yang ikut.</TabsContent>
                         <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>
