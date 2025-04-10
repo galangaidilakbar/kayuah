@@ -22,6 +22,15 @@ class RoundsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->datalist([
+                        'Putaran Pertama',
+                        'Putaran Kedua',
+                        'Putaran Ketiga',
+                        'Semifinal',
+                        'Final Segitiga',
+                        'Final',
+                    ])
+                    ->autocomplete(false)
                     ->maxLength(255),
             ]);
     }
