@@ -3,6 +3,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { CalendarDays, MapPin, Trophy, Users } from 'lucide-react';
+import EventSchedule from './components/event-schedule';
 
 interface ShowProps {
     event: App.Data.EventData;
@@ -93,17 +94,7 @@ export default function Show({ event }: ShowProps) {
                             <TabsTrigger value="standings">Peringkat</TabsTrigger>
                         </TabsList>
                         <TabsContent value="days">
-                            <ol className="mt-6 list-decimal space-y-6 pl-6">
-                                {event.days?.map((day) => (
-                                    <li key={day.id}>
-                                        <h2 className="mb-6">{day.name}</h2>
-
-                                        <ul className="list-disc space-y-6 pl-6">
-                                            {day.rounds?.map((round) => <li key={round.id}>{round.name}</li>)}
-                                        </ul>
-                                    </li>
-                                ))}
-                            </ol>
+                            <EventSchedule days={event.days!} />
                         </TabsContent>
                         <TabsContent value="participants">table jalur-jalur yang ikut.</TabsContent>
                         <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>
