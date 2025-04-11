@@ -56,7 +56,7 @@ export default function Show({ event }: ShowProps) {
 
                 {/* Event Stats */}
                 <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-                    <div className="flex items-center gap-4 rounded-lg bg-white dark:bg-secondary p-4 shadow">
+                    <div className="dark:bg-secondary flex items-center gap-4 rounded-lg bg-white p-4 shadow">
                         <div className="rounded-full bg-rose-100 p-3">
                             <CalendarDays className="h-6 w-6 text-rose-600" />
                         </div>
@@ -65,7 +65,7 @@ export default function Show({ event }: ShowProps) {
                             <p className="text-xl font-semibold">{event.days_count} Days</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-4 rounded-lg bg-white dark:bg-secondary p-4 shadow">
+                    <div className="dark:bg-secondary flex items-center gap-4 rounded-lg bg-white p-4 shadow">
                         <div className="rounded-full bg-emerald-100 p-3">
                             <Users className="h-6 w-6 text-emerald-600" />
                         </div>
@@ -74,7 +74,7 @@ export default function Show({ event }: ShowProps) {
                             <p className="text-xl font-semibold">{event.participants_count} Teams</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-4 rounded-lg bg-white dark:bg-secondary p-4 shadow">
+                    <div className="dark:bg-secondary flex items-center gap-4 rounded-lg bg-white p-4 shadow">
                         <div className="rounded-full bg-amber-100 p-3">
                             <Trophy className="h-6 w-6 text-amber-600" />
                         </div>
