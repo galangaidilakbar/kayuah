@@ -28,14 +28,10 @@ export default function Show({ event }: ShowProps) {
         },
     ];
 
-    const locationString = event.venue
-        ? `${event.venue.name}, ${event.venue.subDistrict?.name || ''}, ${event.venue.subDistrict?.district?.name || ''}`
-        : 'Location not available';
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={event.name} />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+            <div className="container mx-auto px-4 py-8">
                 {/* Hero Section */}
                 <div className="relative mb-8 h-[300px] w-full overflow-hidden rounded-xl md:h-[400px]">
                     <img src={event.thumbnail || '/placeholder.svg'} alt={event.name} className="absolute inset-0 h-full w-full object-cover" />
@@ -50,7 +46,9 @@ export default function Show({ event }: ShowProps) {
                             </div>
                             <div className="flex items-center gap-1">
                                 <MapPin className="h-5 w-5" />
-                                <span>{locationString}</span>
+                                <span>
+                                    {event.venue?.name}, {event.venue?.subDistrict?.name}
+                                </span>
                             </div>
                         </div>
                     </div>
