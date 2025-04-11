@@ -2,14 +2,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { format } from 'date-fns';
+import { CalendarDays, MapPin, Trophy, Users } from 'lucide-react';
 
 interface ShowProps {
     event: App.Data.EventData;
 }
 
 const formatDate = (dateString: string) => {
-    return format(new Date(dateString), 'MMM d, yyyy');
+    return new Date(dateString).toLocaleDateString('id-ID', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
 };
 
 export default function Show({ event }: ShowProps) {
@@ -24,25 +28,67 @@ export default function Show({ event }: ShowProps) {
         },
     ];
 
+    const locationString = event.venue
+        ? `${event.venue.name}, ${event.venue.subDistrict?.name || ''}, ${event.venue.subDistrict?.district?.name || ''}`
+        : 'Location not available';
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={event.name} />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div>
-                    <div className="overflow-hidden rounded-xl shadow-md max-w-sm">
-                        <img src={event.thumbnail || "/placeholder.svg"} alt={event.name} className="h-full w-full object-cover" />
+                {/* Hero Section */}
+                <div className="relative mb-8 h-[300px] w-full overflow-hidden rounded-xl md:h-[400px]">
+                    <img src={event.thumbnail || '/placeholder.svg'} alt={event.name} className="absolute inset-0 h-full w-full object-cover" />
+                    <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 to-transparent p-6">
+                        <h1 className="mb-2 text-3xl font-bold text-white md:text-4xl">{event.name}</h1>
+                        <div className="flex flex-wrap gap-4 text-white">
+                            <div className="flex items-center gap-1">
+                                <CalendarDays className="h-5 w-5" />
+                                <span>
+                                    {formatDate(event.start_date)} - {formatDate(event.end_date)}
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                                <MapPin className="h-5 w-5" />
+                                <span>{locationString}</span>
+                            </div>
+                        </div>
                     </div>
-                    <h1>{event.name}</h1>
-                    <div>
-                        {event.venue?.name}, {event.venue?.subDistrict?.name}
+                </div>
+
+                {/* Event Stats */}
+                <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+                    <div className="bg-background/90 flex items-center gap-4 rounded-lg p-4 shadow">
+                        <div className="rounded-full bg-rose-100 p-3">
+                            <CalendarDays className="h-6 w-6 text-rose-600" />
+                        </div>
+                        <div>
+                            <p className="text-muted-foreground text-sm">Duration</p>
+                            <p className="text-xl font-semibold">{event.days_count} Days</p>
+                        </div>
                     </div>
-                    <div>
-                        {formatDate(event.start_date)} - {formatDate(event.end_date)}
+                    <div className="flex items-center gap-4 rounded-lg bg-white p-4 shadow">
+                        <div className="rounded-full bg-emerald-100 p-3">
+                            <Users className="h-6 w-6 text-emerald-600" />
+                        </div>
+                        <div>
+                            <p className="text-muted-foreground text-sm">Participants</p>
+                            <p className="text-xl font-semibold">{event.participants_count} Teams</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-4 rounded-lg bg-white p-4 shadow">
+                        <div className="rounded-full bg-amber-100 p-3">
+                            <Trophy className="h-6 w-6 text-amber-600" />
+                        </div>
+                        <div>
+                            <p className="text-muted-foreground text-sm">Competition</p>
+                            <p className="text-xl font-semibold">Dragon Boat Racing</p>
+                        </div>
                     </div>
                 </div>
 
                 <div>
-                    <Tabs defaultValue="days" className="w-[400px]">
+                    <Tabs defaultValue="days" className="w-full">
                         <TabsList className="grid w-full grid-cols-3">
                             <TabsTrigger value="days">Hari</TabsTrigger>
                             <TabsTrigger value="participants">Peserta</TabsTrigger>
