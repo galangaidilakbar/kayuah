@@ -90,7 +90,7 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
 
                     {/* Event image */}
                     <Card className="relative aspect-video overflow-hidden py-0">
-                        <img src={thumbnail} alt={event.name} className="object-cover" />
+                        <img src={thumbnail} alt={event.name} className="absolute inset-0 h-full w-full object-cover" />
                         {isLive && (
                             <div className="absolute top-4 right-4">
                                 <Badge variant="destructive" className="px-3 py-1.5 text-sm font-medium tracking-wider uppercase">
