@@ -9,7 +9,7 @@ interface EventScheduleProps {
 
 export default function EventSchedule({ days }: EventScheduleProps) {
     const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
+        return new Date(dateString).toLocaleDateString('id-ID', {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
