@@ -119,7 +119,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
             {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
 
-            <InputError message={pageErrors.socialite} className='text-center' />
+            <InputError message={pageErrors.socialite} className="text-center" />
         </AuthLayout>
     );
 }

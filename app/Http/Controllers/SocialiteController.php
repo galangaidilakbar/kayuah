@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -27,10 +26,10 @@ class SocialiteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, string $driver)
+    public function store(string $driver)
     {
         $currentUser = Socialite::driver($driver)->user();
-        $providerId = $driver . '_id';
+        $providerId = $driver.'_id';
 
         // First check if a user with this email already exists
         $existingUser = User::where('email', $currentUser->email)->first();
@@ -75,7 +74,7 @@ class SocialiteController extends Controller
     {
         $supportedDrivers = ['facebook']; // Adjust as needed
 
-        if (!in_array($driver, $supportedDrivers)) {
+        if (! in_array($driver, $supportedDrivers)) {
             return redirect()->route('login')->withErrors(['socialite' => "Sign in with {$driver} is not supported."]);
         }
 
