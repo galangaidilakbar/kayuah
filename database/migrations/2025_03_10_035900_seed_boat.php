@@ -3,10 +3,17 @@
 use App\Models\Boat;
 use App\Models\Village;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
 
 return new class extends Migration
 {
+    public function shouldRun(): bool
+    {
+        // Skip migration in testing environment
+        return app()->environment() !== 'testing';
+    }
+
     /**
      * Run the migrations.
      */

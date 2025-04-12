@@ -7,6 +7,12 @@ use League\Csv\Reader;
 
 return new class extends Migration
 {
+    public function shouldRun(): bool
+    {
+        // Skip migration in testing environment
+        return app()->environment() !== 'testing';
+    }
+
     /**
      * Run the migrations.
      */
