@@ -99,7 +99,7 @@ const Footer = () => {
                                 <Link
                                     href={route('legal.privacy-policy')}
                                     prefetch
-                                    className={`text-muted-foreground hover:text-foreground text-sm transition-colors ${route().current('legal.privacy-policy') ? 'text-foreground' : ''}`}
+                                    className={`text-muted-foreground hover:text-foreground text-sm transition-colors ${route().current('legal.privacy-policy') ? 'underline' : ''}`}
                                 >
                                     Privacy Policy
                                 </Link>
