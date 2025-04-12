@@ -102,7 +102,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                     <Button asChild tabIndex={5} className="w-full bg-[#1877f2] text-white hover:bg-[#1877f2]/90">
                         <a href={route('socialite.create', 'facebook')}>
-                            <SiFacebook /> Sign in with Facebook
+                            <SiFacebook /> Continue with Facebook
                         </a>
                     </Button>
                 </div>
