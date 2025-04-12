@@ -4,6 +4,7 @@ use App\Models\District;
 use App\Models\SubDistrict;
 use App\Models\Village;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
 
 return new class extends Migration
