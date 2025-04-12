@@ -87,13 +87,13 @@ export default function Show({ event }: ShowProps) {
                 </div>
 
                 <div>
-                    <Tabs defaultValue="days" className="w-full">
+                    <Tabs defaultValue="schedules" className="w-full">
                         <TabsList className="grid w-full grid-cols-3">
-                            <TabsTrigger value="days">Hari</TabsTrigger>
+                            <TabsTrigger value="schedules">Jadwal</TabsTrigger>
                             <TabsTrigger value="participants">Peserta</TabsTrigger>
                             <TabsTrigger value="standings">Peringkat</TabsTrigger>
                         </TabsList>
-                        <TabsContent value="days">
+                        <TabsContent value="schedules">
                             <EventSchedule days={event.days!} />
                         </TabsContent>
                         <TabsContent value="participants">table jalur-jalur yang ikut.</TabsContent>
