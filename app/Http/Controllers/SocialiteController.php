@@ -38,7 +38,7 @@ class SocialiteController extends Controller
 
             Auth::login($existingUser, true);
 
-            return to_route('dashboard');
+            return redirect()->intended(route('dashboard', absolute: false));
         }
 
         // Otherwise create a new user or update existing one by provider ID
@@ -55,12 +55,12 @@ class SocialiteController extends Controller
 
         Auth::login($user, true);
 
-        return to_route('dashboard');
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 
     protected function assignRoleVisitor(User $user)
     {
-        if ($user->roles()->isEmpty()) {
+        if ($user->roles->isEmpty()) {
             $user->assignRole(Role::visitor->value);
         }
     }
