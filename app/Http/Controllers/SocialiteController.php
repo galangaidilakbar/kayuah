@@ -28,39 +28,53 @@ class SocialiteController extends Controller
      */
     public function store(string $driver)
     {
-        $currentUser = Socialite::driver($driver)->user();
-        $providerId = $driver.'_id';
+        try {
+            // Validate driver before proceeding
+            $validation = $this->validateSocialiteDriver($driver);
+            if ($validation) {
+                return $validation;
+            }
 
-        // First check if a user with this email already exists
-        $existingUser = User::where('email', $currentUser->email)->first();
+            $currentUser = Socialite::driver($driver)->user();
+            $providerId = $driver.'_id';
 
-        if ($existingUser) {
-            // User exists with this email, update the social ID for this provider
-            $existingUser->{$providerId} = $currentUser->id;
-            $existingUser->save();
+            // First check if a user with this email already exists
+            $existingUser = User::where('email', $currentUser->email)->first();
 
-            $this->assignRoleVisitor($existingUser);
+            if ($existingUser) {
+                // User exists with this email, update the social ID for this provider
+                $existingUser->{$providerId} = $currentUser->id;
+                $existingUser->save();
+                $this->assignRoleVisitor($existingUser);
+                Auth::login($existingUser, true);
 
-            Auth::login($existingUser, true);
+                return redirect()->intended(route('dashboard', absolute: false));
+            }
+
+            // Otherwise create a new user or update existing one by provider ID
+            $user = User::updateOrCreate(
+                [$providerId => $currentUser->id],
+                [
+                    'name' => $currentUser->name,
+                    'email' => $currentUser->email,
+                    'email_verified_at' => now(), // Only set this if it's a new record
+                ]
+            );
+
+            $this->assignRoleVisitor($user);
+            Auth::login($user, true);
 
             return redirect()->intended(route('dashboard', absolute: false));
+
+        } catch (\Exception $e) {
+            // Determine if it's a user-initiated cancellation or another error
+            $errorMessage = str_contains($e->getMessage(), 'cancel') ||
+                str_contains($e->getMessage(), 'denied') ?
+                'You cancelled the sign in process.' :
+                'There was an error signing in with '.$driver.'. Please try again.';
+
+            return redirect()->route('login')->withErrors(['socialite' => $errorMessage]);
         }
-
-        // Otherwise create a new user or update existing one by provider ID
-        $user = User::updateOrCreate(
-            [$providerId => $currentUser->id],
-            [
-                'name' => $currentUser->name,
-                'email' => $currentUser->email,
-                'email_verified_at' => now(), // Only set this if it's a new record
-            ]
-        );
-
-        $this->assignRoleVisitor($user);
-
-        Auth::login($user, true);
-
-        return redirect()->intended(route('dashboard', absolute: false));
     }
 
     protected function assignRoleVisitor(User $user)
