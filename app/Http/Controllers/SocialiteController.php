@@ -15,6 +15,12 @@ class SocialiteController extends Controller
      */
     public function create(string $driver)
     {
+        $validation = $this->validateSocialiteDriver($driver);
+
+        if ($validation) {
+            return $validation;
+        }
+
         return Socialite::driver($driver)->redirect();
     }
 
@@ -24,7 +30,7 @@ class SocialiteController extends Controller
     public function store(Request $request, string $driver)
     {
         $currentUser = Socialite::driver($driver)->user();
-        $providerId = $driver.'_id';
+        $providerId = $driver . '_id';
 
         // First check if a user with this email already exists
         $existingUser = User::where('email', $currentUser->email)->first();
@@ -63,5 +69,16 @@ class SocialiteController extends Controller
         if ($user->roles->isEmpty()) {
             $user->assignRole(Role::visitor->value);
         }
+    }
+
+    protected function validateSocialiteDriver(string $driver)
+    {
+        $supportedDrivers = ['facebook']; // Adjust as needed
+
+        if (!in_array($driver, $supportedDrivers)) {
+            return redirect()->route('login')->withErrors(['socialite' => "Sign in with {$driver} is not supported."]);
+        }
+
+        return null;
     }
 }

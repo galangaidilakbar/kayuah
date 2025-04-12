@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
@@ -30,6 +30,8 @@ export default function Login({ status, canResetPassword }: LoginProps) {
         password: '',
         remember: false,
     });
+
+    const { errors: pageErrors } = usePage().props;
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -116,6 +118,8 @@ export default function Login({ status, canResetPassword }: LoginProps) {
             </form>
 
             {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
+
+            <InputError message={pageErrors.socialite} className='text-center' />
         </AuthLayout>
     );
 }
