@@ -48,7 +48,7 @@ export default function Show({ event }: ShowProps) {
                             </div>
                             <div className="flex items-center gap-1">
                                 <MapPin className="h-5 w-5" />
-                                <span className='capitalize'>
+                                <span className="capitalize">
                                     {event.venue?.name.toLowerCase()}, {event.venue?.subDistrict?.name}
                                 </span>
                             </div>
