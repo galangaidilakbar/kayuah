@@ -51,8 +51,8 @@ return [
     ],
     'venue' => [
         'label' => [
-            'singular' => 'Tepian',
-            'plural' => 'Tepian',
+            'singular' => 'Gelanggang',
+            'plural' => 'Gelanggang',
         ],
     ],
 ];
