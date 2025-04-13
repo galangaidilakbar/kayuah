@@ -1,9 +1,8 @@
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Link } from '@inertiajs/react';
 import { format } from 'date-fns';
-import { ArrowRight, Calendar, MapPin, Users } from 'lucide-react';
+import { Calendar, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 interface EventCardProps {
@@ -31,13 +30,17 @@ export default function EventCard({ event }: EventCardProps) {
     }, [event.start_date, event.end_date]);
 
     const formatDate = (dateString: string) => {
-        return format(new Date(dateString), 'MMM d, yyyy');
+        return new Date(dateString).toLocaleDateString('id-ID', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
     };
 
     const thumbnail = event.thumbnail ? event.thumbnail : 'placeholder.svg';
 
     return (
-        <Card className="h-full overflow-hidden py-0">
+        <Card className="relative isolate h-full overflow-hidden py-0">
             <div className="relative aspect-video w-full overflow-hidden">
                 <img src={thumbnail} alt={event.name} className="absolute inset-0 h-full w-full object-cover transition-transform hover:scale-105" />
                 {isLive && (
@@ -54,14 +57,19 @@ export default function EventCard({ event }: EventCardProps) {
             </div>
 
             <CardContent className="p-4">
-                <h3 className="line-clamp-2 text-xl font-bold capitalize">{event.name.toLowerCase()}</h3>
+                <h3 className="line-clamp-2 text-xl font-semibold">
+                    <Link href={route('events.show', event.id)} prefetch>
+                        <span className="absolute inset-0 z-10"></span>
+                        {event.name}
+                    </Link>
+                </h3>
 
                 <div className="text-muted-foreground mt-3 space-y-2 text-sm">
                     {event.venue && (
                         <div className="flex items-center gap-1.5">
                             <MapPin className="text-primary h-4 w-4" />
-                            <span className="capitalize">{event.venue.name.toLowerCase()}</span>
-                            {event.venue?.subDistrict && <span className="text-muted-foreground">• {event.venue?.subDistrict?.name}</span>}
+                            <span className="capitalize">{event.venue.name.toLowerCase()},</span>
+                            {event.venue?.subDistrict && <span className="text-muted-foreground">{event.venue?.subDistrict?.name}</span>}
                         </div>
                     )}
 
@@ -71,22 +79,8 @@ export default function EventCard({ event }: EventCardProps) {
                             {formatDate(event.start_date)} - {formatDate(event.end_date)}
                         </span>
                     </div>
-
-                    <div className="flex items-center gap-1.5">
-                        <Users className="text-primary h-4 w-4" />
-                        <span>{event.participants_count} jalur</span>
-                    </div>
                 </div>
             </CardContent>
-
-            <CardFooter className="p-4 pt-0">
-                <Button variant="outline" size="sm" className="group w-full" asChild>
-                    <Link href={route('events.show', event.id)}>
-                        View Details
-                        <ArrowRight className="ml-2 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                </Button>
-            </CardFooter>
         </Card>
     );
 }

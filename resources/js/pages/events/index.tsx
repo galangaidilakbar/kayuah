@@ -19,7 +19,7 @@ export default function Index({ events }: IndexProps) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Events" />
             <div className="container mx-auto px-4 py-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {events.map((event) => (
                         <EventCard event={event} key={event.id} />
                     ))}

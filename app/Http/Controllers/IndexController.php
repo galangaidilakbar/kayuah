@@ -48,7 +48,7 @@ class IndexController extends Controller
 
     protected function baseEventQuery()
     {
-        return Event::with('venue.subDistrict')->withCount(['participants']);
+        return Event::with('venue.subDistrict');
     }
 
     protected function getLatestRace()
