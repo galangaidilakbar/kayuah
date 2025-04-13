@@ -158,7 +158,7 @@ class EventResource extends Resource
                 Infolists\Components\TextEntry::make('end_date')
                     ->date(),
                 Infolists\Components\TextEntry::make('type'),
-                Infolists\Components\TextEntry::make('about'),
+                Infolists\Components\TextEntry::make('about')->html(),
             ]);
     }
 }
