@@ -88,7 +88,7 @@ export default function Show({ event }: ShowProps) {
                 </div>
 
                 <Tabs defaultValue="overview" className="w-full">
-                    <TabsList className="mb-8 grid grid-cols-4">
+                    <TabsList className="mb-8 grid w-full grid-cols-4">
                         <TabsTrigger value="overview">Ringkasan</TabsTrigger>
                         <TabsTrigger value="schedules">Jadwal</TabsTrigger>
                         <TabsTrigger value="participants">Peserta</TabsTrigger>
