@@ -62,8 +62,8 @@ export default function Show({ event }: ShowProps) {
                             <CalendarDays className="h-6 w-6 text-rose-600" />
                         </div>
                         <div>
-                            <p className="text-muted-foreground text-sm">Duration</p>
-                            <p className="text-xl font-semibold">{event.days_count} Days</p>
+                            <p className="text-muted-foreground text-sm">Durasi</p>
+                            <p className="text-xl font-semibold">{event.days_count} Hari</p>
                         </div>
                     </div>
                     <div className="dark:bg-secondary flex items-center gap-4 rounded-lg bg-white p-4 shadow">
@@ -71,8 +71,8 @@ export default function Show({ event }: ShowProps) {
                             <Users className="h-6 w-6 text-emerald-600" />
                         </div>
                         <div>
-                            <p className="text-muted-foreground text-sm">Participants</p>
-                            <p className="text-xl font-semibold">{event.participants_count} Teams</p>
+                            <p className="text-muted-foreground text-sm">Peserta</p>
+                            <p className="text-xl font-semibold">{event.participants_count} Jalur</p>
                         </div>
                     </div>
                     <div className="dark:bg-secondary flex items-center gap-4 rounded-lg bg-white p-4 shadow">
@@ -80,7 +80,7 @@ export default function Show({ event }: ShowProps) {
                             <Trophy className="h-6 w-6 text-amber-600" />
                         </div>
                         <div>
-                            <p className="text-muted-foreground text-sm">Competition</p>
+                            <p className="text-muted-foreground text-sm">Jenis</p>
                             <p className="text-xl font-semibold">Dragon Boat Racing</p>
                         </div>
                     </div>

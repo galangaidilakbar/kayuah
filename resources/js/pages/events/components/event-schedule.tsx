@@ -19,7 +19,7 @@ export default function EventSchedule({ days }: EventScheduleProps) {
 
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Event Schedule</h2>
+            <h2 className="text-2xl font-bold">Jadwal Event</h2>
 
             <div className="space-y-4">
                 {days.map((day) => (
