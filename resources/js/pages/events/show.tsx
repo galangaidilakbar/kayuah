@@ -3,6 +3,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { CalendarDays, MapPin, Trophy, Users } from 'lucide-react';
+import EventOverview from './components/event-overview';
 import EventSchedule from './components/event-schedule';
 
 interface ShowProps {
@@ -81,25 +82,27 @@ export default function Show({ event }: ShowProps) {
                         </div>
                         <div>
                             <p className="text-muted-foreground text-sm">Jenis</p>
-                            <p className="text-xl font-semibold">Dragon Boat Racing</p>
+                            <p className="text-xl font-semibold">{event.type}</p>
                         </div>
                     </div>
                 </div>
 
-                <div>
-                    <Tabs defaultValue="schedules" className="w-full">
-                        <TabsList className="grid w-full grid-cols-3">
-                            <TabsTrigger value="schedules">Jadwal</TabsTrigger>
-                            <TabsTrigger value="participants">Peserta</TabsTrigger>
-                            <TabsTrigger value="standings">Peringkat</TabsTrigger>
-                        </TabsList>
-                        <TabsContent value="schedules">
-                            <EventSchedule days={event.days!} />
-                        </TabsContent>
-                        <TabsContent value="participants">table jalur-jalur yang ikut.</TabsContent>
-                        <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>
-                    </Tabs>
-                </div>
+                <Tabs defaultValue="overview" className="w-full">
+                    <TabsList className="mb-8 grid grid-cols-4">
+                        <TabsTrigger value="overview">Ringkasan</TabsTrigger>
+                        <TabsTrigger value="schedules">Jadwal</TabsTrigger>
+                        <TabsTrigger value="participants">Peserta</TabsTrigger>
+                        <TabsTrigger value="standings">Peringkat</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="overview">
+                        <EventOverview event={event} />
+                    </TabsContent>
+                    <TabsContent value="schedules">
+                        <EventSchedule days={event.days!} />
+                    </TabsContent>
+                    <TabsContent value="participants">table jalur-jalur yang ikut.</TabsContent>
+                    <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>
+                </Tabs>
             </div>
         </AppLayout>
     );
