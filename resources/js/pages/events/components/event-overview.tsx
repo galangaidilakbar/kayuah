@@ -23,7 +23,7 @@ export default function EventOverview({ event }: EventOverviewProps) {
                         Informasi Event
                     </CardTitle>
                     <CardDescription>
-                        Rincian acara <span className="capitalize">{event.name.toLowerCase()}</span>
+                        Rincian acara <span className="capitalize">{event.name}</span>
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
