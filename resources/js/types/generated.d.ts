@@ -26,6 +26,8 @@ declare namespace App.Data {
         name: string;
         start_date: string;
         end_date: string;
+        type: string | null;
+        about: string | null;
         thumbnail: string;
         venue: App.Data.VenueData | null;
         days?: Array<App.Data.DayData> | null;
@@ -100,6 +102,7 @@ declare namespace App.Data {
 }
 declare namespace App.Enums {
     export type RaceStatus = 'scheduled' | 'prepared' | 'ongoing' | 'paused' | 'completed' | 'cancelled' | 'postponed';
+    export type Role = 'super_admin' | 'editor' | 'visitor';
     export type SponsorType =
         | 'politician'
         | 'entrepreneur'

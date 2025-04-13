@@ -56,10 +56,18 @@ class EventResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('start_date')
+                Forms\Components\DatePicker::make('start_date')
                     ->required(),
-                Forms\Components\DateTimePicker::make('end_date')
+                Forms\Components\DatePicker::make('end_date')
                     ->required(),
+                Forms\Components\TextInput::make('type')
+                    ->autocomplete(false)
+                    ->datalist([
+                        'Pacu Jalur Tradisional',
+                        'Pacu Jalur Mini',
+                        'Pacu Jalur',
+                    ]),
+                Forms\Components\RichEditor::make('about')->columnSpanFull(),
             ]);
     }
 
@@ -75,11 +83,12 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('start_date')
-                    ->dateTime()
+                    ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('end_date')
-                    ->dateTime()
+                    ->date()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -145,9 +154,11 @@ class EventResource extends Resource
                 Infolists\Components\TextEntry::make('venue.name'),
                 Infolists\Components\TextEntry::make('name'),
                 Infolists\Components\TextEntry::make('start_date')
-                    ->dateTime(),
+                    ->date(),
                 Infolists\Components\TextEntry::make('end_date')
-                    ->dateTime(),
+                    ->date(),
+                Infolists\Components\TextEntry::make('type'),
+                Infolists\Components\TextEntry::make('about'),
             ]);
     }
 }

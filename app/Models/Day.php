@@ -13,6 +13,18 @@ class Day extends Model
 {
     use HasUuids, SoftDeletes;
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'date' => 'date',
+        ];
+    }
+
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);

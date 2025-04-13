@@ -31,6 +31,7 @@ return new class extends Migration
                 $event->name = $row['name'];
                 $event->start_date = $row['start_date'];
                 $event->end_date = $row['end_date'];
+                $event->type = $row['type'];
                 $event->save();
             }
         }

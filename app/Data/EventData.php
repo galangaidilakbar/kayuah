@@ -15,6 +15,8 @@ class EventData extends Data
         public string $name,
         public DateTime $start_date,
         public DateTime $end_date,
+        public ?string $type,
+        public ?string $about,
         public string $thumbnail,
         public ?VenueData $venue,
         #[DataCollectionOf(DayData::class)]

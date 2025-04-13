@@ -15,8 +15,10 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('venue_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->datetime('start_date');
-            $table->datetime('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('type')->nullable();
+            $table->text('about')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
