@@ -1,7 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from '@inertiajs/react';
-import { format } from 'date-fns';
 import { Calendar, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
 

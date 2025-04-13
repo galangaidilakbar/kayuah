@@ -3,9 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@inertiajs/react';
 import { format } from 'date-fns';
+import { id } from 'date-fns/locale';
 import { ArrowRight, Calendar, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { id } from "date-fns/locale"
 
 export default function EventHero({ event }: { event: App.Data.EventData }) {
     const [isLive, setIsLive] = useState(false);
@@ -29,7 +29,7 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
 
     const formatDate = (dateString: string) => {
         return format(new Date(dateString), 'd MMMM yyyy', {
-            locale: id
+            locale: id,
         });
     };
 
