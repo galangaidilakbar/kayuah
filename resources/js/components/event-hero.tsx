@@ -3,8 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@inertiajs/react';
 import { format } from 'date-fns';
-import { ArrowRight, Calendar, MapPin, Users } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { id } from "date-fns/locale"
 
 export default function EventHero({ event }: { event: App.Data.EventData }) {
     const [isLive, setIsLive] = useState(false);
@@ -27,7 +28,9 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
     }, [event.start_date, event.end_date]);
 
     const formatDate = (dateString: string) => {
-        return format(new Date(dateString), 'MMM d, yyyy');
+        return format(new Date(dateString), 'd MMMM yyyy', {
+            locale: id
+        });
     };
 
     const thumbnail = event.thumbnail ? event.thumbnail : 'placeholder.svg';
@@ -71,17 +74,12 @@ export default function EventHero({ event }: { event: App.Data.EventData }) {
                                     {formatDate(event.start_date)} - {formatDate(event.end_date)}
                                 </span>
                             </div>
-
-                            <div className="flex items-center gap-2">
-                                <Users className="text-primary h-5 w-5" />
-                                <span>{event.participants_count} jalur</span>
-                            </div>
                         </div>
 
-                        <div className="pt-4">
-                            <Button size="lg" className="group" asChild>
+                        <div>
+                            <Button size="lg" className="group w-full sm:w-auto" asChild>
                                 <Link href={route('events.show', event.id)}>
-                                    Watch Live
+                                    View Details
                                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                                 </Link>
                             </Button>
