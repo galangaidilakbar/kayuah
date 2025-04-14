@@ -34,10 +34,8 @@ export default function EventParticipants({ participants }: EventParticipantsPro
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead className="w-[300px]">Team Name</TableHead>
-                                    <TableHead>Boat</TableHead>
-                                    <TableHead className="hidden md:table-cell">Village</TableHead>
-                                    <TableHead className="hidden lg:table-cell">Sponsors</TableHead>
+                                    <TableHead>Nama Jalur</TableHead>
+                                    <TableHead className="hidden md:table-cell">Asal</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -51,29 +49,13 @@ export default function EventParticipants({ participants }: EventParticipantsPro
                                                             {getInitials(participant.title)}
                                                         </AvatarFallback>
                                                     </Avatar>
-                                                    <span className="font-medium">{participant.title}</span>
+                                                    <div className='space-y-1'>
+                                                        <div className="font-medium">{participant.title}</div>
+                                                        <div className='block md:hidden text-xs text-muted-foreground'>{participant.boat?.village?.name}, {participant.boat?.village?.sub_district?.name}</div>
+                                                    </div>
                                                 </div>
                                             </TableCell>
-                                            <TableCell>{participant.boat?.name}</TableCell>
-                                            <TableCell className="hidden md:table-cell">{participant.boat?.village?.name}</TableCell>
-                                            <TableCell className="hidden lg:table-cell">
-                                                <div className="flex flex-wrap gap-1">
-                                                    {participant.sponsors && participant.sponsors.length > 0 ? (
-                                                        participant.sponsors.slice(0, 2).map((sponsor) => (
-                                                            <Badge key={sponsor.id} variant="outline" className="text-xs">
-                                                                {sponsor.name}
-                                                            </Badge>
-                                                        ))
-                                                    ) : (
-                                                        <span className="text-muted-foreground text-sm">No sponsors</span>
-                                                    )}
-                                                    {participant.sponsors && participant.sponsors.length > 2 && (
-                                                        <Badge variant="outline" className="text-xs">
-                                                            +{participant.sponsors.length - 2} more
-                                                        </Badge>
-                                                    )}
-                                                </div>
-                                            </TableCell>
+                                            <TableCell className="hidden md:table-cell">{participant.boat?.village?.name}, {participant.boat?.village?.sub_district?.name}</TableCell>
                                         </TableRow>
                                     ))
                                 ) : (
