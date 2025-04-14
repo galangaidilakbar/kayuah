@@ -49,13 +49,17 @@ export default function EventParticipants({ participants }: EventParticipantsPro
                                                             {getInitials(participant.title)}
                                                         </AvatarFallback>
                                                     </Avatar>
-                                                    <div className='space-y-1'>
+                                                    <div className="space-y-1">
                                                         <div className="font-medium">{participant.title}</div>
-                                                        <div className='block md:hidden text-xs text-muted-foreground'>{participant.boat?.village?.name}, {participant.boat?.village?.sub_district?.name}</div>
+                                                        <div className="text-muted-foreground block text-xs md:hidden">
+                                                            {participant.boat?.village?.name}, {participant.boat?.village?.sub_district?.name}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </TableCell>
-                                            <TableCell className="hidden md:table-cell">{participant.boat?.village?.name}, {participant.boat?.village?.sub_district?.name}</TableCell>
+                                            <TableCell className="hidden md:table-cell">
+                                                {participant.boat?.village?.name}, {participant.boat?.village?.sub_district?.name}
+                                            </TableCell>
                                         </TableRow>
                                     ))
                                 ) : (
