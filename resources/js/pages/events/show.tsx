@@ -1,14 +1,15 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, PaginatedData } from '@/types';
 import { Head } from '@inertiajs/react';
 import { CalendarDays, MapPin, Trophy, Users } from 'lucide-react';
 import EventOverview from './components/event-overview';
+import EventParticipants from './components/event-participants';
 import EventSchedule from './components/event-schedule';
 
 interface ShowProps {
     event: App.Data.EventData;
-    participants: App.Data.ParticipantData[];
+    participants: PaginatedData<App.Data.ParticipantData>;
 }
 
 const formatDate = (dateString: string) => {
@@ -101,7 +102,9 @@ export default function Show({ event, participants }: ShowProps) {
                     <TabsContent value="schedules">
                         <EventSchedule days={event.days!} />
                     </TabsContent>
-                    <TabsContent value="participants">table jalur-jalur yang ikut.</TabsContent>
+                    <TabsContent value="participants">
+                        <EventParticipants participants={participants} />
+                    </TabsContent>
                     <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>
                 </Tabs>
             </div>

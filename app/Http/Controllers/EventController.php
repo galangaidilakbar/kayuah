@@ -24,7 +24,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        $participants = $event->participants()->with('boat.village', 'sponsors')->paginate(10);
+        $participants = $event->participants()->with('boat.village.subDistrict', 'sponsors')->paginate(10);
 
         return Inertia::render('events/show', [
             'event' => EventData::from($event->load('venue.subDistrict', 'days.rounds')->loadCount('days', 'participants')),
