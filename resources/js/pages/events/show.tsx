@@ -8,6 +8,7 @@ import EventSchedule from './components/event-schedule';
 
 interface ShowProps {
     event: App.Data.EventData;
+    participants: App.Data.ParticipantData[];
 }
 
 const formatDate = (dateString: string) => {
@@ -18,7 +19,7 @@ const formatDate = (dateString: string) => {
     });
 };
 
-export default function Show({ event }: ShowProps) {
+export default function Show({ event, participants }: ShowProps) {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Events',
