@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useInitials } from '@/hooks/use-initials';
 import { type PaginatedData } from '@/types';
 import { Users } from 'lucide-react';
@@ -32,16 +31,12 @@ export default function EventParticipants({ participants }: EventParticipantsPro
                     <div className="space-y-4">
                         {participants.data.length > 0 ? (
                             participants.data.map((participant) => (
-                                <div key={participant.id} className="flex items-center gap-3 p-2 border rounded-md">
+                                <div key={participant.id} className="flex items-center gap-3 rounded-md border p-2">
                                     <Avatar className="h-8 w-8 flex-shrink-0">
-                                        <AvatarFallback className="bg-rose-100 text-rose-600">
-                                            {getInitials(participant.title)}
-                                        </AvatarFallback>
+                                        <AvatarFallback className="bg-rose-100 text-rose-600">{getInitials(participant.title)}</AvatarFallback>
                                     </Avatar>
                                     <div className="min-w-0">
-                                        <div className="font-medium text-sm break-words">
-                                            {participant.title}
-                                        </div>
+                                        <div className="text-sm font-medium break-words">{participant.title}</div>
                                         <div className="text-muted-foreground text-xs">
                                             {participant.boat?.village?.name}, {participant.boat?.village?.sub_district?.name}
                                         </div>
@@ -49,7 +44,7 @@ export default function EventParticipants({ participants }: EventParticipantsPro
                                 </div>
                             ))
                         ) : (
-                            <div className="text-center py-6">No participants found matching your criteria</div>
+                            <div className="py-6 text-center">No participants found matching your criteria</div>
                         )}
                     </div>
                 </CardContent>
