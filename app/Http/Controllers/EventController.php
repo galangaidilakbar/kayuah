@@ -24,12 +24,12 @@ class EventController extends Controller
      */
     public function show(Event $event, Request $request)
     {
-        $perPage = 10;
-        $participants = $event->participants()->with('boat.village.subDistrict', 'sponsors')->paginate($perPage);
+        $perPage = 3;
+        $participants = $event->participants()->with('boat.village.subDistrict', 'sponsors')->cursorPaginate($perPage);
 
         return Inertia::render('events/show', [
             'event' => EventData::from($event->load('venue.subDistrict', 'days.rounds')->loadCount('days', 'participants')),
-            'participants' => Inertia::deepMerge($participants),
+            'participants' => ParticipantData::collect($participants),
         ]);
     }
 }

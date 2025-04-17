@@ -3,6 +3,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, PaginatedData } from '@/types';
 import { Head } from '@inertiajs/react';
 import { CalendarDays, MapPin, Trophy, Users } from 'lucide-react';
+import { useState } from 'react';
 import EventOverview from './components/event-overview';
 import EventParticipants from './components/event-participants';
 import EventSchedule from './components/event-schedule';
@@ -21,6 +22,16 @@ const formatDate = (dateString: string) => {
 };
 
 export default function Show({ event, participants }: ShowProps) {
+    const [paginatedParticipants, setPaginatedParticipants] = useState(participants);
+
+    const handleNewParticipants = (newParticipants: PaginatedData<App.Data.ParticipantData>) => {
+        setPaginatedParticipants((prevParticipants) => ({
+            ...prevParticipants,
+            data: [...prevParticipants.data, ...newParticipants.data],
+            next_page_url: newParticipants.next_page_url,
+        }));
+    };
+
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Events',
@@ -103,7 +114,7 @@ export default function Show({ event, participants }: ShowProps) {
                         <EventSchedule days={event.days!} />
                     </TabsContent>
                     <TabsContent value="participants">
-                        <EventParticipants participants={participants} />
+                        <EventParticipants participants={paginatedParticipants} onNewParticipants={handleNewParticipants} />
                     </TabsContent>
                     <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>
                 </Tabs>

@@ -10,9 +10,10 @@ import { useInView } from 'react-intersection-observer';
 
 interface EventParticipantsProps {
     participants: PaginatedData<App.Data.ParticipantData>;
+    onNewParticipants: (newParticipants: PaginatedData<App.Data.ParticipantData>) => void;
 }
 
-export default function EventParticipants({ participants }: EventParticipantsProps) {
+export default function EventParticipants({ participants, onNewParticipants }: EventParticipantsProps) {
     const getInitials = useInitials();
     const { ref, inView } = useInView({
         threshold: 0,
@@ -25,9 +26,12 @@ export default function EventParticipants({ participants }: EventParticipantsPro
                 preserveState: true,
                 preserveScroll: true,
                 only: ['participants'],
+                onSuccess: (page) => {
+                    onNewParticipants(page.props.participants);
+                },
             });
         }
-    }, [inView, participants.next_page_url]);
+    }, [inView, participants.next_page_url, onNewParticipants]);
 
     return (
         <div className="space-y-6">
