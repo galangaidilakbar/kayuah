@@ -29,6 +29,12 @@ class EventController extends Controller
             ->with('boat.village.subDistrict', 'sponsors')
             ->cursorPaginate($perPage);
 
+        if ($request->wantsJson()) {
+            return response()->json([
+                'participants' => ParticipantData::collect($participants),
+            ]);
+        }
+
         return Inertia::render('events/show', [
             'event' => EventData::from(
                 $event

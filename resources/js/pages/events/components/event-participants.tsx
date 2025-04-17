@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useInitials } from '@/hooks/use-initials';
 import { type PaginatedData } from '@/types';
-import { router } from '@inertiajs/react';
+import axios from 'axios';
 import { Users } from 'lucide-react';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -22,14 +22,15 @@ export default function EventParticipants({ participants, onNewParticipants }: E
     // Load next page when the observer is in view
     useEffect(() => {
         if (inView && participants.next_page_url) {
-            router.visit(participants.next_page_url, {
-                preserveState: true,
-                preserveScroll: true,
-                only: ['participants'],
-                onSuccess: (page) => {
-                    onNewParticipants(page.props.participants);
-                },
-            });
+            axios
+                .get(participants.next_page_url)
+                .then((response) => {
+                    const newParticipants = response.data.participants;
+                    onNewParticipants(newParticipants);
+                })
+                .catch((error) => {
+                    console.error('Error fetching participants:', error);
+                });
         }
     }, [inView, participants.next_page_url, onNewParticipants]);
 
