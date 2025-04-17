@@ -1,11 +1,12 @@
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useInitials } from '@/hooks/use-initials';
 import { type PaginatedData } from '@/types';
-import { Link } from '@inertiajs/react';
-import { ChevronsLeft, ChevronsRight, Users } from 'lucide-react';
+import { router } from '@inertiajs/react';
+import { Users } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 interface EventParticipantsProps {
     participants: PaginatedData<App.Data.ParticipantData>;
@@ -13,6 +14,31 @@ interface EventParticipantsProps {
 
 export default function EventParticipants({ participants }: EventParticipantsProps) {
     const getInitials = useInitials();
+    const { ref, inView } = useInView({
+        threshold: 0,
+    });
+
+    const [allParticipants, setAllParticipants] = useState(participants.data);
+
+    // Update allParticipants when new data arrives
+    useEffect(() => {
+        setAllParticipants((prev) => {
+            // Avoid duplicates by filtering out existing IDs
+            const newParticipants = participants.data.filter((newParticipant) => !prev.some((p) => p.id === newParticipant.id));
+            return [...prev, ...newParticipants];
+        });
+    }, [participants.data]);
+
+    // Load next page when the observer is in view
+    useEffect(() => {
+        if (inView && participants.next_page_url) {
+            router.visit(participants.next_page_url, {
+                preserveState: true,
+                preserveScroll: true,
+                only: ['participants'],
+            });
+        }
+    }, [inView, participants.next_page_url]);
 
     return (
         <div className="space-y-6">
@@ -31,8 +57,8 @@ export default function EventParticipants({ participants }: EventParticipantsPro
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
-                        {participants.data.length > 0 ? (
-                            participants.data.map((participant) => (
+                        {allParticipants.length > 0 ? (
+                            allParticipants.map((participant) => (
                                 <div key={participant.id} className="flex items-center gap-3 rounded-md border p-2">
                                     <Avatar className="h-8 w-8 flex-shrink-0">
                                         <AvatarFallback className="bg-rose-100 text-rose-600">{getInitials(participant.title)}</AvatarFallback>
@@ -50,24 +76,12 @@ export default function EventParticipants({ participants }: EventParticipantsPro
                         )}
                     </div>
 
-                    {/* Pagination Controls */}
-                    <div className="mt-4 flex items-center justify-between">
-                        <div className="text-muted-foreground text-sm">
-                            Menampilkan {participants.from} dari {participants.to}
+                    {/* Infinite Scroll Trigger */}
+                    {participants.next_page_url && (
+                        <div ref={ref} className="mt-4 text-center">
+                            <p className="text-muted-foreground text-sm">Loading more...</p>
                         </div>
-                        <div className="flex items-center gap-1">
-                            <Button variant="outline" size="icon" disabled={participants.prev_page_url === null} className="h-8 w-8">
-                                <Link href={participants.prev_page_url!}>
-                                    <ChevronsLeft className="h-4 w-4" />
-                                </Link>
-                            </Button>
-                            <Button variant="outline" size="icon" disabled={participants.next_page_url === null} className="h-8 w-8">
-                                <Link href={participants.next_page_url!}>
-                                    <ChevronsRight className="h-4 w-4" />
-                                </Link>
-                            </Button>
-                        </div>
-                    </div>
+                    )}
                 </CardContent>
             </Card>
         </div>

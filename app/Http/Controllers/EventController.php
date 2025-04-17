@@ -22,13 +22,17 @@ class EventController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function show(Event $event)
+    public function show(Event $event, Request $request)
     {
-        $participants = $event->participants()->with('boat.village.subDistrict', 'sponsors')->paginate(10);
+        $perPage = 10;
+        $participants = $event->participants()->with('boat.village.subDistrict', 'sponsors')->paginate($perPage);
 
         return Inertia::render('events/show', [
             'event' => EventData::from($event->load('venue.subDistrict', 'days.rounds')->loadCount('days', 'participants')),
-            'participants' => ParticipantData::collect($participants),
+            'participants' => Inertia::merge(ParticipantData::collect($participants)->toArray(), [
+                'append' => ['data'],
+                'merge' => ['links', 'meta'],
+            ]),
         ]);
     }
 }
