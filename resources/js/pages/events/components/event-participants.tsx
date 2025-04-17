@@ -1,9 +1,11 @@
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useInitials } from '@/hooks/use-initials';
 import { type PaginatedData } from '@/types';
-import { Users } from 'lucide-react';
+import { Link } from '@inertiajs/react';
+import { ChevronsLeft, ChevronsRight, Users } from 'lucide-react';
 
 interface EventParticipantsProps {
     participants: PaginatedData<App.Data.ParticipantData>;
@@ -46,6 +48,25 @@ export default function EventParticipants({ participants }: EventParticipantsPro
                         ) : (
                             <div className="py-6 text-center">No participants found matching your criteria</div>
                         )}
+                    </div>
+
+                    {/* Pagination Controls */}
+                    <div className="mt-4 flex items-center justify-between">
+                        <div className="text-muted-foreground text-sm">
+                            Menampilkan {participants.from} dari {participants.to}
+                        </div>
+                        <div className="flex items-center gap-1">
+                            <Button variant="outline" size="icon" disabled={participants.prev_page_url === null} className="h-8 w-8">
+                                <Link href={participants.prev_page_url!}>
+                                    <ChevronsLeft className="h-4 w-4" />
+                                </Link>
+                            </Button>
+                            <Button variant="outline" size="icon" disabled={participants.next_page_url === null} className="h-8 w-8">
+                                <Link href={participants.next_page_url!}>
+                                    <ChevronsRight className="h-4 w-4" />
+                                </Link>
+                            </Button>
+                        </div>
                     </div>
                 </CardContent>
             </Card>
