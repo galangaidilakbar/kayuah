@@ -29,10 +29,7 @@ class EventController extends Controller
 
         return Inertia::render('events/show', [
             'event' => EventData::from($event->load('venue.subDistrict', 'days.rounds')->loadCount('days', 'participants')),
-            'participants' => Inertia::merge(ParticipantData::collect($participants)->toArray(), [
-                'append' => ['data'],
-                'merge' => ['links', 'meta'],
-            ]),
+            'participants' => Inertia::deepMerge($participants),
         ]);
     }
 }

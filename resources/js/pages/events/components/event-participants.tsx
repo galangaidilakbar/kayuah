@@ -5,7 +5,7 @@ import { useInitials } from '@/hooks/use-initials';
 import { type PaginatedData } from '@/types';
 import { router } from '@inertiajs/react';
 import { Users } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 interface EventParticipantsProps {
@@ -17,17 +17,6 @@ export default function EventParticipants({ participants }: EventParticipantsPro
     const { ref, inView } = useInView({
         threshold: 0,
     });
-
-    const [allParticipants, setAllParticipants] = useState(participants.data);
-
-    // Update allParticipants when new data arrives
-    useEffect(() => {
-        setAllParticipants((prev) => {
-            // Avoid duplicates by filtering out existing IDs
-            const newParticipants = participants.data.filter((newParticipant) => !prev.some((p) => p.id === newParticipant.id));
-            return [...prev, ...newParticipants];
-        });
-    }, [participants.data]);
 
     // Load next page when the observer is in view
     useEffect(() => {
@@ -57,8 +46,8 @@ export default function EventParticipants({ participants }: EventParticipantsPro
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
-                        {allParticipants.length > 0 ? (
-                            allParticipants.map((participant) => (
+                        {participants.data.length > 0 ? (
+                            participants.data.map((participant) => (
                                 <div key={participant.id} className="flex items-center gap-3 rounded-md border p-2">
                                     <Avatar className="h-8 w-8 flex-shrink-0">
                                         <AvatarFallback className="bg-rose-100 text-rose-600">{getInitials(participant.title)}</AvatarFallback>
