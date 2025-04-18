@@ -5,10 +5,10 @@ import { Input } from '@/components/ui/input';
 import { useInitials } from '@/hooks/use-initials';
 import { type PaginatedData } from '@/types';
 import axios from 'axios';
+import { debounce } from 'lodash';
 import { Search, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { debounce } from 'lodash';
 
 interface EventParticipantsProps {
     participants: PaginatedData<App.Data.ParticipantData>;
@@ -23,7 +23,7 @@ export default function EventParticipants({ participants, onNewParticipants, onF
     });
     const [filter, setFilter] = useState({
         boatName: '',
-        subDistrictId: ''
+        subDistrictId: '',
     });
 
     // Load next page when the observer is in view
@@ -42,7 +42,8 @@ export default function EventParticipants({ participants, onNewParticipants, onF
 
     // Debounced filter function
     const debouncedFilter = debounce((boatName) => {
-        axios.get(window.location.href + `?filter[boat.name]=${boatName}`)
+        axios
+            .get(window.location.href + `?filter[boat.name]=${boatName}`)
             .then((response) => {
                 onFilterParticipants(response.data.participants);
             })
@@ -77,9 +78,9 @@ export default function EventParticipants({ participants, onNewParticipants, onF
                     <CardDescription>Telusuri semua jalur yang berpartisipasi dalam acara ini</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="flex flex-col md:flex-row gap-4 mb-6">
+                    <div className="mb-6 flex flex-col gap-4 md:flex-row">
                         <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                             <Input
                                 placeholder="Cari jalur..."
                                 className="pl-9"
@@ -87,7 +88,7 @@ export default function EventParticipants({ participants, onNewParticipants, onF
                                 onChange={(e) => {
                                     setFilter((prevFilter) => ({
                                         ...prevFilter, // Spread the previous filter state
-                                        boatName: e.target.value // Update only the boatName
+                                        boatName: e.target.value, // Update only the boatName
                                     }));
                                 }}
                             />
