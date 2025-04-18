@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useInitials } from '@/hooks/use-initials';
 import { type PaginatedData } from '@/types';
 import axios from 'axios';
@@ -42,9 +43,17 @@ export default function EventParticipants({ participants, subDistricts, onNewPar
     }, [inView, participants.next_page_url, onNewParticipants]);
 
     // Debounced filter function
-    const debouncedFilter = debounce((boatName) => {
+    const debouncedFilter = debounce((boatName, subDistrictId) => {
+        const query = new URLSearchParams();
+        if (boatName) {
+            query.append('filter[boat.name]', boatName);
+        }
+        if (subDistrictId) {
+            query.append('filter[boat.village.sub_district_id]', subDistrictId === 'all' ? '' : subDistrictId);
+        }
+
         axios
-            .get(window.location.href + `?filter[boat.name]=${boatName}`)
+            .get(`${window.location.href}?${query.toString()}`)
             .then((response) => {
                 onFilterParticipants(response.data.participants);
             })
@@ -54,8 +63,8 @@ export default function EventParticipants({ participants, subDistricts, onNewPar
     }, 300);
 
     useEffect(() => {
-        debouncedFilter(filter.boatName);
-    }, [filter.boatName]);
+        debouncedFilter(filter.boatName, filter.subDistrictId);
+    }, [filter.boatName, filter.subDistrictId]);
 
     useEffect(() => {
         return () => {
@@ -93,6 +102,29 @@ export default function EventParticipants({ participants, subDistricts, onNewPar
                                     }));
                                 }}
                             />
+                        </div>
+                        <div className="w-full md:w-64">
+                            <Select
+                                value={filter.subDistrictId}
+                                onValueChange={(value) => {
+                                    setFilter((prevFilter) => ({
+                                        ...prevFilter,
+                                        subDistrictId: value,
+                                    }));
+                                }}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Filter by kecamatan" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="all">Semua kecamatan</SelectItem>
+                                    {subDistricts.map((subDistrict) => (
+                                        <SelectItem key={subDistrict.id} value={subDistrict.id}>
+                                            {subDistrict.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
                     </div>
 
