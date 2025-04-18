@@ -1,22 +1,28 @@
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { useInitials } from '@/hooks/use-initials';
 import { type PaginatedData } from '@/types';
 import axios from 'axios';
-import { Users } from 'lucide-react';
-import { useEffect } from 'react';
+import { Search, Users } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 interface EventParticipantsProps {
     participants: PaginatedData<App.Data.ParticipantData>;
     onNewParticipants: (newParticipants: PaginatedData<App.Data.ParticipantData>) => void;
+    onFilterParticipants: (filteredParticipants: PaginatedData<App.Data.ParticipantData>) => void;
 }
 
-export default function EventParticipants({ participants, onNewParticipants }: EventParticipantsProps) {
+export default function EventParticipants({ participants, onNewParticipants, onFilterParticipants }: EventParticipantsProps) {
     const getInitials = useInitials();
     const { ref, inView } = useInView({
         threshold: 0,
+    });
+    const [filter, setFilter] = useState({
+        boatName: '',
+        subDistrictId: ''
     });
 
     // Load next page when the observer is in view
@@ -32,6 +38,17 @@ export default function EventParticipants({ participants, onNewParticipants }: E
                 });
         }
     }, [inView, participants.next_page_url, onNewParticipants]);
+
+    useEffect(() => {
+        if (filter.boatName) {
+            axios.get(window.location.href + `?filter[boat.name]=${filter.boatName}`)
+                .then((response) => {
+                    onFilterParticipants(response.data.participants)
+                }).catch((error) => {
+                    console.error('Error filtering participants: ', error)
+                })
+        }
+    }, [filter.boatName])
 
     return (
         <div className="space-y-6">
@@ -49,6 +66,23 @@ export default function EventParticipants({ participants, onNewParticipants }: E
                     <CardDescription>Telusuri semua jalur yang berpartisipasi dalam acara ini</CardDescription>
                 </CardHeader>
                 <CardContent>
+                    <div className="flex flex-col md:flex-row gap-4 mb-6">
+                        <div className="relative flex-1">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                placeholder="Search teams..."
+                                className="pl-9"
+                                value={filter.boatName}
+                                onChange={(e) => {
+                                    setFilter((prevFilter) => ({
+                                        ...prevFilter, // Spread the previous filter state
+                                        boatName: e.target.value // Update only the boatName
+                                    }));
+                                }}
+                            />
+                        </div>
+                    </div>
+
                     <div className="space-y-4">
                         {participants.data.length > 0 ? (
                             participants.data.map((participant) => (

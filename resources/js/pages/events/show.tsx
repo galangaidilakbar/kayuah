@@ -38,6 +38,10 @@ export default function Show({ event, participants }: ShowProps) {
         });
     };
 
+    const handleFilterParticipants = (filteredParticipants: PaginatedData<App.Data.ParticipantData>) => {
+        setAllParticipants(filteredParticipants);
+    }
+
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Events',
@@ -120,7 +124,11 @@ export default function Show({ event, participants }: ShowProps) {
                         <EventSchedule days={event.days!} />
                     </TabsContent>
                     <TabsContent value="participants">
-                        <EventParticipants participants={allParticipants} onNewParticipants={handleNewParticipants} />
+                        <EventParticipants
+                            participants={allParticipants}
+                            onNewParticipants={handleNewParticipants}
+                            onFilterParticipants={handleFilterParticipants}
+                        />
                     </TabsContent>
                     <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>
                 </Tabs>
