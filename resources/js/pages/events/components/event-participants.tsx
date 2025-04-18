@@ -8,6 +8,7 @@ import axios from 'axios';
 import { Search, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { debounce } from 'lodash';
 
 interface EventParticipantsProps {
     participants: PaginatedData<App.Data.ParticipantData>;
@@ -39,16 +40,22 @@ export default function EventParticipants({ participants, onNewParticipants, onF
         }
     }, [inView, participants.next_page_url, onNewParticipants]);
 
-    useEffect(() => {
-        if (filter.boatName) {
-            axios.get(window.location.href + `?filter[boat.name]=${filter.boatName}`)
+    // Debounced filter function
+    const debouncedFilter = debounce((boatName) => {
+        if (boatName) {
+            axios.get(window.location.href + `?filter[boat.name]=${boatName}`)
                 .then((response) => {
-                    onFilterParticipants(response.data.participants)
-                }).catch((error) => {
-                    console.error('Error filtering participants: ', error)
+                    onFilterParticipants(response.data.participants);
                 })
+                .catch((error) => {
+                    console.error('Error filtering participants: ', error);
+                });
         }
-    }, [filter.boatName])
+    }, 300);
+
+    useEffect(() => {
+        debouncedFilter(filter.boatName);
+    }, [filter.boatName]);
 
     return (
         <div className="space-y-6">
