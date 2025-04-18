@@ -25,8 +25,7 @@ export default function EventParticipants({ participants, onNewParticipants }: E
             axios
                 .get(participants.next_page_url)
                 .then((response) => {
-                    const newParticipants = response.data.participants;
-                    onNewParticipants(newParticipants);
+                    onNewParticipants(response.data.participants);
                 })
                 .catch((error) => {
                     console.error('Error fetching participants:', error);
