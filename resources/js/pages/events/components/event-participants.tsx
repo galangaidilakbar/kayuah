@@ -12,11 +12,12 @@ import { useInView } from 'react-intersection-observer';
 
 interface EventParticipantsProps {
     participants: PaginatedData<App.Data.ParticipantData>;
+    subDistricts: App.Data.SubDistrictData[];
     onNewParticipants: (newParticipants: PaginatedData<App.Data.ParticipantData>) => void;
     onFilterParticipants: (filteredParticipants: PaginatedData<App.Data.ParticipantData>) => void;
 }
 
-export default function EventParticipants({ participants, onNewParticipants, onFilterParticipants }: EventParticipantsProps) {
+export default function EventParticipants({ participants, subDistricts, onNewParticipants, onFilterParticipants }: EventParticipantsProps) {
     const getInitials = useInitials();
     const { ref, inView } = useInView({
         threshold: 0,

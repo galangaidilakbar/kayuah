@@ -11,6 +11,7 @@ import EventSchedule from './components/event-schedule';
 interface ShowProps {
     event: App.Data.EventData;
     participants: PaginatedData<App.Data.ParticipantData>;
+    subDistricts: App.Data.SubDistrictData[];
 }
 
 const formatDate = (dateString: string) => {
@@ -21,7 +22,7 @@ const formatDate = (dateString: string) => {
     });
 };
 
-export default function Show({ event, participants }: ShowProps) {
+export default function Show({ event, participants, subDistricts }: ShowProps) {
     const [allParticipants, setAllParticipants] = useState(participants);
 
     const handleNewParticipants = (newParticipants: PaginatedData<App.Data.ParticipantData>) => {
@@ -128,6 +129,7 @@ export default function Show({ event, participants }: ShowProps) {
                             participants={allParticipants}
                             onNewParticipants={handleNewParticipants}
                             onFilterParticipants={handleFilterParticipants}
+                            subDistricts={subDistricts}
                         />
                     </TabsContent>
                     <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>

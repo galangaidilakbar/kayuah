@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Data\EventData;
 use App\Data\ParticipantData;
+use App\Data\SubDistrictData;
 use App\Models\Event;
+use App\Models\SubDistrict;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -35,6 +37,12 @@ class EventController extends Controller
             ->with('boat.village.subDistrict', 'sponsors')
             ->cursorPaginate($perPage);
 
+        // Get subdistrict IDs from participants
+        $subdistrictIds = $participants->pluck('boat.village.sub_district_id')->unique();
+
+        // Fetch subdistricts based on the IDs
+        $subdistricts = SubDistrict::whereIn('id', $subdistrictIds)->get();
+
         if ($request->wantsJson()) {
             return response()->json([
                 'participants' => ParticipantData::collect($participants),
@@ -48,6 +56,7 @@ class EventController extends Controller
                     ->loadCount('days', 'participants')
             ),
             'participants' => ParticipantData::collect($participants),
+            'subDistricts' => SubDistrictData::collect($subdistricts),
         ]);
     }
 }
