@@ -57,8 +57,8 @@ export default function Show({ event, participants }: ShowProps) {
                 <div className="relative mb-8 h-[300px] w-full overflow-hidden rounded-xl md:h-[400px]">
                     <img src={event.thumbnail || '/placeholder.svg'} alt={event.name} className="absolute inset-0 h-full w-full object-cover" />
                     <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 to-transparent p-6">
-                        <h1 className="mb-2 text-3xl font-bold text-white md:text-4xl">{event.name}</h1>
-                        <div className="flex flex-wrap gap-4 text-white">
+                        <h1 className="mb-2 text-2xl font-bold text-white md:text-4xl">{event.name}</h1>
+                        <div className="flex flex-wrap gap-4 text-white text-sm">
                             <div className="flex items-center gap-1">
                                 <CalendarDays className="h-5 w-5" />
                                 <span>
