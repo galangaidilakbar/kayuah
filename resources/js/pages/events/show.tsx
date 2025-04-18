@@ -25,11 +25,17 @@ export default function Show({ event, participants }: ShowProps) {
     const [paginatedParticipants, setPaginatedParticipants] = useState(participants);
 
     const handleNewParticipants = (newParticipants: PaginatedData<App.Data.ParticipantData>) => {
-        setPaginatedParticipants((prevParticipants) => ({
-            ...prevParticipants,
-            data: [...prevParticipants.data, ...newParticipants.data],
-            next_page_url: newParticipants.next_page_url,
-        }));
+        setPaginatedParticipants((prevParticipants) => {
+            // Filter out duplicates based on participant.id
+            const existingIds = new Set(prevParticipants.data.map((p) => p.id));
+            const uniqueNewData = newParticipants.data.filter((p) => !existingIds.has(p.id));
+
+            return {
+                ...newParticipants,
+                data: [...prevParticipants.data, ...uniqueNewData],
+                next_page_url: newParticipants.next_page_url,
+            };
+        });
     };
 
     const breadcrumbs: BreadcrumbItem[] = [
