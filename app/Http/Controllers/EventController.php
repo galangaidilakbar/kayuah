@@ -7,6 +7,8 @@ use App\Data\ParticipantData;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class EventController extends Controller
 {
@@ -25,7 +27,11 @@ class EventController extends Controller
     public function show(Event $event, Request $request)
     {
         $perPage = 10;
-        $participants = $event->participants()
+        $participants = QueryBuilder::for($event->participants())
+            ->allowedFilters([
+                'boat.name',
+                AllowedFilter::exact('boat.village.sub_district_id'),
+            ])
             ->with('boat.village.subDistrict', 'sponsors')
             ->cursorPaginate($perPage);
 
