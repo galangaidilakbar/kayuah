@@ -42,20 +42,24 @@ export default function EventParticipants({ participants, onNewParticipants, onF
 
     // Debounced filter function
     const debouncedFilter = debounce((boatName) => {
-        if (boatName) {
-            axios.get(window.location.href + `?filter[boat.name]=${boatName}`)
-                .then((response) => {
-                    onFilterParticipants(response.data.participants);
-                })
-                .catch((error) => {
-                    console.error('Error filtering participants: ', error);
-                });
-        }
+        axios.get(window.location.href + `?filter[boat.name]=${boatName}`)
+            .then((response) => {
+                onFilterParticipants(response.data.participants);
+            })
+            .catch((error) => {
+                console.error('Error filtering participants: ', error);
+            });
     }, 300);
 
     useEffect(() => {
         debouncedFilter(filter.boatName);
     }, [filter.boatName]);
+
+    useEffect(() => {
+        return () => {
+            debouncedFilter.cancel();
+        };
+    }, [debouncedFilter]);
 
     return (
         <div className="space-y-6">
@@ -77,7 +81,7 @@ export default function EventParticipants({ participants, onNewParticipants, onF
                         <div className="relative flex-1">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                             <Input
-                                placeholder="Search teams..."
+                                placeholder="Cari jalur..."
                                 className="pl-9"
                                 value={filter.boatName}
                                 onChange={(e) => {
