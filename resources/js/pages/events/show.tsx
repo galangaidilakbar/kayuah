@@ -22,10 +22,10 @@ const formatDate = (dateString: string) => {
 };
 
 export default function Show({ event, participants }: ShowProps) {
-    const [paginatedParticipants, setPaginatedParticipants] = useState(participants);
+    const [allParticipants, setAllParticipants] = useState(participants);
 
     const handleNewParticipants = (newParticipants: PaginatedData<App.Data.ParticipantData>) => {
-        setPaginatedParticipants((prevParticipants) => {
+        setAllParticipants((prevParticipants) => {
             // Filter out duplicates based on participant.id
             const existingIds = new Set(prevParticipants.data.map((p) => p.id));
             const uniqueNewData = newParticipants.data.filter((p) => !existingIds.has(p.id));
@@ -120,7 +120,7 @@ export default function Show({ event, participants }: ShowProps) {
                         <EventSchedule days={event.days!} />
                     </TabsContent>
                     <TabsContent value="participants">
-                        <EventParticipants participants={paginatedParticipants} onNewParticipants={handleNewParticipants} />
+                        <EventParticipants participants={allParticipants} onNewParticipants={handleNewParticipants} />
                     </TabsContent>
                     <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>
                 </Tabs>
