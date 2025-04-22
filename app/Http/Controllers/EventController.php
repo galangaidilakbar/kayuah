@@ -38,7 +38,10 @@ class EventController extends Controller
             ->cursorPaginate($perPage);
 
         // Get subdistrict IDs from participants
-        $subdistrictIds = $participants->pluck('boat.village.sub_district_id')->unique();
+        $subdistrictIds = $event->participants()
+            ->with('boat.village.subDistrict', 'sponsors')
+            ->get()
+            ->pluck('boat.village.sub_district_id')->unique();
 
         // Fetch subdistricts based on the IDs
         $subdistricts = SubDistrict::whereIn('id', $subdistrictIds)->get();
