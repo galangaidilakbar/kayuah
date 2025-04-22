@@ -24,6 +24,8 @@ class EventData extends Data
         public Lazy|array|null $days,
         #[DataCollectionOf(ParticipantData::class)]
         public Lazy|array|null $participants,
+        #[DataCollectionOf(StandingData::class)]
+        public Lazy|array|null $standings,
         public Lazy|int|null $days_count,
         public Lazy|int|null $participants_count,
     ) {}
@@ -42,6 +44,7 @@ class EventData extends Data
             Lazy::whenLoaded('venue', $event, fn () => VenueData::from($event->venue)),
             Lazy::whenLoaded('days', $event, fn () => DayData::collect($event->days)),
             Lazy::whenLoaded('participants', $event, fn () => ParticipantData::collect($event->participants)),
+            Lazy::whenLoaded('standings', $event, fn () => StandingData::collect($event->standings)),
             $event->days_count,
             $event->participants_count
         );

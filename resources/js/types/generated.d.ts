@@ -32,6 +32,7 @@ declare namespace App.Data {
         venue?: App.Data.VenueData | null;
         days?: Array<App.Data.DayData> | null;
         participants?: Array<App.Data.ParticipantData> | null;
+        standings?: Array<App.Data.StandingData> | null;
         days_count?: number | null;
         participants_count?: number | null;
     };
