@@ -7,6 +7,7 @@ import { useState } from 'react';
 import EventOverview from './components/event-overview';
 import EventParticipants from './components/event-participants';
 import EventSchedule from './components/event-schedule';
+import EventStanding from './components/event-standing';
 
 interface ShowProps {
     event: App.Data.EventData;
@@ -132,7 +133,9 @@ export default function Show({ event, participants, subDistricts }: ShowProps) {
                             subDistricts={subDistricts}
                         />
                     </TabsContent>
-                    <TabsContent value="standings">Tabel jalur-jalur yang juara.</TabsContent>
+                    <TabsContent value="standings">
+                        <EventStanding standings={event.standings!} />
+                    </TabsContent>
                 </Tabs>
             </div>
         </AppLayout>
