@@ -117,7 +117,7 @@ export default function Show({ event, participants, subDistricts }: ShowProps) {
                         <TabsTrigger value="overview">Ringkasan</TabsTrigger>
                         <TabsTrigger value="schedules">Jadwal</TabsTrigger>
                         <TabsTrigger value="participants">Peserta</TabsTrigger>
-                        <TabsTrigger value="standings">Peringkat</TabsTrigger>
+                        <TabsTrigger value="standings">Klasemen</TabsTrigger>
                     </TabsList>
                     <TabsContent value="overview">
                         <EventOverview event={event} />
