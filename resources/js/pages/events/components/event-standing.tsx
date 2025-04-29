@@ -48,7 +48,7 @@ export default function EventStanding({ standings }: EventStandingProps) {
                                     <Avatar className="h-10 w-10 flex-shrink-0 border">
                                         <AvatarFallback className="bg-rose-100 text-rose-600">
                                             {/* NJ : Nama Jalur */}
-                                            {getInitials(standing.participant?.title ? standing.participant?.title : 'NJ')}
+                                            {getInitials(standing.participant?.title || 'NJ')}
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="min-w-0 flex-1">
