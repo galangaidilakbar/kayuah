@@ -1,7 +1,7 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { CalendarDays, Clock } from 'lucide-react';
+import { Link } from '@inertiajs/react';
+import { CalendarDays, ChevronRight } from 'lucide-react';
 
 interface EventScheduleProps {
     days: App.Data.DayData[];
@@ -28,21 +28,30 @@ export default function EventSchedule({ days }: EventScheduleProps) {
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                     <CalendarDays className="text-muted-foreground h-5 w-5" />
-                                    <CardTitle>{day.name}</CardTitle>
+                                    <CardTitle className="text-xl">{day.name}</CardTitle>
                                 </div>
                                 <Badge variant="outline">{formatDate(day.date)}</Badge>
                             </div>
                             <CardDescription>{day.rounds?.length || 0} putaran</CardDescription>
                         </CardHeader>
-                        <CardContent className='w-full space-y-4 divide-y-2 divide-dashed'>
-                            {day.rounds?.map((round, index) => (
-                                <div className="flex items-center gap-2 p-4" key={round.id}>
-                                    <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium">
-                                        {round.order || index + 1}
-                                    </div>
-                                    <span>{round.name}</span>
-                                </div>
-                            ))}
+                        <CardContent className="p-0">
+                            <div className="divide-y">
+                                {day.rounds?.map((round, index) => (
+                                    <Link
+                                        href="#"
+                                        key={round.id}
+                                        className="group hover:bg-muted/50 flex items-center justify-between p-4 transition-colors"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className="bg-primary/10 text-primary group-hover:bg-primary dark:group-hover:text-background flex h-9 w-9 items-center justify-center rounded-full text-sm font-medium transition-colors group-hover:text-white">
+                                                {round.order || index + 1}
+                                            </div>
+                                            <span className="font-medium">{round.name}</span>
+                                        </div>
+                                        <ChevronRight className="text-muted-foreground h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+                                    </Link>
+                                ))}
+                            </div>
                         </CardContent>
                     </Card>
                 ))}
