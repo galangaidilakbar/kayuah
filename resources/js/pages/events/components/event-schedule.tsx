@@ -38,7 +38,7 @@ export default function EventSchedule({ days }: EventScheduleProps) {
                             <div className="divide-y">
                                 {day.rounds?.map((round, index) => (
                                     <Link
-                                        href="#"
+                                        href={route('rounds.show', round.id)}
                                         key={round.id}
                                         className="group hover:bg-muted/50 flex items-center justify-between p-4 transition-colors"
                                     >

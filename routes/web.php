@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\IndexController;
-use App\Http\Controllers\JustTestController;
+use App\Http\Controllers\RoundController;
 use App\Models\Race;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,6 +15,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::resource('/events', EventController::class)->only('index', 'show');
+
+    Route::get('/rounds/{round}', [RoundController::class, 'show'])->name('rounds.show');
 });
 
 Route::get('/race', function () {
