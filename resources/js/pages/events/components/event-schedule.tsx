@@ -1,6 +1,5 @@
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Link } from '@inertiajs/react';
 import { CalendarDays, ChevronRight } from 'lucide-react';
 
 interface EventScheduleProps {
