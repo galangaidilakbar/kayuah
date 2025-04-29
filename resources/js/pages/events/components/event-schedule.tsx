@@ -37,7 +37,7 @@ export default function EventSchedule({ days }: EventScheduleProps) {
                         <CardContent className="p-0">
                             <div className="divide-y">
                                 {day.rounds?.map((round, index) => (
-                                    <Link
+                                    <a
                                         href={route('rounds.show', round.id)}
                                         key={round.id}
                                         className="group hover:bg-muted/50 flex items-center justify-between p-4 transition-colors"
@@ -49,7 +49,7 @@ export default function EventSchedule({ days }: EventScheduleProps) {
                                             <span className="font-medium">{round.name}</span>
                                         </div>
                                         <ChevronRight className="text-muted-foreground h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
-                                    </Link>
+                                    </a>
                                 ))}
                             </div>
                         </CardContent>
