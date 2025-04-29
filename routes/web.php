@@ -32,8 +32,6 @@ Route::get('/race', function () {
     ]);
 });
 
-Route::resource('/test', JustTestController::class);
-
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
-require __DIR__.'/legal.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/legal.php';
