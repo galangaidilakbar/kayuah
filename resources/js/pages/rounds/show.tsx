@@ -4,8 +4,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, PaginatedData } from '@/types';
 import { Head } from '@inertiajs/react';
+import axios from 'axios';
+import { debounce } from 'lodash';
 import { Search } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ShowProps {
     round: App.Data.RoundData;
@@ -13,10 +15,12 @@ interface ShowProps {
 }
 
 export default function Show({ round, races }: ShowProps) {
+    const [allRaces, setAllRaces] = useState(races);
+
     const [filter, setFilter] = useState({
         boatName: '',
         number: '',
-    })
+    });
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -33,11 +37,42 @@ export default function Show({ round, races }: ShowProps) {
         },
     ];
 
+    // Debounced filter function
+    const debouncedFilter = debounce((boatName, number) => {
+        const query = new URLSearchParams();
+        if (boatName) {
+            query.append('filter[boat_name]', boatName);
+        }
+        if (number) {
+            query.append('sort', number);
+        }
+
+        axios
+            .get(`${window.location.href}?${query.toString()}`)
+            .then((response) => {
+                setAllRaces(response.data.races)
+            })
+            .catch((error) => {
+                console.error('Error filtering participants: ', error);
+            });
+    }, 300);
+
+    useEffect(() => {
+        debouncedFilter(filter.boatName, filter.number);
+    }, [filter.boatName, filter.number]);
+
+    useEffect(() => {
+        return () => {
+            debouncedFilter.cancel();
+        };
+    }, [debouncedFilter]);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
+            <Head title={round.name} />
+
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                {round.name}
+                <h1 className='text-xl font-medium'>{round.name}</h1>
 
                 <div className="mb-6 flex flex-col gap-4 md:flex-row">
                     <div className="relative flex-1">
@@ -68,7 +103,6 @@ export default function Show({ round, races }: ShowProps) {
                                 <SelectValue placeholder="Sort by Hilir" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="all">Semua kecamatan</SelectItem>
                                 {sortBy.map((sort) => (
                                     <SelectItem key={sort.value} value={sort.value}>
                                         {sort.name}
@@ -79,7 +113,7 @@ export default function Show({ round, races }: ShowProps) {
                     </div>
                 </div>
 
-                {races.data.map((race) => (
+                {allRaces.data.map((race) => (
                     <RaceCard key={race.id} race={race} />
                 ))}
             </div>
