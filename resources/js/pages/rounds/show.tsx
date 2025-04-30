@@ -8,7 +8,7 @@ import { Head } from '@inertiajs/react';
 import axios from 'axios';
 import { debounce } from 'lodash';
 import { Sailboat, Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 interface ShowProps {
@@ -29,6 +29,8 @@ export default function Show({ round, races }: ShowProps) {
     });
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const isInitialMount = useRef(true);
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -69,6 +71,11 @@ export default function Show({ round, races }: ShowProps) {
     }, 300);
 
     useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+            return;
+        }
+
         debouncedFilter(filter.boatName, filter.number);
     }, [filter.boatName, filter.number]);
 
