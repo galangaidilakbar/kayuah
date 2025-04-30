@@ -14,6 +14,8 @@ class RoundController extends Controller
     public function show(Round $round)
     {
         $races = QueryBuilder::for($round->races())
+            ->defaultSort('number')
+            ->allowedSorts('number')
             ->with([
                 'leftLaneParticipant.boat.village.subDistrict',
                 'leftLaneParticipant.sponsors',
