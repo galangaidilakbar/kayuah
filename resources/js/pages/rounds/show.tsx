@@ -1,3 +1,4 @@
+import Loading from '@/components/loading';
 import RaceCard from '@/components/race-card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -27,6 +28,8 @@ export default function Show({ round, races }: ShowProps) {
         threshold: 0,
     });
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Events',
@@ -44,6 +47,8 @@ export default function Show({ round, races }: ShowProps) {
 
     // Debounced filter function
     const debouncedFilter = debounce((boatName: string, number: string) => {
+        setIsLoading(true);
+
         const query = new URLSearchParams();
         if (boatName) {
             query.append('filter[boat_name]', boatName.toUpperCase());
@@ -59,7 +64,8 @@ export default function Show({ round, races }: ShowProps) {
             })
             .catch((error) => {
                 console.error('Error filtering races: ', error);
-            });
+            })
+            .finally(() => setIsLoading(false));
     }, 300);
 
     useEffect(() => {
@@ -74,8 +80,12 @@ export default function Show({ round, races }: ShowProps) {
 
     const infiniteScrollRaces = () => {
         if (inView && allRaces.next_page_url) {
+            const query = new URLSearchParams();
+            if (filter.boatName) query.append('filter[boat_name]', filter.boatName.toUpperCase());
+            if (filter.number) query.append('sort', filter.number);
+
             axios
-                .get(allRaces.next_page_url)
+                .get(`${allRaces.next_page_url}&${query.toString()}`)
                 .then((response) => {
                     handleNewRaces(response.data.races);
                 })
@@ -101,7 +111,7 @@ export default function Show({ round, races }: ShowProps) {
 
     useEffect(() => {
         infiniteScrollRaces();
-    });
+    }, [inView, allRaces.next_page_url]);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -149,9 +159,7 @@ export default function Show({ round, races }: ShowProps) {
                     </div>
                 </div>
 
-                {allRaces.data.map((race) => (
-                    <RaceCard key={race.id} race={race} />
-                ))}
+                {isLoading ? <Loading /> : allRaces.data.map((race) => <RaceCard key={race.id} race={race} />)}
 
                 {/* Infinite Scroll Trigger */}
                 {allRaces.next_page_url && (
