@@ -58,7 +58,7 @@ export default function Show({ round, races }: ShowProps) {
         }
 
         axios
-            .get(`${window.location.href}?${query.toString()}`)
+            .get(`${route('rounds.show', round.id)}?${query.toString()}`)
             .then((response) => {
                 setAllRaces(response.data.races);
             })
