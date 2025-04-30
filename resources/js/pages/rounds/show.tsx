@@ -1,7 +1,11 @@
 import RaceCard from '@/components/race-card';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, PaginatedData } from '@/types';
 import { Head } from '@inertiajs/react';
+import { Search } from 'lucide-react';
+import { useState } from 'react';
 
 interface ShowProps {
     round: App.Data.RoundData;
@@ -9,6 +13,11 @@ interface ShowProps {
 }
 
 export default function Show({ round, races }: ShowProps) {
+    const [filter, setFilter] = useState({
+        boatName: '',
+        number: '',
+    })
+
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Events',
@@ -30,6 +39,46 @@ export default function Show({ round, races }: ShowProps) {
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 {round.name}
 
+                <div className="mb-6 flex flex-col gap-4 md:flex-row">
+                    <div className="relative flex-1">
+                        <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                        <Input
+                            placeholder="Cari jalur..."
+                            className="pl-9"
+                            value={filter.boatName}
+                            onChange={(e) => {
+                                setFilter((prevFilter) => ({
+                                    ...prevFilter, // Spread the previous filter state
+                                    boatName: e.target.value, // Update only the boatName
+                                }));
+                            }}
+                        />
+                    </div>
+                    <div className="w-full md:w-64">
+                        <Select
+                            value={filter.number}
+                            onValueChange={(value) => {
+                                setFilter((prevFilter) => ({
+                                    ...prevFilter,
+                                    number: value,
+                                }));
+                            }}
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Sort by Hilir" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">Semua kecamatan</SelectItem>
+                                {sortBy.map((sort) => (
+                                    <SelectItem key={sort.value} value={sort.value}>
+                                        {sort.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+
                 {races.data.map((race) => (
                     <RaceCard key={race.id} race={race} />
                 ))}
@@ -37,3 +86,14 @@ export default function Show({ round, races }: ShowProps) {
         </AppLayout>
     );
 }
+
+const sortBy = [
+    {
+        value: 'number',
+        name: 'Hilir terkecil ke terbesar'
+    },
+    {
+        value: '-number',
+        name: 'Hilir terbesar ke terkecil'
+    }
+]
