@@ -38,10 +38,10 @@ export default function Show({ round, races }: ShowProps) {
     ];
 
     // Debounced filter function
-    const debouncedFilter = debounce((boatName, number) => {
+    const debouncedFilter = debounce((boatName: string, number: string) => {
         const query = new URLSearchParams();
         if (boatName) {
-            query.append('filter[boat_name]', boatName);
+            query.append('filter[boat_name]', boatName.toUpperCase());
         }
         if (number) {
             query.append('sort', number);
@@ -53,7 +53,7 @@ export default function Show({ round, races }: ShowProps) {
                 setAllRaces(response.data.races)
             })
             .catch((error) => {
-                console.error('Error filtering participants: ', error);
+                console.error('Error filtering races: ', error);
             });
     }, 300);
 
