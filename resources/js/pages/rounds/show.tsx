@@ -7,7 +7,7 @@ import { type BreadcrumbItem, PaginatedData } from '@/types';
 import { Head } from '@inertiajs/react';
 import axios from 'axios';
 import { debounce } from 'lodash';
-import { Search } from 'lucide-react';
+import { Sailboat, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -146,7 +146,7 @@ export default function Show({ round, races }: ShowProps) {
                             }}
                         >
                             <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Sort by Hilir" />
+                                <SelectValue placeholder="Urutkan berdasarkan hilir" />
                             </SelectTrigger>
                             <SelectContent>
                                 {sortBy.map((sort) => (
@@ -159,7 +159,18 @@ export default function Show({ round, races }: ShowProps) {
                     </div>
                 </div>
 
-                {isLoading ? <Loading /> : allRaces.data.map((race) => <RaceCard key={race.id} race={race} />)}
+                {
+                    isLoading ? (
+                        <Loading message="Fetching races..." />
+                    ) : allRaces.data.length === 0 ? (
+                        <div className="flex flex-col items-center gap-2 text-center text-muted-foreground">
+                            <Sailboat className="h-8 w-8" />
+                            <p className="text-sm">No races found.</p>
+                        </div>
+                    ) : (
+                        allRaces.data.map((race) => <RaceCard key={race.id} race={race} />)
+                    )
+                }
 
                 {/* Infinite Scroll Trigger */}
                 {allRaces.next_page_url && (
