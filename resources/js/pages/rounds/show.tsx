@@ -8,6 +8,7 @@ import axios from 'axios';
 import { debounce } from 'lodash';
 import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 interface ShowProps {
     round: App.Data.RoundData;
@@ -20,6 +21,10 @@ export default function Show({ round, races }: ShowProps) {
     const [filter, setFilter] = useState({
         boatName: '',
         number: '',
+    });
+
+    const { ref, inView } = useInView({
+        threshold: 0,
     });
 
     const breadcrumbs: BreadcrumbItem[] = [
@@ -66,6 +71,37 @@ export default function Show({ round, races }: ShowProps) {
             debouncedFilter.cancel();
         };
     }, [debouncedFilter]);
+
+    const infiniteScrollRaces = () => {
+        if (inView && allRaces.next_page_url) {
+            axios
+                .get(allRaces.next_page_url)
+                .then((response) => {
+                    handleNewRaces(response.data.races);
+                })
+                .catch((error) => {
+                    console.error('Error fetching participants:', error);
+                });
+        }
+    };
+
+    const handleNewRaces = (newRaces: PaginatedData<App.Data.RaceData>) => {
+        setAllRaces((prevRaces) => {
+            // Filter out duplicates based on participant.id
+            const existingIds = new Set(prevRaces.data.map((p) => p.id));
+            const uniqueNewData = newRaces.data.filter((p) => !existingIds.has(p.id));
+
+            return {
+                ...newRaces,
+                data: [...prevRaces.data, ...uniqueNewData],
+                next_page_url: newRaces.next_page_url,
+            };
+        });
+    };
+
+    useEffect(() => {
+        infiniteScrollRaces();
+    });
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -116,6 +152,13 @@ export default function Show({ round, races }: ShowProps) {
                 {allRaces.data.map((race) => (
                     <RaceCard key={race.id} race={race} />
                 ))}
+
+                {/* Infinite Scroll Trigger */}
+                {allRaces.next_page_url && (
+                    <div ref={ref} className="mt-4 text-center">
+                        <p className="text-muted-foreground text-sm">Loading more...</p>
+                    </div>
+                )}
             </div>
         </AppLayout>
     );
