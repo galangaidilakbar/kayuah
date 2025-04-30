@@ -31,7 +31,7 @@ class RoundController extends Controller
 
         if ($request->wantsJson()) {
             return response()->json([
-                'races' => RaceData::collect($races)
+                'races' => RaceData::collect($races),
             ]);
         }
 

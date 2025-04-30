@@ -50,7 +50,7 @@ export default function Show({ round, races }: ShowProps) {
         axios
             .get(`${window.location.href}?${query.toString()}`)
             .then((response) => {
-                setAllRaces(response.data.races)
+                setAllRaces(response.data.races);
             })
             .catch((error) => {
                 console.error('Error filtering races: ', error);
@@ -72,7 +72,7 @@ export default function Show({ round, races }: ShowProps) {
             <Head title={round.name} />
 
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <h1 className='text-xl font-medium'>{round.name}</h1>
+                <h1 className="text-xl font-medium">{round.name}</h1>
 
                 <div className="mb-6 flex flex-col gap-4 md:flex-row">
                     <div className="relative flex-1">
@@ -124,10 +124,10 @@ export default function Show({ round, races }: ShowProps) {
 const sortBy = [
     {
         value: 'number',
-        name: 'Hilir terkecil ke terbesar'
+        name: 'Hilir terkecil ke terbesar',
     },
     {
         value: '-number',
-        name: 'Hilir terbesar ke terkecil'
-    }
-]
+        name: 'Hilir terbesar ke terkecil',
+    },
+];
