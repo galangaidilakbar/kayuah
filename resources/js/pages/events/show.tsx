@@ -58,7 +58,7 @@ export default function Show({ event, participants, subDistricts }: ShowProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={event.name} />
-            <div className="container mx-auto px-4 py-8">
+            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 {/* Hero Section */}
                 <div className="relative mb-8 h-[300px] w-full overflow-hidden rounded-xl md:h-[400px]">
                     <img src={event.thumbnail || '/placeholder.svg'} alt={event.name} className="absolute inset-0 h-full w-full object-cover" />
